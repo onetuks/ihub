@@ -3,7 +3,6 @@ package com.onetuks.ihub.entity.connection;
 import com.onetuks.ihub.entity.project.Project;
 import com.onetuks.ihub.entity.system.System;
 import com.onetuks.ihub.entity.user.User;
-import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -17,7 +16,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.Type;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 @Entity
 @Table(name = "connections")
@@ -59,7 +59,7 @@ public class Connection {
   @Column(name = "auth_type")
   private String authType;
 
-  @Type(value = JsonType.class)
+  @JdbcTypeCode(value = SqlTypes.JSON)
   @Column(name = "extra_config", columnDefinition = "json")
   private String extraConfig;
 

@@ -1,7 +1,6 @@
 package com.onetuks.ihub.entity.interfaces;
 
 import com.onetuks.ihub.entity.user.User;
-import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -12,8 +11,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.Type;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 @Entity
 @Table(name = "interface_revisions")
@@ -39,9 +40,9 @@ public class InterfaceRevision {
   @Column(name = "changed_at")
   private LocalDateTime changedAt;
 
-  @Type(value = JsonType.class)
+  @JdbcTypeCode(value = SqlTypes.JSON)
   @Column(name = "snapshot", columnDefinition = "json")
-  private String snapshot;
+  private Map<String, String> snapshot;
 
   @Column(name = "reason")
   private String reason;
