@@ -1,0 +1,20 @@
+package com.onetuks.ihub.dto.user;
+
+import com.onetuks.ihub.entity.user.UserRole;
+import com.onetuks.ihub.entity.user.UserStatus;
+import java.time.LocalDateTime;
+
+public record UserResponse(
+    Long userId,
+    String email,
+    String name,
+    String company,
+    String position,
+    String phoneNumber,
+    String profileImageUrl,
+    UserStatus status,
+    UserRole role,
+    LocalDateTime createdAt,
+    LocalDateTime updatedAt
+) {
+}
