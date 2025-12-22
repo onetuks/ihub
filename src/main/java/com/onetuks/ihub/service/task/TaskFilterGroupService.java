@@ -33,7 +33,7 @@ public class TaskFilterGroupService {
   }
 
   @Transactional(readOnly = true)
-  public TaskFilterGroup getById(Long groupId) {
+  public TaskFilterGroup getById(String groupId) {
     return findEntity(groupId);
   }
 
@@ -43,29 +43,29 @@ public class TaskFilterGroupService {
   }
 
   @Transactional
-  public TaskFilterGroup update(Long groupId, TaskFilterGroupUpdateRequest request) {
+  public TaskFilterGroup update(String groupId, TaskFilterGroupUpdateRequest request) {
     TaskFilterGroup group = findEntity(groupId);
     TaskFilterGroupMapper.applyUpdate(group, request);
     return group;
   }
 
   @Transactional
-  public void delete(Long groupId) {
+  public void delete(String groupId) {
     TaskFilterGroup group = findEntity(groupId);
     taskFilterGroupJpaRepository.delete(group);
   }
 
-  private TaskFilterGroup findEntity(Long groupId) {
+  private TaskFilterGroup findEntity(String groupId) {
     return taskFilterGroupJpaRepository.findById(groupId)
         .orElseThrow(() -> new EntityNotFoundException("Task filter group not found: " + groupId));
   }
 
-  private User findUser(Long userId) {
+  private User findUser(String userId) {
     return userJpaRepository.findById(userId)
         .orElseThrow(() -> new EntityNotFoundException("User not found: " + userId));
   }
 
-  private Project findProject(Long projectId) {
+  private Project findProject(String projectId) {
     return projectJpaRepository.findById(projectId)
         .orElseThrow(() -> new EntityNotFoundException("Project not found: " + projectId));
   }

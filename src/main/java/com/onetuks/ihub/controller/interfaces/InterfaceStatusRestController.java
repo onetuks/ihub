@@ -40,7 +40,7 @@ public interface InterfaceStatusRestController {
     @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping("/{statusId}")
-  ResponseEntity<InterfaceStatusResponse> getInterfaceStatus(@PathVariable Long statusId);
+  ResponseEntity<InterfaceStatusResponse> getInterfaceStatus(@PathVariable String statusId);
 
   @Operation(summary = "List interface statuses")
   @ApiResponses({
@@ -59,7 +59,7 @@ public interface InterfaceStatusRestController {
   })
   @PutMapping("/{statusId}")
   ResponseEntity<InterfaceStatusResponse> updateInterfaceStatus(
-      @PathVariable Long statusId,
+      @PathVariable String statusId,
       @Valid @RequestBody InterfaceStatusUpdateRequest request);
 
   @Operation(summary = "Delete interface status")
@@ -70,5 +70,5 @@ public interface InterfaceStatusRestController {
     @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @DeleteMapping("/{statusId}")
-  ResponseEntity<Void> deleteInterfaceStatus(@PathVariable Long statusId);
+  ResponseEntity<Void> deleteInterfaceStatus(@PathVariable String statusId);
 }

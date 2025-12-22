@@ -29,7 +29,7 @@ public class ConnectionRestControllerImpl implements ConnectionRestController {
   }
 
   @Override
-  public ResponseEntity<ConnectionResponse> getConnection(@PathVariable Long connectionId) {
+  public ResponseEntity<ConnectionResponse> getConnection(@PathVariable String connectionId) {
     return ResponseEntity.ok(ConnectionMapper.toResponse(connectionService.getById(connectionId)));
   }
 
@@ -41,13 +41,13 @@ public class ConnectionRestControllerImpl implements ConnectionRestController {
 
   @Override
   public ResponseEntity<ConnectionResponse> updateConnection(
-      @PathVariable Long connectionId, @Valid @RequestBody ConnectionUpdateRequest request) {
+      @PathVariable String connectionId, @Valid @RequestBody ConnectionUpdateRequest request) {
     return ResponseEntity.ok(
         ConnectionMapper.toResponse(connectionService.update(connectionId, request)));
   }
 
   @Override
-  public ResponseEntity<Void> deleteConnection(@PathVariable Long connectionId) {
+  public ResponseEntity<Void> deleteConnection(@PathVariable String connectionId) {
     connectionService.delete(connectionId);
     return ResponseEntity.noContent().build();
   }

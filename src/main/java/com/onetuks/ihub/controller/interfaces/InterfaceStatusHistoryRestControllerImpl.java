@@ -33,7 +33,7 @@ public class InterfaceStatusHistoryRestControllerImpl
 
   @Override
   public ResponseEntity<InterfaceStatusHistoryResponse> getInterfaceStatusHistory(
-      Long historyId) {
+      String historyId) {
     return ResponseEntity.ok(
         InterfaceStatusHistoryMapper.toResponse(interfaceStatusHistoryService.getById(historyId)));
   }
@@ -48,13 +48,13 @@ public class InterfaceStatusHistoryRestControllerImpl
 
   @Override
   public ResponseEntity<InterfaceStatusHistoryResponse> updateInterfaceStatusHistory(
-      Long historyId, @Valid @RequestBody InterfaceStatusHistoryUpdateRequest request) {
+      String historyId, @Valid @RequestBody InterfaceStatusHistoryUpdateRequest request) {
     return ResponseEntity.ok(InterfaceStatusHistoryMapper.toResponse(
         interfaceStatusHistoryService.update(historyId, request)));
   }
 
   @Override
-  public ResponseEntity<Void> deleteInterfaceStatusHistory(Long historyId) {
+  public ResponseEntity<Void> deleteInterfaceStatusHistory(String historyId) {
     interfaceStatusHistoryService.delete(historyId);
     return ResponseEntity.noContent().build();
   }

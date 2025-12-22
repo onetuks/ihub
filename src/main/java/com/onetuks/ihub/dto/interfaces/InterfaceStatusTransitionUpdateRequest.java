@@ -4,8 +4,8 @@ import com.onetuks.ihub.entity.interfaces.InterfaceRole;
 import com.onetuks.ihub.entity.interfaces.InterfaceStatusTransitionStatus;
 
 public record InterfaceStatusTransitionUpdateRequest(
-    Long fromStatusId,
-    Long toStatusId,
+    String fromStatusId,
+    String toStatusId,
     InterfaceRole allowedRole,
     InterfaceStatusTransitionStatus status
 ) {

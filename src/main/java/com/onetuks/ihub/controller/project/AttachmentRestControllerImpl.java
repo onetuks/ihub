@@ -29,7 +29,7 @@ public class AttachmentRestControllerImpl implements AttachmentRestController {
   }
 
   @Override
-  public ResponseEntity<AttachmentResponse> getAttachment(@PathVariable Long attachmentId) {
+  public ResponseEntity<AttachmentResponse> getAttachment(@PathVariable String attachmentId) {
     return ResponseEntity.ok(AttachmentMapper.toResponse(attachmentService.getById(attachmentId)));
   }
 
@@ -41,13 +41,13 @@ public class AttachmentRestControllerImpl implements AttachmentRestController {
 
   @Override
   public ResponseEntity<AttachmentResponse> updateAttachment(
-      @PathVariable Long attachmentId, @Valid @RequestBody AttachmentUpdateRequest request) {
+      @PathVariable String attachmentId, @Valid @RequestBody AttachmentUpdateRequest request) {
     return ResponseEntity.ok(
         AttachmentMapper.toResponse(attachmentService.update(attachmentId, request)));
   }
 
   @Override
-  public ResponseEntity<Void> deleteAttachment(@PathVariable Long attachmentId) {
+  public ResponseEntity<Void> deleteAttachment(@PathVariable String attachmentId) {
     attachmentService.delete(attachmentId);
     return ResponseEntity.noContent().build();
   }

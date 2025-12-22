@@ -8,7 +8,7 @@ public record ProjectUpdateRequest(
     String description,
     LocalDate startDate,
     LocalDate endDate,
-    Long currentAdminId,
+    String currentAdminId,
     ProjectStatus status
 ) {
 }

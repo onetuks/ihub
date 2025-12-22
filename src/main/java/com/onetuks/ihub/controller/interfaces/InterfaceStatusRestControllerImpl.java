@@ -30,7 +30,7 @@ public class InterfaceStatusRestControllerImpl implements InterfaceStatusRestCon
   }
 
   @Override
-  public ResponseEntity<InterfaceStatusResponse> getInterfaceStatus(@PathVariable Long statusId) {
+  public ResponseEntity<InterfaceStatusResponse> getInterfaceStatus(@PathVariable String statusId) {
     return ResponseEntity.ok(
         InterfaceStatusMapper.toResponse(interfaceStatusService.getById(statusId)));
   }
@@ -43,13 +43,13 @@ public class InterfaceStatusRestControllerImpl implements InterfaceStatusRestCon
 
   @Override
   public ResponseEntity<InterfaceStatusResponse> updateInterfaceStatus(
-      @PathVariable Long statusId, @Valid @RequestBody InterfaceStatusUpdateRequest request) {
+      @PathVariable String statusId, @Valid @RequestBody InterfaceStatusUpdateRequest request) {
     return ResponseEntity.ok(
         InterfaceStatusMapper.toResponse(interfaceStatusService.update(statusId, request)));
   }
 
   @Override
-  public ResponseEntity<Void> deleteInterfaceStatus(@PathVariable Long statusId) {
+  public ResponseEntity<Void> deleteInterfaceStatus(@PathVariable String statusId) {
     interfaceStatusService.delete(statusId);
     return ResponseEntity.noContent().build();
   }

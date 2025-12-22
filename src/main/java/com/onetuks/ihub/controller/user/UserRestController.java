@@ -39,7 +39,7 @@ public interface UserRestController {
     @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping("/{userId}")
-  ResponseEntity<UserResponse> getUser(@PathVariable Long userId);
+  ResponseEntity<UserResponse> getUser(@PathVariable String userId);
 
   @Operation(summary = "List users")
   @ApiResponses({
@@ -58,7 +58,7 @@ public interface UserRestController {
   })
   @PutMapping("/{userId}")
   ResponseEntity<UserResponse> updateUser(
-      @PathVariable Long userId,
+      @PathVariable String userId,
       @Valid @RequestBody UserUpdateRequest request);
 
   @Operation(summary = "Delete user")
@@ -69,5 +69,5 @@ public interface UserRestController {
     @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @DeleteMapping("/{userId}")
-  ResponseEntity<Void> deleteUser(@PathVariable Long userId);
+  ResponseEntity<Void> deleteUser(@PathVariable String userId);
 }

@@ -38,7 +38,7 @@ public class FolderService {
   }
 
   @Transactional(readOnly = true)
-  public Folder getById(Long folderId) {
+  public Folder getById(String folderId) {
     return findEntity(folderId);
   }
 
@@ -48,7 +48,7 @@ public class FolderService {
   }
 
   @Transactional
-  public Folder update(Long folderId, FolderUpdateRequest request) {
+  public Folder update(String folderId, FolderUpdateRequest request) {
     Folder folder = findEntity(folderId);
     FolderMapper.applyUpdate(folder, request);
     if (request.parentFolderId() != null) {
@@ -58,26 +58,26 @@ public class FolderService {
   }
 
   @Transactional
-  public void delete(Long folderId) {
+  public void delete(String folderId) {
     Folder folder = findEntity(folderId);
     folderJpaRepository.delete(folder);
   }
 
-  private Folder findEntity(Long folderId) {
+  private Folder findEntity(String folderId) {
     return folderJpaRepository.findById(folderId)
         .orElseThrow(() -> new EntityNotFoundException("Folder not found: " + folderId));
   }
 
-  private Folder findFolder(Long folderId) {
+  private Folder findFolder(String folderId) {
     return findEntity(folderId);
   }
 
-  private Project findProject(Long projectId) {
+  private Project findProject(String projectId) {
     return projectJpaRepository.findById(projectId)
         .orElseThrow(() -> new EntityNotFoundException("Project not found: " + projectId));
   }
 
-  private User findUser(Long userId) {
+  private User findUser(String userId) {
     return userJpaRepository.findById(userId)
         .orElseThrow(() -> new EntityNotFoundException("User not found: " + userId));
   }

@@ -25,6 +25,7 @@ public final class InterfaceStatusHistoryMapper {
 
   public static void applyCreate(InterfaceStatusHistory history,
       InterfaceStatusHistoryCreateRequest request) {
+    history.setHistoryId(UUIDProvider.provideUUID(InterfaceStatusHistory.TABLE_NAME));
     history.setChangedAt(LocalDateTime.now());
     history.setReason(request.reason());
   }

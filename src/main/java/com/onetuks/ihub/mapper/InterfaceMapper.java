@@ -34,6 +34,7 @@ public final class InterfaceMapper {
 
   public static void applyCreate(Interface anInterface, InterfaceCreateRequest request) {
     LocalDateTime now = LocalDateTime.now();
+    anInterface.setInterfaceId(UUIDProvider.provideUUID(Interface.TABLE_NAME));
     anInterface.setIfId(request.ifId());
     anInterface.setModule(request.module());
     anInterface.setInterfaceType(request.interfaceType());

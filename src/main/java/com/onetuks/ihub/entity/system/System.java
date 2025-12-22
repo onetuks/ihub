@@ -17,11 +17,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "systems")
+@Table(name = System.TABLE_NAME)
 @Getter
 @Setter
 @RequiredArgsConstructor
 public class System {
+
+  public static final String TABLE_NAME = "systems";
 
   @Id
   @Column(name = "system_id", nullable = false)

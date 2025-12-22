@@ -6,8 +6,8 @@ import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 public record TaskFilterGroupCreateRequest(
-    @NotNull Long userId,
-    @NotNull Long projectId,
+    @NotNull String userId,
+    @NotNull String projectId,
     @NotBlank String name,
     String assigneeKeyword,
     String authorKeyword,

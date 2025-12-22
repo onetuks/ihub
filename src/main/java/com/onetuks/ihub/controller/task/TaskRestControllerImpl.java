@@ -28,7 +28,7 @@ public class TaskRestControllerImpl implements TaskRestController {
   }
 
   @Override
-  public ResponseEntity<TaskResponse> getTask(@PathVariable Long taskId) {
+  public ResponseEntity<TaskResponse> getTask(@PathVariable String taskId) {
     return ResponseEntity.ok(TaskMapper.toResponse(taskService.getById(taskId)));
   }
 
@@ -39,12 +39,12 @@ public class TaskRestControllerImpl implements TaskRestController {
 
   @Override
   public ResponseEntity<TaskResponse> updateTask(
-      @PathVariable Long taskId, @Valid @RequestBody TaskUpdateRequest request) {
+      @PathVariable String taskId, @Valid @RequestBody TaskUpdateRequest request) {
     return ResponseEntity.ok(TaskMapper.toResponse(taskService.update(taskId, request)));
   }
 
   @Override
-  public ResponseEntity<Void> deleteTask(@PathVariable Long taskId) {
+  public ResponseEntity<Void> deleteTask(@PathVariable String taskId) {
     taskService.delete(taskId);
     return ResponseEntity.noContent().build();
   }

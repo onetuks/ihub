@@ -29,7 +29,7 @@ public class ProjectRestControllerImpl implements ProjectRestController {
   }
 
   @Override
-  public ResponseEntity<ProjectResponse> getProject(@PathVariable Long projectId) {
+  public ResponseEntity<ProjectResponse> getProject(@PathVariable String projectId) {
     return ResponseEntity.ok(ProjectMapper.toResponse(projectService.getById(projectId)));
   }
 
@@ -40,13 +40,13 @@ public class ProjectRestControllerImpl implements ProjectRestController {
 
   @Override
   public ResponseEntity<ProjectResponse> updateProject(
-      @PathVariable Long projectId,
+      @PathVariable String projectId,
       @Valid @RequestBody ProjectUpdateRequest request) {
     return ResponseEntity.ok(ProjectMapper.toResponse(projectService.update(projectId, request)));
   }
 
   @Override
-  public ResponseEntity<Void> deleteProject(@PathVariable Long projectId) {
+  public ResponseEntity<Void> deleteProject(@PathVariable String projectId) {
     projectService.delete(projectId);
     return ResponseEntity.noContent().build();
   }

@@ -4,9 +4,9 @@ import com.onetuks.ihub.entity.communication.TargetType;
 
 public record FeedItemUpdateRequest(
     String eventType,
-    Long actorId,
+    String actorId,
     TargetType targetType,
-    Long targetId,
+    String targetId,
     String summary
 ) {
 }

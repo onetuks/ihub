@@ -29,7 +29,7 @@ public class InterfaceRestControllerImpl implements InterfaceRestController {
   }
 
   @Override
-  public ResponseEntity<InterfaceResponse> getInterface(@PathVariable Long interfaceId) {
+  public ResponseEntity<InterfaceResponse> getInterface(@PathVariable String interfaceId) {
     return ResponseEntity.ok(InterfaceMapper.toResponse(interfaceService.getById(interfaceId)));
   }
 
@@ -41,13 +41,13 @@ public class InterfaceRestControllerImpl implements InterfaceRestController {
 
   @Override
   public ResponseEntity<InterfaceResponse> updateInterface(
-      @PathVariable Long interfaceId, @Valid @RequestBody InterfaceUpdateRequest request) {
+      @PathVariable String interfaceId, @Valid @RequestBody InterfaceUpdateRequest request) {
     return ResponseEntity.ok(
         InterfaceMapper.toResponse(interfaceService.update(interfaceId, request)));
   }
 
   @Override
-  public ResponseEntity<Void> deleteInterface(@PathVariable Long interfaceId) {
+  public ResponseEntity<Void> deleteInterface(@PathVariable String interfaceId) {
     interfaceService.delete(interfaceId);
     return ResponseEntity.noContent().build();
   }

@@ -26,6 +26,7 @@ public final class CommentMapper {
 
   public static void applyCreate(Comment comment, CommentCreateRequest request) {
     LocalDateTime now = LocalDateTime.now();
+    comment.setCommentId(UUIDProvider.provideUUID(Comment.TABLE_NAME));
     comment.setTargetType(request.targetType());
     comment.setTargetId(request.targetId());
     comment.setContent(request.content());

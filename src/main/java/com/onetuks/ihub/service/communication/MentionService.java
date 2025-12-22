@@ -34,7 +34,7 @@ public class MentionService {
   }
 
   @Transactional(readOnly = true)
-  public Mention getById(Long mentionId) {
+  public Mention getById(String mentionId) {
     return findEntity(mentionId);
   }
 
@@ -44,7 +44,7 @@ public class MentionService {
   }
 
   @Transactional
-  public Mention update(Long mentionId, MentionUpdateRequest request) {
+  public Mention update(String mentionId, MentionUpdateRequest request) {
     Mention mention = findEntity(mentionId);
     MentionMapper.applyUpdate(mention, request);
     if (request.mentionedUserId() != null) {
@@ -57,22 +57,22 @@ public class MentionService {
   }
 
   @Transactional
-  public void delete(Long mentionId) {
+  public void delete(String mentionId) {
     Mention mention = findEntity(mentionId);
     mentionJpaRepository.delete(mention);
   }
 
-  private Mention findEntity(Long mentionId) {
+  private Mention findEntity(String mentionId) {
     return mentionJpaRepository.findById(mentionId)
         .orElseThrow(() -> new EntityNotFoundException("Mention not found: " + mentionId));
   }
 
-  private Project findProject(Long projectId) {
+  private Project findProject(String projectId) {
     return projectJpaRepository.findById(projectId)
         .orElseThrow(() -> new EntityNotFoundException("Project not found: " + projectId));
   }
 
-  private User findUser(Long userId) {
+  private User findUser(String userId) {
     return userJpaRepository.findById(userId)
         .orElseThrow(() -> new EntityNotFoundException("User not found: " + userId));
   }

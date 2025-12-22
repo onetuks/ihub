@@ -15,11 +15,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "folders")
+@Table(name = Folder.TABLE_NAME)
 @Getter
 @Setter
 @RequiredArgsConstructor
 public class Folder {
+
+  public static final String TABLE_NAME = "folders";
 
   @Id
   @Column(name = "folder_id", nullable = false)

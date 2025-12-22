@@ -4,10 +4,10 @@ import com.onetuks.ihub.entity.communication.TargetType;
 import jakarta.validation.constraints.NotNull;
 
 public record MentionCreateRequest(
-    @NotNull Long projectId,
+    @NotNull String projectId,
     @NotNull TargetType targetType,
-    @NotNull Long targetId,
-    @NotNull Long mentionedUserId,
-    @NotNull Long createdById
+    @NotNull String targetId,
+    @NotNull String mentionedUserId,
+    @NotNull String createdById
 ) {
 }

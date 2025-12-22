@@ -15,11 +15,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "posts")
+@Table(name = Post.TABLE_NAME)
 @Getter
 @Setter
 @RequiredArgsConstructor
 public class Post {
+
+  public static final String TABLE_NAME = "posts";
 
   @Id
   @Column(name = "post_id", nullable = false)

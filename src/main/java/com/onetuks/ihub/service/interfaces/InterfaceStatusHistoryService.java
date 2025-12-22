@@ -42,7 +42,7 @@ public class InterfaceStatusHistoryService {
   }
 
   @Transactional(readOnly = true)
-  public InterfaceStatusHistory getById(Long historyId) {
+  public InterfaceStatusHistory getById(String historyId) {
     return findEntity(historyId);
   }
 
@@ -53,7 +53,7 @@ public class InterfaceStatusHistoryService {
 
   @Transactional
   public InterfaceStatusHistory update(
-      Long historyId, InterfaceStatusHistoryUpdateRequest request) {
+      String historyId, InterfaceStatusHistoryUpdateRequest request) {
     InterfaceStatusHistory history = findEntity(historyId);
     InterfaceStatusHistoryMapper.applyUpdate(history, request);
     if (request.toStatusId() != null) {
@@ -63,34 +63,34 @@ public class InterfaceStatusHistoryService {
   }
 
   @Transactional
-  public void delete(Long historyId) {
+  public void delete(String historyId) {
     InterfaceStatusHistory history = findEntity(historyId);
     interfaceStatusHistoryJpaRepository.delete(history);
   }
 
-  private InterfaceStatusHistory findEntity(Long historyId) {
+  private InterfaceStatusHistory findEntity(String historyId) {
     return interfaceStatusHistoryJpaRepository.findById(historyId)
         .orElseThrow(() -> new EntityNotFoundException(
             "Interface status history not found: " + historyId));
   }
 
-  private Interface findInterface(Long interfaceId) {
+  private Interface findInterface(String interfaceId) {
     return interfaceJpaRepository.findById(interfaceId)
         .orElseThrow(() -> new EntityNotFoundException("Interface not found: " + interfaceId));
   }
 
-  private InterfaceStatus findStatus(Long statusId) {
+  private InterfaceStatus findStatus(String statusId) {
     return interfaceStatusJpaRepository.findById(statusId)
         .orElseThrow(() -> new EntityNotFoundException(
             "Interface status not found: " + statusId));
   }
 
-  private User findUser(Long userId) {
+  private User findUser(String userId) {
     return userJpaRepository.findById(userId)
         .orElseThrow(() -> new EntityNotFoundException("User not found: " + userId));
   }
 
-  private Task findTask(Long taskId) {
+  private Task findTask(String taskId) {
     return taskJpaRepository.findById(taskId)
         .orElseThrow(() -> new EntityNotFoundException("Task not found: " + taskId));
   }

@@ -37,7 +37,7 @@ public class AttachmentService {
   }
 
   @Transactional(readOnly = true)
-  public Attachment getById(Long attachmentId) {
+  public Attachment getById(String attachmentId) {
     return findEntity(attachmentId);
   }
 
@@ -47,7 +47,7 @@ public class AttachmentService {
   }
 
   @Transactional
-  public Attachment update(Long attachmentId, AttachmentUpdateRequest request) {
+  public Attachment update(String attachmentId, AttachmentUpdateRequest request) {
     Attachment attachment = findEntity(attachmentId);
     AttachmentMapper.applyUpdate(attachment, request);
     if (request.fileId() != null) {
@@ -60,27 +60,27 @@ public class AttachmentService {
   }
 
   @Transactional
-  public void delete(Long attachmentId) {
+  public void delete(String attachmentId) {
     Attachment attachment = findEntity(attachmentId);
     attachmentJpaRepository.delete(attachment);
   }
 
-  private Attachment findEntity(Long attachmentId) {
+  private Attachment findEntity(String attachmentId) {
     return attachmentJpaRepository.findById(attachmentId)
         .orElseThrow(() -> new EntityNotFoundException("Attachment not found: " + attachmentId));
   }
 
-  private Project findProject(Long projectId) {
+  private Project findProject(String projectId) {
     return projectJpaRepository.findById(projectId)
         .orElseThrow(() -> new EntityNotFoundException("Project not found: " + projectId));
   }
 
-  private File findFile(Long fileId) {
+  private File findFile(String fileId) {
     return fileJpaRepository.findById(fileId)
         .orElseThrow(() -> new EntityNotFoundException("File not found: " + fileId));
   }
 
-  private User findUser(Long userId) {
+  private User findUser(String userId) {
     return userJpaRepository.findById(userId)
         .orElseThrow(() -> new EntityNotFoundException("User not found: " + userId));
   }

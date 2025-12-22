@@ -23,6 +23,7 @@ public final class AttachmentMapper {
   }
 
   public static void applyCreate(Attachment attachment, AttachmentCreateRequest request) {
+    attachment.setAttachmentId(UUIDProvider.provideUUID(Attachment.TABLE_NAME));
     attachment.setTargetType(request.targetType());
     attachment.setTargetId(request.targetId());
     attachment.setAttachedAt(LocalDateTime.now());

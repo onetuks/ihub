@@ -5,11 +5,11 @@ import com.onetuks.ihub.entity.interfaces.InterfaceStatusTransitionStatus;
 import jakarta.validation.constraints.NotNull;
 
 public record InterfaceStatusTransitionCreateRequest(
-    @NotNull Long projectId,
-    @NotNull Long fromStatusId,
-    @NotNull Long toStatusId,
+    @NotNull String projectId,
+    @NotNull String fromStatusId,
+    @NotNull String toStatusId,
     @NotNull InterfaceRole allowedRole,
     @NotNull InterfaceStatusTransitionStatus status,
-    @NotNull Long createdById
+    @NotNull String createdById
 ) {
 }

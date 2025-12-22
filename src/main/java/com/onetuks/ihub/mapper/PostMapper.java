@@ -24,6 +24,7 @@ public final class PostMapper {
 
   public static void applyCreate(Post post, PostCreateRequest request) {
     LocalDateTime now = LocalDateTime.now();
+    post.setPostId(UUIDProvider.provideUUID(Post.TABLE_NAME));
     post.setTitle(request.title());
     post.setContent(request.content());
     post.setCreatedAt(now);

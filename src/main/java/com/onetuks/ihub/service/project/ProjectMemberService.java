@@ -33,7 +33,7 @@ public class ProjectMemberService {
   }
 
   @Transactional(readOnly = true)
-  public ProjectMember getById(Long projectMemberId) {
+  public ProjectMember getById(String projectMemberId) {
     return findEntity(projectMemberId);
   }
 
@@ -43,30 +43,30 @@ public class ProjectMemberService {
   }
 
   @Transactional
-  public ProjectMember update(Long projectMemberId, ProjectMemberUpdateRequest request) {
+  public ProjectMember update(String projectMemberId, ProjectMemberUpdateRequest request) {
     ProjectMember member = findEntity(projectMemberId);
     ProjectMemberMapper.applyUpdate(member, request);
     return member;
   }
 
   @Transactional
-  public void delete(Long projectMemberId) {
+  public void delete(String projectMemberId) {
     ProjectMember member = findEntity(projectMemberId);
     projectMemberJpaRepository.delete(member);
   }
 
-  private ProjectMember findEntity(Long projectMemberId) {
+  private ProjectMember findEntity(String projectMemberId) {
     return projectMemberJpaRepository.findById(projectMemberId)
         .orElseThrow(() -> new EntityNotFoundException(
             "Project member not found: " + projectMemberId));
   }
 
-  private Project findProject(Long projectId) {
+  private Project findProject(String projectId) {
     return projectJpaRepository.findById(projectId)
         .orElseThrow(() -> new EntityNotFoundException("Project not found: " + projectId));
   }
 
-  private User findUser(Long userId) {
+  private User findUser(String userId) {
     return userJpaRepository.findById(userId)
         .orElseThrow(() -> new EntityNotFoundException("User not found: " + userId));
   }

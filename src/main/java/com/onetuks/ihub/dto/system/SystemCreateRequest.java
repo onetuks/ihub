@@ -6,13 +6,13 @@ import com.onetuks.ihub.entity.system.SystemType;
 import jakarta.validation.constraints.NotNull;
 
 public record SystemCreateRequest(
-    @NotNull Long projectId,
+    @NotNull String projectId,
     String systemCode,
     @NotNull SystemStatus status,
     String description,
     @NotNull SystemType systemType,
     @NotNull SystemEnvironment environment,
-    @NotNull Long createdById,
-    @NotNull Long updatedById
+    @NotNull String createdById,
+    @NotNull String updatedById
 ) {
 }

@@ -29,7 +29,7 @@ public class MentionRestControllerImpl implements MentionRestController {
   }
 
   @Override
-  public ResponseEntity<MentionResponse> getMention(@PathVariable Long mentionId) {
+  public ResponseEntity<MentionResponse> getMention(@PathVariable String mentionId) {
     return ResponseEntity.ok(MentionMapper.toResponse(mentionService.getById(mentionId)));
   }
 
@@ -40,12 +40,12 @@ public class MentionRestControllerImpl implements MentionRestController {
 
   @Override
   public ResponseEntity<MentionResponse> updateMention(
-      @PathVariable Long mentionId, @Valid @RequestBody MentionUpdateRequest request) {
+      @PathVariable String mentionId, @Valid @RequestBody MentionUpdateRequest request) {
     return ResponseEntity.ok(MentionMapper.toResponse(mentionService.update(mentionId, request)));
   }
 
   @Override
-  public ResponseEntity<Void> deleteMention(@PathVariable Long mentionId) {
+  public ResponseEntity<Void> deleteMention(@PathVariable String mentionId) {
     mentionService.delete(mentionId);
     return ResponseEntity.noContent().build();
   }

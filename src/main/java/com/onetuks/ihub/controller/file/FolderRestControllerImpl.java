@@ -29,7 +29,7 @@ public class FolderRestControllerImpl implements FolderRestController {
   }
 
   @Override
-  public ResponseEntity<FolderResponse> getFolder(@PathVariable Long folderId) {
+  public ResponseEntity<FolderResponse> getFolder(@PathVariable String folderId) {
     return ResponseEntity.ok(FolderMapper.toResponse(folderService.getById(folderId)));
   }
 
@@ -40,12 +40,12 @@ public class FolderRestControllerImpl implements FolderRestController {
 
   @Override
   public ResponseEntity<FolderResponse> updateFolder(
-      @PathVariable Long folderId, @Valid @RequestBody FolderUpdateRequest request) {
+      @PathVariable String folderId, @Valid @RequestBody FolderUpdateRequest request) {
     return ResponseEntity.ok(FolderMapper.toResponse(folderService.update(folderId, request)));
   }
 
   @Override
-  public ResponseEntity<Void> deleteFolder(@PathVariable Long folderId) {
+  public ResponseEntity<Void> deleteFolder(@PathVariable String folderId) {
     folderService.delete(folderId);
     return ResponseEntity.noContent().build();
   }

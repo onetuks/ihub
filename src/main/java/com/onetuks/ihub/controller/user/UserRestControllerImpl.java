@@ -27,7 +27,7 @@ public class UserRestControllerImpl implements UserRestController {
   }
 
   @Override
-  public ResponseEntity<UserResponse> getUser(@PathVariable Long userId) {
+  public ResponseEntity<UserResponse> getUser(@PathVariable String userId) {
     return ResponseEntity.ok(UserMapper.toResponse(userService.getById(userId)));
   }
 
@@ -38,12 +38,12 @@ public class UserRestControllerImpl implements UserRestController {
 
   @Override
   public ResponseEntity<UserResponse> updateUser(
-      @PathVariable Long userId, @Valid @RequestBody UserUpdateRequest request) {
+      @PathVariable String userId, @Valid @RequestBody UserUpdateRequest request) {
     return ResponseEntity.ok(UserMapper.toResponse(userService.update(userId, request)));
   }
 
   @Override
-  public ResponseEntity<Void> deleteUser(@PathVariable Long userId) {
+  public ResponseEntity<Void> deleteUser(@PathVariable String userId) {
     userService.delete(userId);
     return ResponseEntity.noContent().build();
   }

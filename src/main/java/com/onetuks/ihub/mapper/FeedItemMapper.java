@@ -24,6 +24,7 @@ public final class FeedItemMapper {
   }
 
   public static void applyCreate(FeedItem feedItem, FeedItemCreateRequest request) {
+    feedItem.setFeedId(UUIDProvider.provideUUID(FeedItem.TABLE_NAME));
     feedItem.setEventType(request.eventType());
     feedItem.setTargetType(request.targetType());
     feedItem.setTargetId(request.targetId());

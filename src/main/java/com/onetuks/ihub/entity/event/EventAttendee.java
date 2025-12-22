@@ -15,11 +15,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "event_attendees")
+@Table(name = EventAttendee.TABLE_NAME)
 @Getter
 @Setter
 @RequiredArgsConstructor
 public class EventAttendee {
+
+  public static final String TABLE_NAME = "event_attendees";
 
   @Id
   @Column(name = "event_attendee_id", nullable = false)

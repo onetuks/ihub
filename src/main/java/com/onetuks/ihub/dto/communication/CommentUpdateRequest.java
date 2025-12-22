@@ -4,7 +4,7 @@ import com.onetuks.ihub.entity.communication.TargetType;
 
 public record CommentUpdateRequest(
     TargetType targetType,
-    Long targetId,
+    String targetId,
     String content
 ) {
 }

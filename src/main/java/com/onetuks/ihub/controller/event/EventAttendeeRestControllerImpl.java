@@ -30,7 +30,7 @@ public class EventAttendeeRestControllerImpl implements EventAttendeeRestControl
   }
 
   @Override
-  public ResponseEntity<EventAttendeeResponse> getEventAttendee(Long eventAttendeeId) {
+  public ResponseEntity<EventAttendeeResponse> getEventAttendee(String eventAttendeeId) {
     return ResponseEntity.ok(
         EventAttendeeMapper.toResponse(eventAttendeeService.getById(eventAttendeeId)));
   }
@@ -43,13 +43,13 @@ public class EventAttendeeRestControllerImpl implements EventAttendeeRestControl
 
   @Override
   public ResponseEntity<EventAttendeeResponse> updateEventAttendee(
-      Long eventAttendeeId, @Valid @RequestBody EventAttendeeUpdateRequest request) {
+      String eventAttendeeId, @Valid @RequestBody EventAttendeeUpdateRequest request) {
     return ResponseEntity.ok(
         EventAttendeeMapper.toResponse(eventAttendeeService.update(eventAttendeeId, request)));
   }
 
   @Override
-  public ResponseEntity<Void> deleteEventAttendee(Long eventAttendeeId) {
+  public ResponseEntity<Void> deleteEventAttendee(String eventAttendeeId) {
     eventAttendeeService.delete(eventAttendeeId);
     return ResponseEntity.noContent().build();
   }

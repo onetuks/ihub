@@ -33,7 +33,7 @@ public class EventAttendeeService {
   }
 
   @Transactional(readOnly = true)
-  public EventAttendee getById(Long attendeeId) {
+  public EventAttendee getById(String attendeeId) {
     return findEntity(attendeeId);
   }
 
@@ -43,29 +43,29 @@ public class EventAttendeeService {
   }
 
   @Transactional
-  public EventAttendee update(Long attendeeId, EventAttendeeUpdateRequest request) {
+  public EventAttendee update(String attendeeId, EventAttendeeUpdateRequest request) {
     EventAttendee attendee = findEntity(attendeeId);
     EventAttendeeMapper.applyUpdate(attendee, request);
     return attendee;
   }
 
   @Transactional
-  public void delete(Long attendeeId) {
+  public void delete(String attendeeId) {
     EventAttendee attendee = findEntity(attendeeId);
     eventAttendeeJpaRepository.delete(attendee);
   }
 
-  private EventAttendee findEntity(Long attendeeId) {
+  private EventAttendee findEntity(String attendeeId) {
     return eventAttendeeJpaRepository.findById(attendeeId)
         .orElseThrow(() -> new EntityNotFoundException("Event attendee not found: " + attendeeId));
   }
 
-  private Event findEvent(Long eventId) {
+  private Event findEvent(String eventId) {
     return eventJpaRepository.findById(eventId)
         .orElseThrow(() -> new EntityNotFoundException("Event not found: " + eventId));
   }
 
-  private User findUser(Long userId) {
+  private User findUser(String userId) {
     return userJpaRepository.findById(userId)
         .orElseThrow(() -> new EntityNotFoundException("User not found: " + userId));
   }

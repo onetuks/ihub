@@ -40,7 +40,7 @@ public interface ProjectRestController {
     @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping("/{projectId}")
-  ResponseEntity<ProjectResponse> getProject(@PathVariable Long projectId);
+  ResponseEntity<ProjectResponse> getProject(@PathVariable String projectId);
 
   @Operation(summary = "List projects")
   @ApiResponses({
@@ -59,7 +59,7 @@ public interface ProjectRestController {
   })
   @PutMapping("/{projectId}")
   ResponseEntity<ProjectResponse> updateProject(
-      @PathVariable Long projectId,
+      @PathVariable String projectId,
       @Valid @RequestBody ProjectUpdateRequest request);
 
   @Operation(summary = "Delete project")
@@ -70,5 +70,5 @@ public interface ProjectRestController {
     @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @DeleteMapping("/{projectId}")
-  ResponseEntity<Void> deleteProject(@PathVariable Long projectId);
+  ResponseEntity<Void> deleteProject(@PathVariable String projectId);
 }

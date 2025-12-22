@@ -41,7 +41,7 @@ public interface InterfaceStatusTransitionRestController {
   })
   @GetMapping("/{transitionId}")
   ResponseEntity<InterfaceStatusTransitionResponse> getInterfaceStatusTransition(
-      @PathVariable Long transitionId);
+      @PathVariable String transitionId);
 
   @Operation(summary = "List interface status transitions")
   @ApiResponses({
@@ -60,7 +60,7 @@ public interface InterfaceStatusTransitionRestController {
   })
   @PutMapping("/{transitionId}")
   ResponseEntity<InterfaceStatusTransitionResponse> updateInterfaceStatusTransition(
-      @PathVariable Long transitionId,
+      @PathVariable String transitionId,
       @Valid @RequestBody InterfaceStatusTransitionUpdateRequest request);
 
   @Operation(summary = "Delete interface status transition")
@@ -71,5 +71,5 @@ public interface InterfaceStatusTransitionRestController {
     @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @DeleteMapping("/{transitionId}")
-  ResponseEntity<Void> deleteInterfaceStatusTransition(@PathVariable Long transitionId);
+  ResponseEntity<Void> deleteInterfaceStatusTransition(@PathVariable String transitionId);
 }

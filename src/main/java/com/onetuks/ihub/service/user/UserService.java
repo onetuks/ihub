@@ -25,7 +25,7 @@ public class UserService {
   }
 
   @Transactional(readOnly = true)
-  public User getById(Long userId) {
+  public User getById(String userId) {
     return findEntity(userId);
   }
 
@@ -35,19 +35,19 @@ public class UserService {
   }
 
   @Transactional
-  public User update(Long userId, UserUpdateRequest request) {
+  public User update(String userId, UserUpdateRequest request) {
     User user = findEntity(userId);
     UserMapper.applyUpdate(user, request);
     return user;
   }
 
   @Transactional
-  public void delete(Long userId) {
+  public void delete(String userId) {
     User user = findEntity(userId);
     userJpaRepository.delete(user);
   }
 
-  private User findEntity(Long userId) {
+  private User findEntity(String userId) {
     return userJpaRepository.findById(userId)
         .orElseThrow(() -> new EntityNotFoundException("User not found: " + userId));
   }

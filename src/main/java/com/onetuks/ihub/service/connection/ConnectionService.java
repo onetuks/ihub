@@ -38,7 +38,7 @@ public class ConnectionService {
   }
 
   @Transactional(readOnly = true)
-  public Connection getById(Long connectionId) {
+  public Connection getById(String connectionId) {
     return findEntity(connectionId);
   }
 
@@ -48,7 +48,7 @@ public class ConnectionService {
   }
 
   @Transactional
-  public Connection update(Long connectionId, ConnectionUpdateRequest request) {
+  public Connection update(String connectionId, ConnectionUpdateRequest request) {
     Connection connection = findEntity(connectionId);
     ConnectionMapper.applyUpdate(connection, request);
     if (request.projectId() != null) {
@@ -64,27 +64,27 @@ public class ConnectionService {
   }
 
   @Transactional
-  public void delete(Long connectionId) {
+  public void delete(String connectionId) {
     Connection connection = findEntity(connectionId);
     connectionJpaRepository.delete(connection);
   }
 
-  private Connection findEntity(Long connectionId) {
+  private Connection findEntity(String connectionId) {
     return connectionJpaRepository.findById(connectionId)
         .orElseThrow(() -> new EntityNotFoundException("Connection not found: " + connectionId));
   }
 
-  private Project findProject(Long projectId) {
+  private Project findProject(String projectId) {
     return projectJpaRepository.findById(projectId)
         .orElseThrow(() -> new EntityNotFoundException("Project not found: " + projectId));
   }
 
-  private System findSystem(Long systemId) {
+  private System findSystem(String systemId) {
     return systemJpaRepository.findById(systemId)
         .orElseThrow(() -> new EntityNotFoundException("System not found: " + systemId));
   }
 
-  private User findUser(Long userId) {
+  private User findUser(String userId) {
     return userJpaRepository.findById(userId)
         .orElseThrow(() -> new EntityNotFoundException("User not found: " + userId));
   }

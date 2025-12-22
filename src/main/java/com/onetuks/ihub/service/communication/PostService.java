@@ -35,7 +35,7 @@ public class PostService {
   }
 
   @Transactional(readOnly = true)
-  public Post getById(Long postId) {
+  public Post getById(String postId) {
     return findEntity(postId);
   }
 
@@ -45,29 +45,29 @@ public class PostService {
   }
 
   @Transactional
-  public Post update(Long postId, PostUpdateRequest request) {
+  public Post update(String postId, PostUpdateRequest request) {
     Post post = findEntity(postId);
     PostMapper.applyUpdate(post, request);
     return post;
   }
 
   @Transactional
-  public void delete(Long postId) {
+  public void delete(String postId) {
     Post post = findEntity(postId);
     postJpaRepository.delete(post);
   }
 
-  private Post findEntity(Long postId) {
+  private Post findEntity(String postId) {
     return postJpaRepository.findById(postId)
         .orElseThrow(() -> new EntityNotFoundException("Post not found: " + postId));
   }
 
-  private Project findProject(Long projectId) {
+  private Project findProject(String projectId) {
     return projectJpaRepository.findById(projectId)
         .orElseThrow(() -> new EntityNotFoundException("Project not found: " + projectId));
   }
 
-  private User findUser(Long userId) {
+  private User findUser(String userId) {
     return userJpaRepository.findById(userId)
         .orElseThrow(() -> new EntityNotFoundException("User not found: " + userId));
   }

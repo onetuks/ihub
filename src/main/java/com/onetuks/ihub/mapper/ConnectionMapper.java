@@ -34,6 +34,7 @@ public final class ConnectionMapper {
 
   public static void applyCreate(Connection connection, ConnectionCreateRequest request) {
     LocalDateTime now = LocalDateTime.now();
+    connection.setConnectionId(UUIDProvider.provideUUID(Connection.TABLE_NAME));
     connection.setName(request.name());
     connection.setProtocol(request.protocol());
     connection.setHost(request.host());

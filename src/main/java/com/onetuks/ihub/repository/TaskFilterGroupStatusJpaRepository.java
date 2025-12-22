@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TaskFilterGroupStatusJpaRepository
-    extends JpaRepository<TaskFilterGroupStatus, Long> {
+    extends JpaRepository<TaskFilterGroupStatus, String> {
 }

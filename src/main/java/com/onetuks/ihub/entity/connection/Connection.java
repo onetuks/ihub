@@ -20,11 +20,13 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 @Entity
-@Table(name = "connections")
+@Table(name = Connection.TABLE_NAME)
 @Getter
 @Setter
 @RequiredArgsConstructor
 public class Connection {
+
+  public static final String TABLE_NAME = "connections";
 
   @Id
   @Column(name = "connection_id", nullable = false)

@@ -35,7 +35,7 @@ public class FeedItemService {
   }
 
   @Transactional(readOnly = true)
-  public FeedItem getById(Long feedItemId) {
+  public FeedItem getById(String feedItemId) {
     return findEntity(feedItemId);
   }
 
@@ -45,7 +45,7 @@ public class FeedItemService {
   }
 
   @Transactional
-  public FeedItem update(Long feedItemId, FeedItemUpdateRequest request) {
+  public FeedItem update(String feedItemId, FeedItemUpdateRequest request) {
     FeedItem feedItem = findEntity(feedItemId);
     FeedItemMapper.applyUpdate(feedItem, request);
     if (request.actorId() != null) {
@@ -55,22 +55,22 @@ public class FeedItemService {
   }
 
   @Transactional
-  public void delete(Long feedItemId) {
+  public void delete(String feedItemId) {
     FeedItem feedItem = findEntity(feedItemId);
     feedItemJpaRepository.delete(feedItem);
   }
 
-  private FeedItem findEntity(Long feedItemId) {
+  private FeedItem findEntity(String feedItemId) {
     return feedItemJpaRepository.findById(feedItemId)
         .orElseThrow(() -> new EntityNotFoundException("Feed item not found: " + feedItemId));
   }
 
-  private Project findProject(Long projectId) {
+  private Project findProject(String projectId) {
     return projectJpaRepository.findById(projectId)
         .orElseThrow(() -> new EntityNotFoundException("Project not found: " + projectId));
   }
 
-  private User findUser(Long userId) {
+  private User findUser(String userId) {
     return userJpaRepository.findById(userId)
         .orElseThrow(() -> new EntityNotFoundException("User not found: " + userId));
   }

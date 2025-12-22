@@ -40,7 +40,7 @@ public interface EventAttendeeRestController {
     @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping("/{eventAttendeeId}")
-  ResponseEntity<EventAttendeeResponse> getEventAttendee(@PathVariable Long eventAttendeeId);
+  ResponseEntity<EventAttendeeResponse> getEventAttendee(@PathVariable String eventAttendeeId);
 
   @Operation(summary = "List event attendees")
   @ApiResponses({
@@ -59,7 +59,7 @@ public interface EventAttendeeRestController {
   })
   @PutMapping("/{eventAttendeeId}")
   ResponseEntity<EventAttendeeResponse> updateEventAttendee(
-      @PathVariable Long eventAttendeeId,
+      @PathVariable String eventAttendeeId,
       @Valid @RequestBody EventAttendeeUpdateRequest request);
 
   @Operation(summary = "Delete event attendee")
@@ -70,5 +70,5 @@ public interface EventAttendeeRestController {
     @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @DeleteMapping("/{eventAttendeeId}")
-  ResponseEntity<Void> deleteEventAttendee(@PathVariable Long eventAttendeeId);
+  ResponseEntity<Void> deleteEventAttendee(@PathVariable String eventAttendeeId);
 }

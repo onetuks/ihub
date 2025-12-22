@@ -30,7 +30,7 @@ public class ProjectMemberRestControllerImpl implements ProjectMemberRestControl
   }
 
   @Override
-  public ResponseEntity<ProjectMemberResponse> getProjectMember(Long projectMemberId) {
+  public ResponseEntity<ProjectMemberResponse> getProjectMember(String projectMemberId) {
     return ResponseEntity.ok(
         ProjectMemberMapper.toResponse(projectMemberService.getById(projectMemberId)));
   }
@@ -43,13 +43,13 @@ public class ProjectMemberRestControllerImpl implements ProjectMemberRestControl
 
   @Override
   public ResponseEntity<ProjectMemberResponse> updateProjectMember(
-      Long projectMemberId, @Valid @RequestBody ProjectMemberUpdateRequest request) {
+      String projectMemberId, @Valid @RequestBody ProjectMemberUpdateRequest request) {
     return ResponseEntity.ok(
         ProjectMemberMapper.toResponse(projectMemberService.update(projectMemberId, request)));
   }
 
   @Override
-  public ResponseEntity<Void> deleteProjectMember(Long projectMemberId) {
+  public ResponseEntity<Void> deleteProjectMember(String projectMemberId) {
     projectMemberService.delete(projectMemberId);
     return ResponseEntity.noContent().build();
   }

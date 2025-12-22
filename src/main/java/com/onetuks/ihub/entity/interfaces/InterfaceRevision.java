@@ -17,11 +17,13 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 @Entity
-@Table(name = "interface_revisions")
+@Table(name = InterfaceRevision.TABLE_NAME)
 @Getter
 @Setter
 @RequiredArgsConstructor
 public class InterfaceRevision {
+
+  public static final String TABLE_NAME = "interface_revisions";
 
   @Id
   @Column(name = "revision_id", nullable = false)

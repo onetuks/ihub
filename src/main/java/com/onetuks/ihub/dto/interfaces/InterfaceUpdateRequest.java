@@ -6,15 +6,15 @@ import com.onetuks.ihub.entity.interfaces.SyncAsyncType;
 
 public record InterfaceUpdateRequest(
     String ifId,
-    Long sourceSystemId,
-    Long targetSystemId,
+    String sourceSystemId,
+    String targetSystemId,
     String module,
     InterfaceType interfaceType,
     String pattern,
     ChannelAdapter senderAdapter,
     ChannelAdapter receiverAdapter,
     SyncAsyncType sa,
-    Long statusId,
+    String statusId,
     String batchTimeLabel,
     String remark
 ) {

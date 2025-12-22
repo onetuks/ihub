@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface InterfaceStatusTransitionJpaRepository
-    extends JpaRepository<InterfaceStatusTransition, Long> {
+    extends JpaRepository<InterfaceStatusTransition, String> {
 }

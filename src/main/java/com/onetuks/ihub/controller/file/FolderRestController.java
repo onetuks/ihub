@@ -39,7 +39,7 @@ public interface FolderRestController {
     @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping("/{folderId}")
-  ResponseEntity<FolderResponse> getFolder(@PathVariable Long folderId);
+  ResponseEntity<FolderResponse> getFolder(@PathVariable String folderId);
 
   @Operation(summary = "List folders")
   @ApiResponses({
@@ -58,7 +58,7 @@ public interface FolderRestController {
   })
   @PutMapping("/{folderId}")
   ResponseEntity<FolderResponse> updateFolder(
-      @PathVariable Long folderId,
+      @PathVariable String folderId,
       @Valid @RequestBody FolderUpdateRequest request);
 
   @Operation(summary = "Delete folder")
@@ -69,5 +69,5 @@ public interface FolderRestController {
     @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @DeleteMapping("/{folderId}")
-  ResponseEntity<Void> deleteFolder(@PathVariable Long folderId);
+  ResponseEntity<Void> deleteFolder(@PathVariable String folderId);
 }

@@ -24,6 +24,7 @@ public final class InterfaceRevisionMapper {
 
   public static void applyCreate(InterfaceRevision revision,
       InterfaceRevisionCreateRequest request) {
+    revision.setRevisionId(UUIDProvider.provideUUID(InterfaceRevision.TABLE_NAME));
     revision.setVersionNo(request.versionNo());
     revision.setSnapshot(request.snapshot());
     revision.setReason(request.reason());

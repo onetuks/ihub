@@ -17,11 +17,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "feed_items")
+@Table(name = FeedItem.TABLE_NAME)
 @Getter
 @Setter
 @RequiredArgsConstructor
 public class FeedItem {
+
+  public static final String TABLE_NAME = "feed_items";
 
   @Id
   @Column(name = "feed_id", nullable = false)
@@ -43,7 +45,7 @@ public class FeedItem {
   private TargetType targetType;
 
   @Column(name = "target_id")
-  private Long targetId;
+  private String targetId;
 
   @Column(name = "summary")
   private String summary;

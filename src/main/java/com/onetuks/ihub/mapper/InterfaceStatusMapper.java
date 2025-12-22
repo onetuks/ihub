@@ -25,6 +25,7 @@ public final class InterfaceStatusMapper {
 
   public static void applyCreate(InterfaceStatus status, InterfaceStatusCreateRequest request) {
     LocalDateTime now = LocalDateTime.now();
+    status.setStatusId(UUIDProvider.provideUUID(InterfaceStatus.TABLE_NAME));
     status.setName(request.name());
     status.setCode(request.code());
     status.setSeqOrder(request.seqOrder());

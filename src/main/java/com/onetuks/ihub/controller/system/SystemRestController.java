@@ -39,7 +39,7 @@ public interface SystemRestController {
     @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping("/{systemId}")
-  ResponseEntity<SystemResponse> getSystem(@PathVariable Long systemId);
+  ResponseEntity<SystemResponse> getSystem(@PathVariable String systemId);
 
   @Operation(summary = "List systems")
   @ApiResponses({
@@ -58,7 +58,7 @@ public interface SystemRestController {
   })
   @PutMapping("/{systemId}")
   ResponseEntity<SystemResponse> updateSystem(
-      @PathVariable Long systemId,
+      @PathVariable String systemId,
       @Valid @RequestBody SystemUpdateRequest request);
 
   @Operation(summary = "Delete system")
@@ -69,5 +69,5 @@ public interface SystemRestController {
     @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @DeleteMapping("/{systemId}")
-  ResponseEntity<Void> deleteSystem(@PathVariable Long systemId);
+  ResponseEntity<Void> deleteSystem(@PathVariable String systemId);
 }

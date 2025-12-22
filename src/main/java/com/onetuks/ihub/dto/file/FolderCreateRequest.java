@@ -3,9 +3,9 @@ package com.onetuks.ihub.dto.file;
 import jakarta.validation.constraints.NotNull;
 
 public record FolderCreateRequest(
-    @NotNull Long projectId,
-    Long parentFolderId,
+    @NotNull String projectId,
+    String parentFolderId,
     String name,
-    Long createdById
+    String createdById
 ) {
 }

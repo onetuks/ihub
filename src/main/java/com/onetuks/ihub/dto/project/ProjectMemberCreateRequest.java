@@ -5,8 +5,8 @@ import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 public record ProjectMemberCreateRequest(
-    @NotNull Long projectId,
-    @NotNull Long userId,
+    @NotNull String projectId,
+    @NotNull String userId,
     @NotNull ProjectMemberRole role,
     LocalDateTime joinedAt,
     LocalDateTime leftAt

@@ -33,7 +33,7 @@ public class InterfaceStatusTransitionRestControllerImpl
 
   @Override
   public ResponseEntity<InterfaceStatusTransitionResponse> getInterfaceStatusTransition(
-      Long transitionId) {
+      String transitionId) {
     return ResponseEntity.ok(InterfaceStatusTransitionMapper.toResponse(
         interfaceStatusTransitionService.getById(transitionId)));
   }
@@ -48,13 +48,13 @@ public class InterfaceStatusTransitionRestControllerImpl
 
   @Override
   public ResponseEntity<InterfaceStatusTransitionResponse> updateInterfaceStatusTransition(
-      Long transitionId, @Valid @RequestBody InterfaceStatusTransitionUpdateRequest request) {
+      String transitionId, @Valid @RequestBody InterfaceStatusTransitionUpdateRequest request) {
     return ResponseEntity.ok(InterfaceStatusTransitionMapper.toResponse(
         interfaceStatusTransitionService.update(transitionId, request)));
   }
 
   @Override
-  public ResponseEntity<Void> deleteInterfaceStatusTransition(Long transitionId) {
+  public ResponseEntity<Void> deleteInterfaceStatusTransition(String transitionId) {
     interfaceStatusTransitionService.delete(transitionId);
     return ResponseEntity.noContent().build();
   }

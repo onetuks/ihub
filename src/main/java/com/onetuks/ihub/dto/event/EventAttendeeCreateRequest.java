@@ -4,8 +4,8 @@ import com.onetuks.ihub.entity.event.EventAttendeeStatus;
 import jakarta.validation.constraints.NotNull;
 
 public record EventAttendeeCreateRequest(
-    @NotNull Long eventId,
-    @NotNull Long userId,
+    @NotNull String eventId,
+    @NotNull String userId,
     Boolean isMandatory,
     EventAttendeeStatus attendStatus
 ) {

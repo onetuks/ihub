@@ -39,7 +39,7 @@ public interface FileRestController {
     @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping("/{fileId}")
-  ResponseEntity<FileResponse> getFile(@PathVariable Long fileId);
+  ResponseEntity<FileResponse> getFile(@PathVariable String fileId);
 
   @Operation(summary = "List files")
   @ApiResponses({
@@ -58,7 +58,7 @@ public interface FileRestController {
   })
   @PutMapping("/{fileId}")
   ResponseEntity<FileResponse> updateFile(
-      @PathVariable Long fileId,
+      @PathVariable String fileId,
       @Valid @RequestBody FileUpdateRequest request);
 
   @Operation(summary = "Delete file")
@@ -69,5 +69,5 @@ public interface FileRestController {
     @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @DeleteMapping("/{fileId}")
-  ResponseEntity<Void> deleteFile(@PathVariable Long fileId);
+  ResponseEntity<Void> deleteFile(@PathVariable String fileId);
 }

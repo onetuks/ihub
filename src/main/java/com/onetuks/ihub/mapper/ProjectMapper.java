@@ -28,6 +28,7 @@ public final class ProjectMapper {
 
   public static void applyCreate(Project project, ProjectCreateRequest request) {
     LocalDateTime now = LocalDateTime.now();
+    project.setProjectId(UUIDProvider.provideUUID(Project.TABLE_NAME));
     project.setTitle(request.title());
     project.setDescription(request.description());
     project.setStartDate(request.startDate());

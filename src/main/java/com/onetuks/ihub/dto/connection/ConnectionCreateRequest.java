@@ -5,8 +5,8 @@ import com.onetuks.ihub.entity.connection.Protocol;
 import jakarta.validation.constraints.NotNull;
 
 public record ConnectionCreateRequest(
-    @NotNull Long projectId,
-    @NotNull Long systemId,
+    @NotNull String projectId,
+    @NotNull String systemId,
     String name,
     Protocol protocol,
     String host,
@@ -17,7 +17,7 @@ public record ConnectionCreateRequest(
     String extraConfig,
     @NotNull ConnectionStatus status,
     String description,
-    @NotNull Long createdById,
-    @NotNull Long updatedById
+    @NotNull String createdById,
+    @NotNull String updatedById
 ) {
 }

@@ -21,6 +21,7 @@ public final class ProjectMemberMapper {
   }
 
   public static void applyCreate(ProjectMember projectMember, ProjectMemberCreateRequest request) {
+    projectMember.setProjectMemberId(UUIDProvider.provideUUID(ProjectMember.TABLE_NAME));
     projectMember.setRole(request.role());
     projectMember.setJoinedAt(request.joinedAt());
     projectMember.setLeftAt(request.leftAt());

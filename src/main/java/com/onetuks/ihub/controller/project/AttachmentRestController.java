@@ -40,7 +40,7 @@ public interface AttachmentRestController {
     @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping("/{attachmentId}")
-  ResponseEntity<AttachmentResponse> getAttachment(@PathVariable Long attachmentId);
+  ResponseEntity<AttachmentResponse> getAttachment(@PathVariable String attachmentId);
 
   @Operation(summary = "List attachments")
   @ApiResponses({
@@ -59,7 +59,7 @@ public interface AttachmentRestController {
   })
   @PutMapping("/{attachmentId}")
   ResponseEntity<AttachmentResponse> updateAttachment(
-      @PathVariable Long attachmentId,
+      @PathVariable String attachmentId,
       @Valid @RequestBody AttachmentUpdateRequest request);
 
   @Operation(summary = "Delete attachment")
@@ -70,5 +70,5 @@ public interface AttachmentRestController {
     @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @DeleteMapping("/{attachmentId}")
-  ResponseEntity<Void> deleteAttachment(@PathVariable Long attachmentId);
+  ResponseEntity<Void> deleteAttachment(@PathVariable String attachmentId);
 }

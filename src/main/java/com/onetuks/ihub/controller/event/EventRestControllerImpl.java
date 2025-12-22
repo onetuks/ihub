@@ -29,7 +29,7 @@ public class EventRestControllerImpl implements EventRestController {
   }
 
   @Override
-  public ResponseEntity<EventResponse> getEvent(@PathVariable Long eventId) {
+  public ResponseEntity<EventResponse> getEvent(@PathVariable String eventId) {
     return ResponseEntity.ok(EventMapper.toResponse(eventService.getById(eventId)));
   }
 
@@ -40,12 +40,12 @@ public class EventRestControllerImpl implements EventRestController {
 
   @Override
   public ResponseEntity<EventResponse> updateEvent(
-      @PathVariable Long eventId, @Valid @RequestBody EventUpdateRequest request) {
+      @PathVariable String eventId, @Valid @RequestBody EventUpdateRequest request) {
     return ResponseEntity.ok(EventMapper.toResponse(eventService.update(eventId, request)));
   }
 
   @Override
-  public ResponseEntity<Void> deleteEvent(@PathVariable Long eventId) {
+  public ResponseEntity<Void> deleteEvent(@PathVariable String eventId) {
     eventService.delete(eventId);
     return ResponseEntity.noContent().build();
   }

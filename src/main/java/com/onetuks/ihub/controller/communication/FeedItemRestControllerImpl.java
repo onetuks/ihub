@@ -29,7 +29,7 @@ public class FeedItemRestControllerImpl implements FeedItemRestController {
   }
 
   @Override
-  public ResponseEntity<FeedItemResponse> getFeedItem(@PathVariable Long feedItemId) {
+  public ResponseEntity<FeedItemResponse> getFeedItem(@PathVariable String feedItemId) {
     return ResponseEntity.ok(FeedItemMapper.toResponse(feedItemService.getById(feedItemId)));
   }
 
@@ -40,12 +40,12 @@ public class FeedItemRestControllerImpl implements FeedItemRestController {
 
   @Override
   public ResponseEntity<FeedItemResponse> updateFeedItem(
-      @PathVariable Long feedItemId, @Valid @RequestBody FeedItemUpdateRequest request) {
+      @PathVariable String feedItemId, @Valid @RequestBody FeedItemUpdateRequest request) {
     return ResponseEntity.ok(FeedItemMapper.toResponse(feedItemService.update(feedItemId, request)));
   }
 
   @Override
-  public ResponseEntity<Void> deleteFeedItem(@PathVariable Long feedItemId) {
+  public ResponseEntity<Void> deleteFeedItem(@PathVariable String feedItemId) {
     feedItemService.delete(feedItemId);
     return ResponseEntity.noContent().build();
   }

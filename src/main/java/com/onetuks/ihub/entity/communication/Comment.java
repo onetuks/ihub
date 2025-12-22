@@ -17,11 +17,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "comments")
+@Table(name = Comment.TABLE_NAME)
 @Getter
 @Setter
 @RequiredArgsConstructor
 public class Comment {
+
+  public static final String TABLE_NAME = "comments";
 
   @Id
   @Column(name = "comment_id", nullable = false)
@@ -40,7 +42,7 @@ public class Comment {
   private TargetType targetType;
 
   @Column(name = "target_id")
-  private Long targetId;
+  private String targetId;
 
   @Column(name = "content")
   private String content;

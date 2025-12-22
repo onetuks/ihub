@@ -4,8 +4,8 @@ import com.onetuks.ihub.entity.communication.TargetType;
 
 public record MentionUpdateRequest(
     TargetType targetType,
-    Long targetId,
-    Long mentionedUserId,
-    Long createdById
+    String targetId,
+    String mentionedUserId,
+    String createdById
 ) {
 }

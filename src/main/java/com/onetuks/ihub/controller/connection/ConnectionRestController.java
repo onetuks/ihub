@@ -40,7 +40,7 @@ public interface ConnectionRestController {
     @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping("/{connectionId}")
-  ResponseEntity<ConnectionResponse> getConnection(@PathVariable Long connectionId);
+  ResponseEntity<ConnectionResponse> getConnection(@PathVariable String connectionId);
 
   @Operation(summary = "List connections")
   @ApiResponses({
@@ -59,7 +59,7 @@ public interface ConnectionRestController {
   })
   @PutMapping("/{connectionId}")
   ResponseEntity<ConnectionResponse> updateConnection(
-      @PathVariable Long connectionId,
+      @PathVariable String connectionId,
       @Valid @RequestBody ConnectionUpdateRequest request);
 
   @Operation(summary = "Delete connection")
@@ -70,5 +70,5 @@ public interface ConnectionRestController {
     @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @DeleteMapping("/{connectionId}")
-  ResponseEntity<Void> deleteConnection(@PathVariable Long connectionId);
+  ResponseEntity<Void> deleteConnection(@PathVariable String connectionId);
 }

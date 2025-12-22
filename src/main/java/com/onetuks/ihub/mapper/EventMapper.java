@@ -28,6 +28,7 @@ public final class EventMapper {
 
   public static void applyCreate(Event event, EventCreateRequest request) {
     LocalDateTime now = LocalDateTime.now();
+    event.setEventId(UUIDProvider.provideUUID(Event.TABLE_NAME));
     event.setTitle(request.title());
     event.setStartDatetime(request.startDatetime());
     event.setEndDatetime(request.endDatetime());

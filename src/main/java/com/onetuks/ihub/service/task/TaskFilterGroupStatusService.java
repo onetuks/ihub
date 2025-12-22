@@ -29,7 +29,7 @@ public class TaskFilterGroupStatusService {
   }
 
   @Transactional(readOnly = true)
-  public TaskFilterGroupStatus getById(Long statusId) {
+  public TaskFilterGroupStatus getById(String statusId) {
     return findEntity(statusId);
   }
 
@@ -40,25 +40,25 @@ public class TaskFilterGroupStatusService {
 
   @Transactional
   public TaskFilterGroupStatus update(
-      Long statusId, TaskFilterGroupStatusUpdateRequest request) {
+      String statusId, TaskFilterGroupStatusUpdateRequest request) {
     TaskFilterGroupStatus status = findEntity(statusId);
     TaskFilterGroupStatusMapper.applyUpdate(status, request);
     return status;
   }
 
   @Transactional
-  public void delete(Long statusId) {
+  public void delete(String statusId) {
     TaskFilterGroupStatus status = findEntity(statusId);
     taskFilterGroupStatusJpaRepository.delete(status);
   }
 
-  private TaskFilterGroupStatus findEntity(Long statusId) {
+  private TaskFilterGroupStatus findEntity(String statusId) {
     return taskFilterGroupStatusJpaRepository.findById(statusId)
         .orElseThrow(() -> new EntityNotFoundException(
             "Task filter group status not found: " + statusId));
   }
 
-  private TaskFilterGroup findGroup(Long groupId) {
+  private TaskFilterGroup findGroup(String groupId) {
     return taskFilterGroupJpaRepository.findById(groupId)
         .orElseThrow(() -> new EntityNotFoundException(
             "Task filter group not found: " + groupId));

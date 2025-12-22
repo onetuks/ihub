@@ -39,7 +39,7 @@ public interface MentionRestController {
     @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping("/{mentionId}")
-  ResponseEntity<MentionResponse> getMention(@PathVariable Long mentionId);
+  ResponseEntity<MentionResponse> getMention(@PathVariable String mentionId);
 
   @Operation(summary = "List mentions")
   @ApiResponses({
@@ -58,7 +58,7 @@ public interface MentionRestController {
   })
   @PutMapping("/{mentionId}")
   ResponseEntity<MentionResponse> updateMention(
-      @PathVariable Long mentionId,
+      @PathVariable String mentionId,
       @Valid @RequestBody MentionUpdateRequest request);
 
   @Operation(summary = "Delete mention")
@@ -69,5 +69,5 @@ public interface MentionRestController {
     @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @DeleteMapping("/{mentionId}")
-  ResponseEntity<Void> deleteMention(@PathVariable Long mentionId);
+  ResponseEntity<Void> deleteMention(@PathVariable String mentionId);
 }

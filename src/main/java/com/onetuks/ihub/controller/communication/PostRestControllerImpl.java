@@ -28,7 +28,7 @@ public class PostRestControllerImpl implements PostRestController {
   }
 
   @Override
-  public ResponseEntity<PostResponse> getPost(@PathVariable Long postId) {
+  public ResponseEntity<PostResponse> getPost(@PathVariable String postId) {
     return ResponseEntity.ok(PostMapper.toResponse(postService.getById(postId)));
   }
 
@@ -39,12 +39,12 @@ public class PostRestControllerImpl implements PostRestController {
 
   @Override
   public ResponseEntity<PostResponse> updatePost(
-      @PathVariable Long postId, @Valid @RequestBody PostUpdateRequest request) {
+      @PathVariable String postId, @Valid @RequestBody PostUpdateRequest request) {
     return ResponseEntity.ok(PostMapper.toResponse(postService.update(postId, request)));
   }
 
   @Override
-  public ResponseEntity<Void> deletePost(@PathVariable Long postId) {
+  public ResponseEntity<Void> deletePost(@PathVariable String postId) {
     postService.delete(postId);
     return ResponseEntity.noContent().build();
   }

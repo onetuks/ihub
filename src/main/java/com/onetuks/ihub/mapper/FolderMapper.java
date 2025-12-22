@@ -24,6 +24,7 @@ public final class FolderMapper {
 
   public static void applyCreate(Folder folder, FolderCreateRequest request) {
     LocalDateTime now = LocalDateTime.now();
+    folder.setFolderId(UUIDProvider.provideUUID(Folder.TABLE_NAME));
     folder.setName(request.name());
     folder.setCreatedAt(now);
     folder.setUpdatedAt(now);

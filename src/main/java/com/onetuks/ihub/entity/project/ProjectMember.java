@@ -17,12 +17,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "project_members", uniqueConstraints = {
+@Table(name = ProjectMember.TABLE_NAME, uniqueConstraints = {
     @UniqueConstraint(name = "unq_project_user", columnNames = {"project_id", "user_id"})})
 @Getter
 @Setter
 @RequiredArgsConstructor
 public class ProjectMember {
+
+  public static final String TABLE_NAME = "project_members";
 
   @Id
   @Column(name = "project_member_id", nullable = false)

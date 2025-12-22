@@ -39,7 +39,7 @@ public interface PostRestController {
     @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping("/{postId}")
-  ResponseEntity<PostResponse> getPost(@PathVariable Long postId);
+  ResponseEntity<PostResponse> getPost(@PathVariable String postId);
 
   @Operation(summary = "List posts")
   @ApiResponses({
@@ -58,7 +58,7 @@ public interface PostRestController {
   })
   @PutMapping("/{postId}")
   ResponseEntity<PostResponse> updatePost(
-      @PathVariable Long postId,
+      @PathVariable String postId,
       @Valid @RequestBody PostUpdateRequest request);
 
   @Operation(summary = "Delete post")
@@ -69,5 +69,5 @@ public interface PostRestController {
     @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @DeleteMapping("/{postId}")
-  ResponseEntity<Void> deletePost(@PathVariable Long postId);
+  ResponseEntity<Void> deletePost(@PathVariable String postId);
 }

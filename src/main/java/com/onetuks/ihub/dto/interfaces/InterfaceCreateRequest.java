@@ -6,19 +6,19 @@ import com.onetuks.ihub.entity.interfaces.SyncAsyncType;
 import jakarta.validation.constraints.NotNull;
 
 public record InterfaceCreateRequest(
-    @NotNull Long projectId,
+    @NotNull String projectId,
     String ifId,
-    @NotNull Long sourceSystemId,
-    @NotNull Long targetSystemId,
+    @NotNull String sourceSystemId,
+    @NotNull String targetSystemId,
     String module,
     @NotNull InterfaceType interfaceType,
     String pattern,
     @NotNull ChannelAdapter senderAdapter,
     @NotNull ChannelAdapter receiverAdapter,
     @NotNull SyncAsyncType sa,
-    @NotNull Long statusId,
+    @NotNull String statusId,
     String batchTimeLabel,
     String remark,
-    @NotNull Long createdById
+    @NotNull String createdById
 ) {
 }

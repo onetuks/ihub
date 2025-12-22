@@ -4,9 +4,9 @@ import jakarta.validation.constraints.NotNull;
 import java.util.Map;
 
 public record InterfaceRevisionCreateRequest(
-    @NotNull Long interfaceId,
+    @NotNull String interfaceId,
     @NotNull Integer versionNo,
-    @NotNull Long changedById,
+    @NotNull String changedById,
     Map<String, String> snapshot,
     String reason
 ) {

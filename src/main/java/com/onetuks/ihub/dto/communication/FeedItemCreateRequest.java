@@ -4,11 +4,11 @@ import com.onetuks.ihub.entity.communication.TargetType;
 import jakarta.validation.constraints.NotNull;
 
 public record FeedItemCreateRequest(
-    @NotNull Long projectId,
+    @NotNull String projectId,
     String eventType,
-    Long actorId,
+    String actorId,
     TargetType targetType,
-    Long targetId,
+    String targetId,
     String summary
 ) {
 }

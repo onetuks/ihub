@@ -29,7 +29,7 @@ public class CommentRestControllerImpl implements CommentRestController {
   }
 
   @Override
-  public ResponseEntity<CommentResponse> getComment(@PathVariable Long commentId) {
+  public ResponseEntity<CommentResponse> getComment(@PathVariable String commentId) {
     return ResponseEntity.ok(CommentMapper.toResponse(commentService.getById(commentId)));
   }
 
@@ -40,12 +40,12 @@ public class CommentRestControllerImpl implements CommentRestController {
 
   @Override
   public ResponseEntity<CommentResponse> updateComment(
-      @PathVariable Long commentId, @Valid @RequestBody CommentUpdateRequest request) {
+      @PathVariable String commentId, @Valid @RequestBody CommentUpdateRequest request) {
     return ResponseEntity.ok(CommentMapper.toResponse(commentService.update(commentId, request)));
   }
 
   @Override
-  public ResponseEntity<Void> deleteComment(@PathVariable Long commentId) {
+  public ResponseEntity<Void> deleteComment(@PathVariable String commentId) {
     commentService.delete(commentId);
     return ResponseEntity.noContent().build();
   }

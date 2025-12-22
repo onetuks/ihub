@@ -41,7 +41,7 @@ public interface InterfaceStatusHistoryRestController {
   })
   @GetMapping("/{historyId}")
   ResponseEntity<InterfaceStatusHistoryResponse> getInterfaceStatusHistory(
-      @PathVariable Long historyId);
+      @PathVariable String historyId);
 
   @Operation(summary = "List interface status histories")
   @ApiResponses({
@@ -60,7 +60,7 @@ public interface InterfaceStatusHistoryRestController {
   })
   @PutMapping("/{historyId}")
   ResponseEntity<InterfaceStatusHistoryResponse> updateInterfaceStatusHistory(
-      @PathVariable Long historyId,
+      @PathVariable String historyId,
       @Valid @RequestBody InterfaceStatusHistoryUpdateRequest request);
 
   @Operation(summary = "Delete interface status history")
@@ -71,5 +71,5 @@ public interface InterfaceStatusHistoryRestController {
     @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @DeleteMapping("/{historyId}")
-  ResponseEntity<Void> deleteInterfaceStatusHistory(@PathVariable Long historyId);
+  ResponseEntity<Void> deleteInterfaceStatusHistory(@PathVariable String historyId);
 }

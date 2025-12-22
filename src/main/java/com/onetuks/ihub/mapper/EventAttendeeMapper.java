@@ -20,6 +20,7 @@ public final class EventAttendeeMapper {
   }
 
   public static void applyCreate(EventAttendee eventAttendee, EventAttendeeCreateRequest request) {
+    eventAttendee.setEventAttendeeId(UUIDProvider.provideUUID(EventAttendee.TABLE_NAME));
     eventAttendee.setIsMandatory(request.isMandatory());
     eventAttendee.setAttendStatus(request.attendStatus());
   }

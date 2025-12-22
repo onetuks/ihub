@@ -29,7 +29,7 @@ public class SystemRestControllerImpl implements SystemRestController {
   }
 
   @Override
-  public ResponseEntity<SystemResponse> getSystem(@PathVariable Long systemId) {
+  public ResponseEntity<SystemResponse> getSystem(@PathVariable String systemId) {
     return ResponseEntity.ok(SystemMapper.toResponse(systemService.getById(systemId)));
   }
 
@@ -40,12 +40,12 @@ public class SystemRestControllerImpl implements SystemRestController {
 
   @Override
   public ResponseEntity<SystemResponse> updateSystem(
-      @PathVariable Long systemId, @Valid @RequestBody SystemUpdateRequest request) {
+      @PathVariable String systemId, @Valid @RequestBody SystemUpdateRequest request) {
     return ResponseEntity.ok(SystemMapper.toResponse(systemService.update(systemId, request)));
   }
 
   @Override
-  public ResponseEntity<Void> deleteSystem(@PathVariable Long systemId) {
+  public ResponseEntity<Void> deleteSystem(@PathVariable String systemId) {
     systemService.delete(systemId);
     return ResponseEntity.noContent().build();
   }

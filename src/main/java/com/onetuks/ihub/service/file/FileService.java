@@ -41,7 +41,7 @@ public class FileService {
   }
 
   @Transactional(readOnly = true)
-  public File getById(Long fileId) {
+  public File getById(String fileId) {
     return findEntity(fileId);
   }
 
@@ -51,7 +51,7 @@ public class FileService {
   }
 
   @Transactional
-  public File update(Long fileId, FileUpdateRequest request) {
+  public File update(String fileId, FileUpdateRequest request) {
     File file = findEntity(fileId);
     FileMapper.applyUpdate(file, request);
     if (request.folderId() != null) {
@@ -64,27 +64,27 @@ public class FileService {
   }
 
   @Transactional
-  public void delete(Long fileId) {
+  public void delete(String fileId) {
     File file = findEntity(fileId);
     fileJpaRepository.delete(file);
   }
 
-  private File findEntity(Long fileId) {
+  private File findEntity(String fileId) {
     return fileJpaRepository.findById(fileId)
         .orElseThrow(() -> new EntityNotFoundException("File not found: " + fileId));
   }
 
-  private Project findProject(Long projectId) {
+  private Project findProject(String projectId) {
     return projectJpaRepository.findById(projectId)
         .orElseThrow(() -> new EntityNotFoundException("Project not found: " + projectId));
   }
 
-  private Folder findFolder(Long folderId) {
+  private Folder findFolder(String folderId) {
     return folderJpaRepository.findById(folderId)
         .orElseThrow(() -> new EntityNotFoundException("Folder not found: " + folderId));
   }
 
-  private User findUser(Long userId) {
+  private User findUser(String userId) {
     return userJpaRepository.findById(userId)
         .orElseThrow(() -> new EntityNotFoundException("User not found: " + userId));
   }

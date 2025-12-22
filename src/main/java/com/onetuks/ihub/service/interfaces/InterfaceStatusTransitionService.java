@@ -39,7 +39,7 @@ public class InterfaceStatusTransitionService {
   }
 
   @Transactional(readOnly = true)
-  public InterfaceStatusTransition getById(Long transitionId) {
+  public InterfaceStatusTransition getById(String transitionId) {
     return findEntity(transitionId);
   }
 
@@ -50,7 +50,7 @@ public class InterfaceStatusTransitionService {
 
   @Transactional
   public InterfaceStatusTransition update(
-      Long transitionId, InterfaceStatusTransitionUpdateRequest request) {
+      String transitionId, InterfaceStatusTransitionUpdateRequest request) {
     InterfaceStatusTransition transition = findEntity(transitionId);
     InterfaceStatusTransitionMapper.applyUpdate(transition, request);
     if (request.fromStatusId() != null) {
@@ -63,29 +63,29 @@ public class InterfaceStatusTransitionService {
   }
 
   @Transactional
-  public void delete(Long transitionId) {
+  public void delete(String transitionId) {
     InterfaceStatusTransition transition = findEntity(transitionId);
     interfaceStatusTransitionJpaRepository.delete(transition);
   }
 
-  private InterfaceStatusTransition findEntity(Long transitionId) {
+  private InterfaceStatusTransition findEntity(String transitionId) {
     return interfaceStatusTransitionJpaRepository.findById(transitionId)
         .orElseThrow(() -> new EntityNotFoundException(
             "Interface status transition not found: " + transitionId));
   }
 
-  private Project findProject(Long projectId) {
+  private Project findProject(String projectId) {
     return projectJpaRepository.findById(projectId)
         .orElseThrow(() -> new EntityNotFoundException("Project not found: " + projectId));
   }
 
-  private InterfaceStatus findStatus(Long statusId) {
+  private InterfaceStatus findStatus(String statusId) {
     return interfaceStatusJpaRepository.findById(statusId)
         .orElseThrow(() -> new EntityNotFoundException(
             "Interface status not found: " + statusId));
   }
 
-  private User findUser(Long userId) {
+  private User findUser(String userId) {
     return userJpaRepository.findById(userId)
         .orElseThrow(() -> new EntityNotFoundException("User not found: " + userId));
   }

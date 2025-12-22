@@ -17,11 +17,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "mentions")
+@Table(name = Mention.TABLE_NAME)
 @Getter
 @Setter
 @RequiredArgsConstructor
 public class Mention {
+
+  public static final String TABLE_NAME = "mentions";
 
   @Id
   @Column(name = "mention_id", nullable = false)
@@ -36,7 +38,7 @@ public class Mention {
   private TargetType targetType;
 
   @Column(name = "target_id")
-  private Long targetId;
+  private String targetId;
 
   @ManyToOne(fetch = FetchType.LAZY, optional = false)
   @JoinColumn(

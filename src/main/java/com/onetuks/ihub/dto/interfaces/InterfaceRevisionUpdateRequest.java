@@ -4,7 +4,7 @@ import java.util.Map;
 
 public record InterfaceRevisionUpdateRequest(
     Integer versionNo,
-    Long changedById,
+    String changedById,
     Map<String, String> snapshot,
     String reason
 ) {

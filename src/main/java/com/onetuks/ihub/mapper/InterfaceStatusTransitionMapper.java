@@ -26,6 +26,7 @@ public final class InterfaceStatusTransitionMapper {
 
   public static void applyCreate(
       InterfaceStatusTransition transition, InterfaceStatusTransitionCreateRequest request) {
+    transition.setTransitionId(UUIDProvider.provideUUID(InterfaceStatusTransition.TABLE_NAME));
     transition.setAllowedRole(request.allowedRole());
     transition.setStatus(request.status());
     transition.setCreatedAt(LocalDateTime.now());

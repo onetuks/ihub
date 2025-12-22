@@ -27,6 +27,7 @@ public final class FileMapper {
   }
 
   public static void applyCreate(File file, FileCreateRequest request) {
+    file.setFileId(UUIDProvider.provideUUID(File.TABLE_NAME));
     file.setStatus(request.status());
     file.setOriginalName(request.originalName());
     file.setStoredName(request.storedName());

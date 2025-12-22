@@ -50,7 +50,7 @@ public class TaskService {
   }
 
   @Transactional(readOnly = true)
-  public Task getById(Long taskId) {
+  public Task getById(String taskId) {
     return findEntity(taskId);
   }
 
@@ -60,7 +60,7 @@ public class TaskService {
   }
 
   @Transactional
-  public Task update(Long taskId, TaskUpdateRequest request) {
+  public Task update(String taskId, TaskUpdateRequest request) {
     Task task = findEntity(taskId);
     TaskMapper.applyUpdate(task, request);
     if (request.parentTaskId() != null) {
@@ -79,31 +79,31 @@ public class TaskService {
   }
 
   @Transactional
-  public void delete(Long taskId) {
+  public void delete(String taskId) {
     Task task = findEntity(taskId);
     taskJpaRepository.delete(task);
   }
 
-  private Task findEntity(Long taskId) {
+  private Task findEntity(String taskId) {
     return taskJpaRepository.findById(taskId)
         .orElseThrow(() -> new EntityNotFoundException("Task not found: " + taskId));
   }
 
-  private Task findTask(Long taskId) {
+  private Task findTask(String taskId) {
     return findEntity(taskId);
   }
 
-  private Project findProject(Long projectId) {
+  private Project findProject(String projectId) {
     return projectJpaRepository.findById(projectId)
         .orElseThrow(() -> new EntityNotFoundException("Project not found: " + projectId));
   }
 
-  private Interface findInterface(Long interfaceId) {
+  private Interface findInterface(String interfaceId) {
     return interfaceJpaRepository.findById(interfaceId)
         .orElseThrow(() -> new EntityNotFoundException("Interface not found: " + interfaceId));
   }
 
-  private User findUser(Long userId) {
+  private User findUser(String userId) {
     return userJpaRepository.findById(userId)
         .orElseThrow(() -> new EntityNotFoundException("User not found: " + userId));
   }

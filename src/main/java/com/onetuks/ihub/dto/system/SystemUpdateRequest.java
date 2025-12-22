@@ -10,6 +10,6 @@ public record SystemUpdateRequest(
     String description,
     SystemType systemType,
     SystemEnvironment environment,
-    Long updatedById
+    String updatedById
 ) {
 }

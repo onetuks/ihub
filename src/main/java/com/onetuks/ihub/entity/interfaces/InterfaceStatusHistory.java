@@ -15,11 +15,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "interface_status_histories")
+@Table(name = InterfaceStatusHistory.TABLE_NAME)
 @Getter
 @Setter
 @RequiredArgsConstructor
 public class InterfaceStatusHistory {
+
+  public static final String TABLE_NAME = "interface_status_histories";
 
   @Id
   @Column(name = "history_id", nullable = false)

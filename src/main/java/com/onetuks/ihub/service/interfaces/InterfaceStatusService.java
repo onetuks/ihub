@@ -29,7 +29,7 @@ public class InterfaceStatusService {
   }
 
   @Transactional(readOnly = true)
-  public InterfaceStatus getById(Long statusId) {
+  public InterfaceStatus getById(String statusId) {
     return findEntity(statusId);
   }
 
@@ -39,24 +39,24 @@ public class InterfaceStatusService {
   }
 
   @Transactional
-  public InterfaceStatus update(Long statusId, InterfaceStatusUpdateRequest request) {
+  public InterfaceStatus update(String statusId, InterfaceStatusUpdateRequest request) {
     InterfaceStatus status = findEntity(statusId);
     InterfaceStatusMapper.applyUpdate(status, request);
     return status;
   }
 
   @Transactional
-  public void delete(Long statusId) {
+  public void delete(String statusId) {
     InterfaceStatus status = findEntity(statusId);
     interfaceStatusJpaRepository.delete(status);
   }
 
-  private InterfaceStatus findEntity(Long statusId) {
+  private InterfaceStatus findEntity(String statusId) {
     return interfaceStatusJpaRepository.findById(statusId)
         .orElseThrow(() -> new EntityNotFoundException("Interface status not found: " + statusId));
   }
 
-  private Project findProject(Long projectId) {
+  private Project findProject(String projectId) {
     return projectJpaRepository.findById(projectId)
         .orElseThrow(() -> new EntityNotFoundException("Project not found: " + projectId));
   }

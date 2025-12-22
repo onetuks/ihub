@@ -30,7 +30,7 @@ public class TaskFilterGroupRestControllerImpl implements TaskFilterGroupRestCon
   }
 
   @Override
-  public ResponseEntity<TaskFilterGroupResponse> getTaskFilterGroup(@PathVariable Long groupId) {
+  public ResponseEntity<TaskFilterGroupResponse> getTaskFilterGroup(@PathVariable String groupId) {
     return ResponseEntity.ok(TaskFilterGroupMapper.toResponse(taskFilterGroupService.getById(groupId)));
   }
 
@@ -42,13 +42,13 @@ public class TaskFilterGroupRestControllerImpl implements TaskFilterGroupRestCon
 
   @Override
   public ResponseEntity<TaskFilterGroupResponse> updateTaskFilterGroup(
-      @PathVariable Long groupId, @Valid @RequestBody TaskFilterGroupUpdateRequest request) {
+      @PathVariable String groupId, @Valid @RequestBody TaskFilterGroupUpdateRequest request) {
     return ResponseEntity.ok(
         TaskFilterGroupMapper.toResponse(taskFilterGroupService.update(groupId, request)));
   }
 
   @Override
-  public ResponseEntity<Void> deleteTaskFilterGroup(@PathVariable Long groupId) {
+  public ResponseEntity<Void> deleteTaskFilterGroup(@PathVariable String groupId) {
     taskFilterGroupService.delete(groupId);
     return ResponseEntity.noContent().build();
   }

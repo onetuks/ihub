@@ -23,6 +23,7 @@ public final class MentionMapper {
   }
 
   public static void applyCreate(Mention mention, MentionCreateRequest request) {
+    mention.setMentionId(UUIDProvider.provideUUID(Mention.TABLE_NAME));
     mention.setTargetType(request.targetType());
     mention.setTargetId(request.targetId());
     mention.setCreatedAt(LocalDateTime.now());

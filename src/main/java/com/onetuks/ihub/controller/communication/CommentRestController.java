@@ -40,7 +40,7 @@ public interface CommentRestController {
     @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping("/{commentId}")
-  ResponseEntity<CommentResponse> getComment(@PathVariable Long commentId);
+  ResponseEntity<CommentResponse> getComment(@PathVariable String commentId);
 
   @Operation(summary = "List comments")
   @ApiResponses({
@@ -59,7 +59,7 @@ public interface CommentRestController {
   })
   @PutMapping("/{commentId}")
   ResponseEntity<CommentResponse> updateComment(
-      @PathVariable Long commentId,
+      @PathVariable String commentId,
       @Valid @RequestBody CommentUpdateRequest request);
 
   @Operation(summary = "Delete comment")
@@ -70,5 +70,5 @@ public interface CommentRestController {
     @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @DeleteMapping("/{commentId}")
-  ResponseEntity<Void> deleteComment(@PathVariable Long commentId);
+  ResponseEntity<Void> deleteComment(@PathVariable String commentId);
 }

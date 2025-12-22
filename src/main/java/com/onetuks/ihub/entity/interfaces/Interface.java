@@ -19,11 +19,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "interfaces")
+@Table(name = Interface.TABLE_NAME)
 @Getter
 @Setter
 @RequiredArgsConstructor
 public class Interface {
+
+  public static final String TABLE_NAME = "interfaces";
 
   @Id
   @Column(name = "interface_id", nullable = false)

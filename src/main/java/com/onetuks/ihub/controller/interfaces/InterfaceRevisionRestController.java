@@ -40,7 +40,7 @@ public interface InterfaceRevisionRestController {
     @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping("/{revisionId}")
-  ResponseEntity<InterfaceRevisionResponse> getInterfaceRevision(@PathVariable Long revisionId);
+  ResponseEntity<InterfaceRevisionResponse> getInterfaceRevision(@PathVariable String revisionId);
 
   @Operation(summary = "List interface revisions")
   @ApiResponses({
@@ -59,7 +59,7 @@ public interface InterfaceRevisionRestController {
   })
   @PutMapping("/{revisionId}")
   ResponseEntity<InterfaceRevisionResponse> updateInterfaceRevision(
-      @PathVariable Long revisionId,
+      @PathVariable String revisionId,
       @Valid @RequestBody InterfaceRevisionUpdateRequest request);
 
   @Operation(summary = "Delete interface revision")
@@ -70,5 +70,5 @@ public interface InterfaceRevisionRestController {
     @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @DeleteMapping("/{revisionId}")
-  ResponseEntity<Void> deleteInterfaceRevision(@PathVariable Long revisionId);
+  ResponseEntity<Void> deleteInterfaceRevision(@PathVariable String revisionId);
 }

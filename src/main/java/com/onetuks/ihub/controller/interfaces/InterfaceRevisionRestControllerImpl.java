@@ -30,7 +30,7 @@ public class InterfaceRevisionRestControllerImpl implements InterfaceRevisionRes
   }
 
   @Override
-  public ResponseEntity<InterfaceRevisionResponse> getInterfaceRevision(Long revisionId) {
+  public ResponseEntity<InterfaceRevisionResponse> getInterfaceRevision(String revisionId) {
     return ResponseEntity.ok(
         InterfaceRevisionMapper.toResponse(interfaceRevisionService.getById(revisionId)));
   }
@@ -45,13 +45,13 @@ public class InterfaceRevisionRestControllerImpl implements InterfaceRevisionRes
 
   @Override
   public ResponseEntity<InterfaceRevisionResponse> updateInterfaceRevision(
-      Long revisionId, @Valid @RequestBody InterfaceRevisionUpdateRequest request) {
+      String revisionId, @Valid @RequestBody InterfaceRevisionUpdateRequest request) {
     return ResponseEntity.ok(
         InterfaceRevisionMapper.toResponse(interfaceRevisionService.update(revisionId, request)));
   }
 
   @Override
-  public ResponseEntity<Void> deleteInterfaceRevision(Long revisionId) {
+  public ResponseEntity<Void> deleteInterfaceRevision(String revisionId) {
     interfaceRevisionService.delete(revisionId);
     return ResponseEntity.noContent().build();
   }

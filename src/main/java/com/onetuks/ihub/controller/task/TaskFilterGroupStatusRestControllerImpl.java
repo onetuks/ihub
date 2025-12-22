@@ -32,7 +32,7 @@ public class TaskFilterGroupStatusRestControllerImpl
   }
 
   @Override
-  public ResponseEntity<TaskFilterGroupStatusResponse> getTaskFilterGroupStatus(Long statusId) {
+  public ResponseEntity<TaskFilterGroupStatusResponse> getTaskFilterGroupStatus(String statusId) {
     return ResponseEntity.ok(
         TaskFilterGroupStatusMapper.toResponse(taskFilterGroupStatusService.getById(statusId)));
   }
@@ -47,13 +47,13 @@ public class TaskFilterGroupStatusRestControllerImpl
 
   @Override
   public ResponseEntity<TaskFilterGroupStatusResponse> updateTaskFilterGroupStatus(
-      Long statusId, @Valid @RequestBody TaskFilterGroupStatusUpdateRequest request) {
+      String statusId, @Valid @RequestBody TaskFilterGroupStatusUpdateRequest request) {
     return ResponseEntity.ok(TaskFilterGroupStatusMapper.toResponse(
         taskFilterGroupStatusService.update(statusId, request)));
   }
 
   @Override
-  public ResponseEntity<Void> deleteTaskFilterGroupStatus(Long statusId) {
+  public ResponseEntity<Void> deleteTaskFilterGroupStatus(String statusId) {
     taskFilterGroupStatusService.delete(statusId);
     return ResponseEntity.noContent().build();
   }

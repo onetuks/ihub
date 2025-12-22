@@ -6,14 +6,14 @@ import com.onetuks.ihub.entity.task.TaskType;
 import java.time.LocalDate;
 
 public record TaskUpdateRequest(
-    Long parentTaskId,
+    String parentTaskId,
     TaskType taskType,
-    Long interfaceId,
+    String interfaceId,
     String title,
     String description,
     TaskStatus status,
-    Long assigneeId,
-    Long requesterId,
+    String assigneeId,
+    String requesterId,
     LocalDate startDate,
     LocalDate dueDate,
     TaskPriority priority,

@@ -40,7 +40,7 @@ public interface FeedItemRestController {
     @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping("/{feedItemId}")
-  ResponseEntity<FeedItemResponse> getFeedItem(@PathVariable Long feedItemId);
+  ResponseEntity<FeedItemResponse> getFeedItem(@PathVariable String feedItemId);
 
   @Operation(summary = "List feed items")
   @ApiResponses({
@@ -59,7 +59,7 @@ public interface FeedItemRestController {
   })
   @PutMapping("/{feedItemId}")
   ResponseEntity<FeedItemResponse> updateFeedItem(
-      @PathVariable Long feedItemId,
+      @PathVariable String feedItemId,
       @Valid @RequestBody FeedItemUpdateRequest request);
 
   @Operation(summary = "Delete feed item")
@@ -70,5 +70,5 @@ public interface FeedItemRestController {
     @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @DeleteMapping("/{feedItemId}")
-  ResponseEntity<Void> deleteFeedItem(@PathVariable Long feedItemId);
+  ResponseEntity<Void> deleteFeedItem(@PathVariable String feedItemId);
 }

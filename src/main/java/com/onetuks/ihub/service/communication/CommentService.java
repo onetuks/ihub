@@ -38,7 +38,7 @@ public class CommentService {
   }
 
   @Transactional(readOnly = true)
-  public Comment getById(Long commentId) {
+  public Comment getById(String commentId) {
     return findEntity(commentId);
   }
 
@@ -48,33 +48,33 @@ public class CommentService {
   }
 
   @Transactional
-  public Comment update(Long commentId, CommentUpdateRequest request) {
+  public Comment update(String commentId, CommentUpdateRequest request) {
     Comment comment = findEntity(commentId);
     CommentMapper.applyUpdate(comment, request);
     return comment;
   }
 
   @Transactional
-  public void delete(Long commentId) {
+  public void delete(String commentId) {
     Comment comment = findEntity(commentId);
     commentJpaRepository.delete(comment);
   }
 
-  private Comment findEntity(Long commentId) {
+  private Comment findEntity(String commentId) {
     return commentJpaRepository.findById(commentId)
         .orElseThrow(() -> new EntityNotFoundException("Comment not found: " + commentId));
   }
 
-  private Comment findComment(Long commentId) {
+  private Comment findComment(String commentId) {
     return findEntity(commentId);
   }
 
-  private Project findProject(Long projectId) {
+  private Project findProject(String projectId) {
     return projectJpaRepository.findById(projectId)
         .orElseThrow(() -> new EntityNotFoundException("Project not found: " + projectId));
   }
 
-  private User findUser(Long userId) {
+  private User findUser(String userId) {
     return userJpaRepository.findById(userId)
         .orElseThrow(() -> new EntityNotFoundException("User not found: " + userId));
   }

@@ -39,7 +39,7 @@ public interface EventRestController {
     @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping("/{eventId}")
-  ResponseEntity<EventResponse> getEvent(@PathVariable Long eventId);
+  ResponseEntity<EventResponse> getEvent(@PathVariable String eventId);
 
   @Operation(summary = "List events")
   @ApiResponses({
@@ -58,7 +58,7 @@ public interface EventRestController {
   })
   @PutMapping("/{eventId}")
   ResponseEntity<EventResponse> updateEvent(
-      @PathVariable Long eventId,
+      @PathVariable String eventId,
       @Valid @RequestBody EventUpdateRequest request);
 
   @Operation(summary = "Delete event")
@@ -69,5 +69,5 @@ public interface EventRestController {
     @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @DeleteMapping("/{eventId}")
-  ResponseEntity<Void> deleteEvent(@PathVariable Long eventId);
+  ResponseEntity<Void> deleteEvent(@PathVariable String eventId);
 }

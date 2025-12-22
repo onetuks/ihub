@@ -33,7 +33,7 @@ public class InterfaceRevisionService {
   }
 
   @Transactional(readOnly = true)
-  public InterfaceRevision getById(Long revisionId) {
+  public InterfaceRevision getById(String revisionId) {
     return findEntity(revisionId);
   }
 
@@ -43,7 +43,7 @@ public class InterfaceRevisionService {
   }
 
   @Transactional
-  public InterfaceRevision update(Long revisionId, InterfaceRevisionUpdateRequest request) {
+  public InterfaceRevision update(String revisionId, InterfaceRevisionUpdateRequest request) {
     InterfaceRevision revision = findEntity(revisionId);
     InterfaceRevisionMapper.applyUpdate(revision, request);
     if (request.changedById() != null) {
@@ -53,22 +53,22 @@ public class InterfaceRevisionService {
   }
 
   @Transactional
-  public void delete(Long revisionId) {
+  public void delete(String revisionId) {
     InterfaceRevision revision = findEntity(revisionId);
     interfaceRevisionJpaRepository.delete(revision);
   }
 
-  private InterfaceRevision findEntity(Long revisionId) {
+  private InterfaceRevision findEntity(String revisionId) {
     return interfaceRevisionJpaRepository.findById(revisionId)
         .orElseThrow(() -> new EntityNotFoundException("Interface revision not found: " + revisionId));
   }
 
-  private Interface findInterface(Long interfaceId) {
+  private Interface findInterface(String interfaceId) {
     return interfaceJpaRepository.findById(interfaceId)
         .orElseThrow(() -> new EntityNotFoundException("Interface not found: " + interfaceId));
   }
 
-  private User findUser(Long userId) {
+  private User findUser(String userId) {
     return userJpaRepository.findById(userId)
         .orElseThrow(() -> new EntityNotFoundException("User not found: " + userId));
   }

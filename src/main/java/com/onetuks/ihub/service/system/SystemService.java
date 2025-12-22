@@ -34,7 +34,7 @@ public class SystemService {
   }
 
   @Transactional(readOnly = true)
-  public System getById(Long systemId) {
+  public System getById(String systemId) {
     return findEntity(systemId);
   }
 
@@ -44,7 +44,7 @@ public class SystemService {
   }
 
   @Transactional
-  public System update(Long systemId, SystemUpdateRequest request) {
+  public System update(String systemId, SystemUpdateRequest request) {
     System system = findEntity(systemId);
     SystemMapper.applyUpdate(system, request);
     if (request.updatedById() != null) {
@@ -54,22 +54,22 @@ public class SystemService {
   }
 
   @Transactional
-  public void delete(Long systemId) {
+  public void delete(String systemId) {
     System system = findEntity(systemId);
     systemJpaRepository.delete(system);
   }
 
-  private System findEntity(Long systemId) {
+  private System findEntity(String systemId) {
     return systemJpaRepository.findById(systemId)
         .orElseThrow(() -> new EntityNotFoundException("System not found: " + systemId));
   }
 
-  private Project findProject(Long projectId) {
+  private Project findProject(String projectId) {
     return projectJpaRepository.findById(projectId)
         .orElseThrow(() -> new EntityNotFoundException("Project not found: " + projectId));
   }
 
-  private User findUser(Long userId) {
+  private User findUser(String userId) {
     return userJpaRepository.findById(userId)
         .orElseThrow(() -> new EntityNotFoundException("User not found: " + userId));
   }

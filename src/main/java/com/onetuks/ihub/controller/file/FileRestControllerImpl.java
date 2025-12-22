@@ -28,7 +28,7 @@ public class FileRestControllerImpl implements FileRestController {
   }
 
   @Override
-  public ResponseEntity<FileResponse> getFile(@PathVariable Long fileId) {
+  public ResponseEntity<FileResponse> getFile(@PathVariable String fileId) {
     return ResponseEntity.ok(FileMapper.toResponse(fileService.getById(fileId)));
   }
 
@@ -39,12 +39,12 @@ public class FileRestControllerImpl implements FileRestController {
 
   @Override
   public ResponseEntity<FileResponse> updateFile(
-      @PathVariable Long fileId, @Valid @RequestBody FileUpdateRequest request) {
+      @PathVariable String fileId, @Valid @RequestBody FileUpdateRequest request) {
     return ResponseEntity.ok(FileMapper.toResponse(fileService.update(fileId, request)));
   }
 
   @Override
-  public ResponseEntity<Void> deleteFile(@PathVariable Long fileId) {
+  public ResponseEntity<Void> deleteFile(@PathVariable String fileId) {
     fileService.delete(fileId);
     return ResponseEntity.noContent().build();
   }

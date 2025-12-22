@@ -39,7 +39,7 @@ public interface TaskRestController {
     @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping("/{taskId}")
-  ResponseEntity<TaskResponse> getTask(@PathVariable Long taskId);
+  ResponseEntity<TaskResponse> getTask(@PathVariable String taskId);
 
   @Operation(summary = "List tasks")
   @ApiResponses({
@@ -58,7 +58,7 @@ public interface TaskRestController {
   })
   @PutMapping("/{taskId}")
   ResponseEntity<TaskResponse> updateTask(
-      @PathVariable Long taskId,
+      @PathVariable String taskId,
       @Valid @RequestBody TaskUpdateRequest request);
 
   @Operation(summary = "Delete task")
@@ -69,5 +69,5 @@ public interface TaskRestController {
     @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @DeleteMapping("/{taskId}")
-  ResponseEntity<Void> deleteTask(@PathVariable Long taskId);
+  ResponseEntity<Void> deleteTask(@PathVariable String taskId);
 }

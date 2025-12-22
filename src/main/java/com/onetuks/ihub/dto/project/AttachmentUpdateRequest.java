@@ -3,9 +3,9 @@ package com.onetuks.ihub.dto.project;
 import com.onetuks.ihub.entity.communication.TargetType;
 
 public record AttachmentUpdateRequest(
-    Long fileId,
+    String fileId,
     TargetType targetType,
-    Long targetId,
-    Long attachedById
+    String targetId,
+    String attachedById
 ) {
 }

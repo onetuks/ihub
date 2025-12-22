@@ -42,7 +42,7 @@ public class InterfaceService {
   }
 
   @Transactional(readOnly = true)
-  public Interface getById(Long interfaceId) {
+  public Interface getById(String interfaceId) {
     return findEntity(interfaceId);
   }
 
@@ -52,7 +52,7 @@ public class InterfaceService {
   }
 
   @Transactional
-  public Interface update(Long interfaceId, InterfaceUpdateRequest request) {
+  public Interface update(String interfaceId, InterfaceUpdateRequest request) {
     Interface anInterface = findEntity(interfaceId);
     InterfaceMapper.applyUpdate(anInterface, request);
     if (request.sourceSystemId() != null) {
@@ -68,32 +68,32 @@ public class InterfaceService {
   }
 
   @Transactional
-  public void delete(Long interfaceId) {
+  public void delete(String interfaceId) {
     Interface anInterface = findEntity(interfaceId);
     interfaceJpaRepository.delete(anInterface);
   }
 
-  private Interface findEntity(Long interfaceId) {
+  private Interface findEntity(String interfaceId) {
     return interfaceJpaRepository.findById(interfaceId)
         .orElseThrow(() -> new EntityNotFoundException("Interface not found: " + interfaceId));
   }
 
-  private Project findProject(Long projectId) {
+  private Project findProject(String projectId) {
     return projectJpaRepository.findById(projectId)
         .orElseThrow(() -> new EntityNotFoundException("Project not found: " + projectId));
   }
 
-  private System findSystem(Long systemId) {
+  private System findSystem(String systemId) {
     return systemJpaRepository.findById(systemId)
         .orElseThrow(() -> new EntityNotFoundException("System not found: " + systemId));
   }
 
-  private InterfaceStatus findStatus(Long statusId) {
+  private InterfaceStatus findStatus(String statusId) {
     return interfaceStatusJpaRepository.findById(statusId)
         .orElseThrow(() -> new EntityNotFoundException("Interface status not found: " + statusId));
   }
 
-  private User findUser(Long userId) {
+  private User findUser(String userId) {
     return userJpaRepository.findById(userId)
         .orElseThrow(() -> new EntityNotFoundException("User not found: " + userId));
   }

@@ -18,11 +18,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "attachments")
+@Table(name = Attachment.TABLE_NAME)
 @Getter
 @Setter
 @RequiredArgsConstructor
 public class Attachment {
+
+  public static final String TABLE_NAME = "attachments";
 
   @Id
   @Column(name = "attachment_id", nullable = false)
@@ -41,7 +43,7 @@ public class Attachment {
   private TargetType targetType;
 
   @Column(name = "target_id", nullable = false)
-  private Long targetId;
+  private String targetId;
 
   @ManyToOne(fetch = FetchType.LAZY, optional = false)
   @JoinColumn(name = "attached_by", referencedColumnName = "user_id", nullable = false)

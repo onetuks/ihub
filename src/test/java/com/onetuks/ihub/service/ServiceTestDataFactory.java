@@ -14,6 +14,7 @@ import com.onetuks.ihub.entity.interfaces.SyncAsyncType;
 import com.onetuks.ihub.entity.task.Task;
 import com.onetuks.ihub.entity.task.TaskStatus;
 import com.onetuks.ihub.entity.task.TaskType;
+import com.onetuks.ihub.mapper.UUIDProvider;
 import com.onetuks.ihub.repository.InterfaceJpaRepository;
 import com.onetuks.ihub.repository.InterfaceStatusJpaRepository;
 import com.onetuks.ihub.repository.ProjectJpaRepository;
@@ -29,6 +30,7 @@ public final class ServiceTestDataFactory {
 
   public static User createUser(UserJpaRepository userJpaRepository, String email, String name) {
     User user = new User();
+    user.setUserId(UUIDProvider.provideUUID(User.TABLE_NAME));
     user.setEmail(email);
     user.setPassword("pass");
     user.setName(name);
@@ -42,6 +44,7 @@ public final class ServiceTestDataFactory {
   public static Project createProject(
       ProjectJpaRepository projectJpaRepository, User creator, User admin, String title) {
     Project project = new Project();
+    project.setProjectId(UUIDProvider.provideUUID(Project.TABLE_NAME));
     project.setTitle(title);
     project.setStatus(ProjectStatus.ACTIVE);
     project.setCreatedBy(creator);
@@ -58,6 +61,7 @@ public final class ServiceTestDataFactory {
       User updater,
       String systemCode) {
     com.onetuks.ihub.entity.system.System system = new com.onetuks.ihub.entity.system.System();
+    system.setSystemId(UUIDProvider.provideUUID(com.onetuks.ihub.entity.system.System.TABLE_NAME));
     system.setProject(project);
     system.setSystemCode(systemCode);
     system.setStatus(SystemStatus.ACTIVE);
@@ -77,6 +81,7 @@ public final class ServiceTestDataFactory {
       String name,
       int seqOrder) {
     InterfaceStatus status = new InterfaceStatus();
+    status.setStatusId(UUIDProvider.provideUUID(InterfaceStatus.TABLE_NAME));
     status.setProject(project);
     status.setName(name);
     status.setCode(name.toUpperCase());
@@ -95,8 +100,10 @@ public final class ServiceTestDataFactory {
       InterfaceStatus status,
       User creator,
       String ifId) {
-    com.onetuks.ihub.entity.interfaces.Interface anInterface =
+      com.onetuks.ihub.entity.interfaces.Interface anInterface =
         new com.onetuks.ihub.entity.interfaces.Interface();
+    anInterface.setInterfaceId(UUIDProvider.provideUUID(
+        com.onetuks.ihub.entity.interfaces.Interface.TABLE_NAME));
     anInterface.setProject(project);
     anInterface.setIfId(ifId);
     anInterface.setSourceSystem(sourceSystem);
@@ -119,6 +126,7 @@ public final class ServiceTestDataFactory {
   public static Task createTask(
       TaskJpaRepository taskJpaRepository, Project project, User creator, String title) {
     Task task = new Task();
+    task.setTaskId(UUIDProvider.provideUUID(Task.TABLE_NAME));
     task.setProject(project);
     task.setTaskType(TaskType.PARENT);
     task.setTitle(title);

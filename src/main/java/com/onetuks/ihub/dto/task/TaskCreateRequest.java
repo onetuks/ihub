@@ -8,19 +8,19 @@ import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 public record TaskCreateRequest(
-    @NotNull Long projectId,
-    Long parentTaskId,
+    @NotNull String projectId,
+    String parentTaskId,
     @NotNull TaskType taskType,
-    Long interfaceId,
+    String interfaceId,
     @NotBlank String title,
     String description,
     @NotNull TaskStatus status,
-    Long assigneeId,
-    Long requesterId,
+    String assigneeId,
+    String requesterId,
     LocalDate startDate,
     LocalDate dueDate,
     TaskPriority priority,
     Integer progress,
-    Long createdById
+    String createdById
 ) {
 }

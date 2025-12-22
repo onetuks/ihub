@@ -40,7 +40,7 @@ public interface TaskFilterGroupRestController {
     @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping("/{groupId}")
-  ResponseEntity<TaskFilterGroupResponse> getTaskFilterGroup(@PathVariable Long groupId);
+  ResponseEntity<TaskFilterGroupResponse> getTaskFilterGroup(@PathVariable String groupId);
 
   @Operation(summary = "List task filter groups")
   @ApiResponses({
@@ -59,7 +59,7 @@ public interface TaskFilterGroupRestController {
   })
   @PutMapping("/{groupId}")
   ResponseEntity<TaskFilterGroupResponse> updateTaskFilterGroup(
-      @PathVariable Long groupId,
+      @PathVariable String groupId,
       @Valid @RequestBody TaskFilterGroupUpdateRequest request);
 
   @Operation(summary = "Delete task filter group")
@@ -70,5 +70,5 @@ public interface TaskFilterGroupRestController {
     @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @DeleteMapping("/{groupId}")
-  ResponseEntity<Void> deleteTaskFilterGroup(@PathVariable Long groupId);
+  ResponseEntity<Void> deleteTaskFilterGroup(@PathVariable String groupId);
 }

@@ -4,11 +4,11 @@ import com.onetuks.ihub.entity.communication.TargetType;
 import jakarta.validation.constraints.NotNull;
 
 public record CommentCreateRequest(
-    @NotNull Long projectId,
-    Long parentCommentId,
+    @NotNull String projectId,
+    String parentCommentId,
     TargetType targetType,
-    Long targetId,
+    String targetId,
     String content,
-    Long createdById
+    String createdById
 ) {
 }

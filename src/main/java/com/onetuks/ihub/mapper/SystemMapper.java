@@ -28,6 +28,7 @@ public final class SystemMapper {
 
   public static void applyCreate(System system, SystemCreateRequest request) {
     LocalDateTime now = LocalDateTime.now();
+    system.setSystemId(UUIDProvider.provideUUID(System.TABLE_NAME));
     system.setSystemCode(request.systemCode());
     system.setStatus(request.status());
     system.setDescription(request.description());
