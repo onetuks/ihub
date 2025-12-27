@@ -8,6 +8,7 @@ import java.security.Key;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
+import javax.crypto.SecretKey;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -80,7 +81,7 @@ public class JwtTokenService {
 
   private Claims parseClaims(String token) {
     return Jwts.parser()
-        .verifyWith(signingKey)
+        .verifyWith((SecretKey) signingKey)
         .build()
         .parseSignedClaims(token)
         .getPayload();

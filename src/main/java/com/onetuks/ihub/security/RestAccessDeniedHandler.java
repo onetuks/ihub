@@ -13,10 +13,9 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
 public class RestAccessDeniedHandler implements AccessDeniedHandler {
 
-  private final ObjectMapper objectMapper;
+  private static final ObjectMapper objectMapper = new ObjectMapper();
 
   @Override
   public void handle(
