@@ -24,9 +24,9 @@ public interface AttachmentRestController {
 
   @Operation(summary = "Create attachment")
   @ApiResponses({
-    @ApiResponse(responseCode = "201", description = "Attachment created"),
-    @ApiResponse(responseCode = "400", description = "Invalid request"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "201", description = "Attachment created"),
+      @ApiResponse(responseCode = "400", description = "Invalid request"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @PostMapping
   ResponseEntity<AttachmentResponse> createAttachment(
@@ -34,28 +34,28 @@ public interface AttachmentRestController {
 
   @Operation(summary = "Get attachment by id")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Attachment found"),
-    @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
-    @ApiResponse(responseCode = "404", description = "Attachment not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Attachment found"),
+      @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
+      @ApiResponse(responseCode = "404", description = "Attachment not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping("/{attachmentId}")
   ResponseEntity<AttachmentResponse> getAttachment(@PathVariable String attachmentId);
 
   @Operation(summary = "List attachments")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Attachments listed"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Attachments listed"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping
   ResponseEntity<List<AttachmentResponse>> getAttachments();
 
   @Operation(summary = "Update attachment")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Attachment updated"),
-    @ApiResponse(responseCode = "400", description = "Invalid request"),
-    @ApiResponse(responseCode = "404", description = "Attachment not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Attachment updated"),
+      @ApiResponse(responseCode = "400", description = "Invalid request"),
+      @ApiResponse(responseCode = "404", description = "Attachment not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @PutMapping("/{attachmentId}")
   ResponseEntity<AttachmentResponse> updateAttachment(
@@ -64,10 +64,10 @@ public interface AttachmentRestController {
 
   @Operation(summary = "Delete attachment")
   @ApiResponses({
-    @ApiResponse(responseCode = "204", description = "Attachment deleted"),
-    @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
-    @ApiResponse(responseCode = "404", description = "Attachment not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "204", description = "Attachment deleted"),
+      @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
+      @ApiResponse(responseCode = "404", description = "Attachment not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @DeleteMapping("/{attachmentId}")
   ResponseEntity<Void> deleteAttachment(@PathVariable String attachmentId);

@@ -11,4 +11,5 @@ public record FeedItemCreateRequest(
     String targetId,
     String summary
 ) {
+
 }

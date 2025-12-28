@@ -9,4 +9,5 @@ public record TaskFilterGroupStatusResponse(
     TaskFilterGroupStatusType statusType,
     LocalDateTime createdAt
 ) {
+
 }

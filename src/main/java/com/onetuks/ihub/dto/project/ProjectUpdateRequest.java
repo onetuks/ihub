@@ -11,4 +11,5 @@ public record ProjectUpdateRequest(
     String currentAdminId,
     ProjectStatus status
 ) {
+
 }

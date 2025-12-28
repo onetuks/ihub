@@ -11,4 +11,5 @@ public record FolderResponse(
     LocalDateTime createdAt,
     LocalDateTime updatedAt
 ) {
+
 }

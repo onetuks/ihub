@@ -31,7 +31,8 @@ public class TaskFilterGroupRestControllerImpl implements TaskFilterGroupRestCon
 
   @Override
   public ResponseEntity<TaskFilterGroupResponse> getTaskFilterGroup(@PathVariable String groupId) {
-    return ResponseEntity.ok(TaskFilterGroupMapper.toResponse(taskFilterGroupService.getById(groupId)));
+    return ResponseEntity.ok(
+        TaskFilterGroupMapper.toResponse(taskFilterGroupService.getById(groupId)));
   }
 
   @Override

@@ -12,4 +12,5 @@ public record InterfaceRevisionResponse(
     Map<String, String> snapshot,
     String reason
 ) {
+
 }

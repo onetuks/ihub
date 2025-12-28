@@ -24,9 +24,9 @@ public interface TaskFilterGroupRestController {
 
   @Operation(summary = "Create task filter group")
   @ApiResponses({
-    @ApiResponse(responseCode = "201", description = "Task filter group created"),
-    @ApiResponse(responseCode = "400", description = "Invalid request"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "201", description = "Task filter group created"),
+      @ApiResponse(responseCode = "400", description = "Invalid request"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @PostMapping
   ResponseEntity<TaskFilterGroupResponse> createTaskFilterGroup(
@@ -34,28 +34,28 @@ public interface TaskFilterGroupRestController {
 
   @Operation(summary = "Get task filter group by id")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Task filter group found"),
-    @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
-    @ApiResponse(responseCode = "404", description = "Task filter group not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Task filter group found"),
+      @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
+      @ApiResponse(responseCode = "404", description = "Task filter group not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping("/{groupId}")
   ResponseEntity<TaskFilterGroupResponse> getTaskFilterGroup(@PathVariable String groupId);
 
   @Operation(summary = "List task filter groups")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Task filter groups listed"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Task filter groups listed"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping
   ResponseEntity<List<TaskFilterGroupResponse>> getTaskFilterGroups();
 
   @Operation(summary = "Update task filter group")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Task filter group updated"),
-    @ApiResponse(responseCode = "400", description = "Invalid request"),
-    @ApiResponse(responseCode = "404", description = "Task filter group not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Task filter group updated"),
+      @ApiResponse(responseCode = "400", description = "Invalid request"),
+      @ApiResponse(responseCode = "404", description = "Task filter group not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @PutMapping("/{groupId}")
   ResponseEntity<TaskFilterGroupResponse> updateTaskFilterGroup(
@@ -64,10 +64,10 @@ public interface TaskFilterGroupRestController {
 
   @Operation(summary = "Delete task filter group")
   @ApiResponses({
-    @ApiResponse(responseCode = "204", description = "Task filter group deleted"),
-    @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
-    @ApiResponse(responseCode = "404", description = "Task filter group not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "204", description = "Task filter group deleted"),
+      @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
+      @ApiResponse(responseCode = "404", description = "Task filter group not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @DeleteMapping("/{groupId}")
   ResponseEntity<Void> deleteTaskFilterGroup(@PathVariable String groupId);

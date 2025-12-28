@@ -24,37 +24,37 @@ public interface MentionRestController {
 
   @Operation(summary = "Create mention")
   @ApiResponses({
-    @ApiResponse(responseCode = "201", description = "Mention created"),
-    @ApiResponse(responseCode = "400", description = "Invalid request"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "201", description = "Mention created"),
+      @ApiResponse(responseCode = "400", description = "Invalid request"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @PostMapping
   ResponseEntity<MentionResponse> createMention(@Valid @RequestBody MentionCreateRequest request);
 
   @Operation(summary = "Get mention by id")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Mention found"),
-    @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
-    @ApiResponse(responseCode = "404", description = "Mention not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Mention found"),
+      @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
+      @ApiResponse(responseCode = "404", description = "Mention not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping("/{mentionId}")
   ResponseEntity<MentionResponse> getMention(@PathVariable String mentionId);
 
   @Operation(summary = "List mentions")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Mentions listed"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Mentions listed"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping
   ResponseEntity<List<MentionResponse>> getMentions();
 
   @Operation(summary = "Update mention")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Mention updated"),
-    @ApiResponse(responseCode = "400", description = "Invalid request"),
-    @ApiResponse(responseCode = "404", description = "Mention not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Mention updated"),
+      @ApiResponse(responseCode = "400", description = "Invalid request"),
+      @ApiResponse(responseCode = "404", description = "Mention not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @PutMapping("/{mentionId}")
   ResponseEntity<MentionResponse> updateMention(
@@ -63,10 +63,10 @@ public interface MentionRestController {
 
   @Operation(summary = "Delete mention")
   @ApiResponses({
-    @ApiResponse(responseCode = "204", description = "Mention deleted"),
-    @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
-    @ApiResponse(responseCode = "404", description = "Mention not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "204", description = "Mention deleted"),
+      @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
+      @ApiResponse(responseCode = "404", description = "Mention not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @DeleteMapping("/{mentionId}")
   ResponseEntity<Void> deleteMention(@PathVariable String mentionId);

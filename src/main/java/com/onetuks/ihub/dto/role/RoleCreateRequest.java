@@ -6,4 +6,5 @@ public record RoleCreateRequest(
     @NotBlank String roleName,
     String description
 ) {
+
 }

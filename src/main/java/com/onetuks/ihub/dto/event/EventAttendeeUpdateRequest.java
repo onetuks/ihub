@@ -6,4 +6,5 @@ public record EventAttendeeUpdateRequest(
     Boolean isMandatory,
     EventAttendeeStatus attendStatus
 ) {
+
 }

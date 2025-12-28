@@ -14,4 +14,5 @@ public record InterfaceStatusTransitionResponse(
     LocalDateTime createdAt,
     String createdById
 ) {
+
 }

@@ -1,7 +1,6 @@
 package com.onetuks.ihub.dto.user;
 
 import com.onetuks.ihub.entity.user.UserStatus;
-import jakarta.validation.constraints.Email;
 
 public record UserUpdateRequest(
     String password,
@@ -12,4 +11,5 @@ public record UserUpdateRequest(
     String profileImageUrl,
     UserStatus status
 ) {
+
 }

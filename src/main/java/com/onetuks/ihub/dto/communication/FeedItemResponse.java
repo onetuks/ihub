@@ -13,4 +13,5 @@ public record FeedItemResponse(
     String summary,
     LocalDateTime createdAt
 ) {
+
 }

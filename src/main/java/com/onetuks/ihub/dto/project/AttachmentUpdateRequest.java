@@ -8,4 +8,5 @@ public record AttachmentUpdateRequest(
     String targetId,
     String attachedById
 ) {
+
 }

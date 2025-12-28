@@ -1,7 +1,5 @@
 package com.onetuks.ihub.service.role;
 
-import com.onetuks.ihub.annotation.RequiresRole;
-import com.onetuks.ihub.config.RoleDataInitializer;
 import com.onetuks.ihub.dto.role.RoleCreateRequest;
 import com.onetuks.ihub.dto.role.RoleGrantRequest;
 import com.onetuks.ihub.dto.role.RoleRevokeRequest;

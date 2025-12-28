@@ -12,4 +12,5 @@ public record AttachmentResponse(
     String attachedById,
     LocalDateTime attachedAt
 ) {
+
 }

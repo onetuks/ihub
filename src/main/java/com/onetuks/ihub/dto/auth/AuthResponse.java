@@ -7,4 +7,5 @@ public record AuthResponse(
     String tokenType,
     Instant expiresAt
 ) {
+
 }

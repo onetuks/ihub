@@ -9,4 +9,5 @@ public record EventAttendeeCreateRequest(
     Boolean isMandatory,
     EventAttendeeStatus attendStatus
 ) {
+
 }

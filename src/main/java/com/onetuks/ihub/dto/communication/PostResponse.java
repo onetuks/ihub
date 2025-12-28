@@ -11,4 +11,5 @@ public record PostResponse(
     LocalDateTime createdAt,
     LocalDateTime updatedAt
 ) {
+
 }

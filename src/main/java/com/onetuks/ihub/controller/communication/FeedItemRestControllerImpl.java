@@ -35,13 +35,15 @@ public class FeedItemRestControllerImpl implements FeedItemRestController {
 
   @Override
   public ResponseEntity<List<FeedItemResponse>> getFeedItems() {
-    return ResponseEntity.ok(feedItemService.getAll().stream().map(FeedItemMapper::toResponse).toList());
+    return ResponseEntity.ok(
+        feedItemService.getAll().stream().map(FeedItemMapper::toResponse).toList());
   }
 
   @Override
   public ResponseEntity<FeedItemResponse> updateFeedItem(
       @PathVariable String feedItemId, @Valid @RequestBody FeedItemUpdateRequest request) {
-    return ResponseEntity.ok(FeedItemMapper.toResponse(feedItemService.update(feedItemId, request)));
+    return ResponseEntity.ok(
+        FeedItemMapper.toResponse(feedItemService.update(feedItemId, request)));
   }
 
   @Override

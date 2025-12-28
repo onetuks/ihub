@@ -24,9 +24,9 @@ public interface InterfaceStatusRestController {
 
   @Operation(summary = "Create interface status")
   @ApiResponses({
-    @ApiResponse(responseCode = "201", description = "Interface status created"),
-    @ApiResponse(responseCode = "400", description = "Invalid request"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "201", description = "Interface status created"),
+      @ApiResponse(responseCode = "400", description = "Invalid request"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @PostMapping
   ResponseEntity<InterfaceStatusResponse> createInterfaceStatus(
@@ -34,28 +34,28 @@ public interface InterfaceStatusRestController {
 
   @Operation(summary = "Get interface status by id")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Interface status found"),
-    @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
-    @ApiResponse(responseCode = "404", description = "Interface status not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Interface status found"),
+      @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
+      @ApiResponse(responseCode = "404", description = "Interface status not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping("/{statusId}")
   ResponseEntity<InterfaceStatusResponse> getInterfaceStatus(@PathVariable String statusId);
 
   @Operation(summary = "List interface statuses")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Interface statuses listed"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Interface statuses listed"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping
   ResponseEntity<List<InterfaceStatusResponse>> getInterfaceStatuses();
 
   @Operation(summary = "Update interface status")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Interface status updated"),
-    @ApiResponse(responseCode = "400", description = "Invalid request"),
-    @ApiResponse(responseCode = "404", description = "Interface status not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Interface status updated"),
+      @ApiResponse(responseCode = "400", description = "Invalid request"),
+      @ApiResponse(responseCode = "404", description = "Interface status not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @PutMapping("/{statusId}")
   ResponseEntity<InterfaceStatusResponse> updateInterfaceStatus(
@@ -64,10 +64,10 @@ public interface InterfaceStatusRestController {
 
   @Operation(summary = "Delete interface status")
   @ApiResponses({
-    @ApiResponse(responseCode = "204", description = "Interface status deleted"),
-    @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
-    @ApiResponse(responseCode = "404", description = "Interface status not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "204", description = "Interface status deleted"),
+      @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
+      @ApiResponse(responseCode = "404", description = "Interface status not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @DeleteMapping("/{statusId}")
   ResponseEntity<Void> deleteInterfaceStatus(@PathVariable String statusId);

@@ -7,4 +7,5 @@ public record TaskFilterGroupStatusCreateRequest(
     @NotNull String groupId,
     @NotNull TaskFilterGroupStatusType statusType
 ) {
+
 }

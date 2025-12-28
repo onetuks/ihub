@@ -10,4 +10,5 @@ public record InterfaceStatusHistoryCreateRequest(
     @NotNull String relatedTaskId,
     String reason
 ) {
+
 }

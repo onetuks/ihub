@@ -35,7 +35,8 @@ public class FolderRestControllerImpl implements FolderRestController {
 
   @Override
   public ResponseEntity<List<FolderResponse>> getFolders() {
-    return ResponseEntity.ok(folderService.getAll().stream().map(FolderMapper::toResponse).toList());
+    return ResponseEntity.ok(
+        folderService.getAll().stream().map(FolderMapper::toResponse).toList());
   }
 
   @Override

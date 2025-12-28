@@ -4,4 +4,5 @@ public record FolderUpdateRequest(
     String parentFolderId,
     String name
 ) {
+
 }

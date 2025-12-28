@@ -35,7 +35,8 @@ public class SystemRestControllerImpl implements SystemRestController {
 
   @Override
   public ResponseEntity<List<SystemResponse>> getSystems() {
-    return ResponseEntity.ok(systemService.getAll().stream().map(SystemMapper::toResponse).toList());
+    return ResponseEntity.ok(
+        systemService.getAll().stream().map(SystemMapper::toResponse).toList());
   }
 
   @Override

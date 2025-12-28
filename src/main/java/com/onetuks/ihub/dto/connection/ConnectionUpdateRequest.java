@@ -18,4 +18,5 @@ public record ConnectionUpdateRequest(
     String description,
     String updatedById
 ) {
+
 }

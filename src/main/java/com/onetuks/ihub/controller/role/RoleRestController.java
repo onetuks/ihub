@@ -43,7 +43,8 @@ public interface RoleRestController {
       @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @PatchMapping(path = "/revoke")
-  ResponseEntity<RoleRevokeResponse> revokeRoleFromUser(@Valid @RequestBody RoleRevokeRequest request);
+  ResponseEntity<RoleRevokeResponse> revokeRoleFromUser(
+      @Valid @RequestBody RoleRevokeRequest request);
 
   @Operation(summary = "Create role")
   @ApiResponses({

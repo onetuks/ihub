@@ -24,4 +24,5 @@ public record InterfaceResponse(
     LocalDateTime createdAt,
     LocalDateTime updatedAt
 ) {
+
 }

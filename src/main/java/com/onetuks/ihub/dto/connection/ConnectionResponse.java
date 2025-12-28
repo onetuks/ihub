@@ -23,4 +23,5 @@ public record ConnectionResponse(
     LocalDateTime createdAt,
     LocalDateTime updatedAt
 ) {
+
 }

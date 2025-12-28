@@ -12,4 +12,5 @@ public record SystemUpdateRequest(
     SystemEnvironment environment,
     String updatedById
 ) {
+
 }

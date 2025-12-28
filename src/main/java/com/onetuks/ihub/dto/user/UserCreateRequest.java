@@ -15,4 +15,5 @@ public record UserCreateRequest(
     String profileImageUrl,
     @NotNull UserStatus status
 ) {
+
 }

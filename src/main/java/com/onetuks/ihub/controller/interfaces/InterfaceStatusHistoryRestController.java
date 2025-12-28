@@ -24,9 +24,9 @@ public interface InterfaceStatusHistoryRestController {
 
   @Operation(summary = "Create interface status history")
   @ApiResponses({
-    @ApiResponse(responseCode = "201", description = "Interface status history created"),
-    @ApiResponse(responseCode = "400", description = "Invalid request"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "201", description = "Interface status history created"),
+      @ApiResponse(responseCode = "400", description = "Invalid request"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @PostMapping
   ResponseEntity<InterfaceStatusHistoryResponse> createInterfaceStatusHistory(
@@ -34,10 +34,10 @@ public interface InterfaceStatusHistoryRestController {
 
   @Operation(summary = "Get interface status history by id")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Interface status history found"),
-    @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
-    @ApiResponse(responseCode = "404", description = "Interface status history not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Interface status history found"),
+      @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
+      @ApiResponse(responseCode = "404", description = "Interface status history not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping("/{historyId}")
   ResponseEntity<InterfaceStatusHistoryResponse> getInterfaceStatusHistory(
@@ -45,18 +45,18 @@ public interface InterfaceStatusHistoryRestController {
 
   @Operation(summary = "List interface status histories")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Interface status histories listed"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Interface status histories listed"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping
   ResponseEntity<List<InterfaceStatusHistoryResponse>> getInterfaceStatusHistories();
 
   @Operation(summary = "Update interface status history")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Interface status history updated"),
-    @ApiResponse(responseCode = "400", description = "Invalid request"),
-    @ApiResponse(responseCode = "404", description = "Interface status history not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Interface status history updated"),
+      @ApiResponse(responseCode = "400", description = "Invalid request"),
+      @ApiResponse(responseCode = "404", description = "Interface status history not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @PutMapping("/{historyId}")
   ResponseEntity<InterfaceStatusHistoryResponse> updateInterfaceStatusHistory(
@@ -65,10 +65,10 @@ public interface InterfaceStatusHistoryRestController {
 
   @Operation(summary = "Delete interface status history")
   @ApiResponses({
-    @ApiResponse(responseCode = "204", description = "Interface status history deleted"),
-    @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
-    @ApiResponse(responseCode = "404", description = "Interface status history not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "204", description = "Interface status history deleted"),
+      @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
+      @ApiResponse(responseCode = "404", description = "Interface status history not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @DeleteMapping("/{historyId}")
   ResponseEntity<Void> deleteInterfaceStatusHistory(@PathVariable String historyId);

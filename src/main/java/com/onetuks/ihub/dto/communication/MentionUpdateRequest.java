@@ -8,4 +8,5 @@ public record MentionUpdateRequest(
     String mentionedUserId,
     String createdById
 ) {
+
 }

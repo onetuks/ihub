@@ -24,37 +24,37 @@ public interface TaskRestController {
 
   @Operation(summary = "Create task")
   @ApiResponses({
-    @ApiResponse(responseCode = "201", description = "Task created"),
-    @ApiResponse(responseCode = "400", description = "Invalid request"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "201", description = "Task created"),
+      @ApiResponse(responseCode = "400", description = "Invalid request"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @PostMapping
   ResponseEntity<TaskResponse> createTask(@Valid @RequestBody TaskCreateRequest request);
 
   @Operation(summary = "Get task by id")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Task found"),
-    @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
-    @ApiResponse(responseCode = "404", description = "Task not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Task found"),
+      @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
+      @ApiResponse(responseCode = "404", description = "Task not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping("/{taskId}")
   ResponseEntity<TaskResponse> getTask(@PathVariable String taskId);
 
   @Operation(summary = "List tasks")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Tasks listed"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Tasks listed"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping
   ResponseEntity<List<TaskResponse>> getTasks();
 
   @Operation(summary = "Update task")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Task updated"),
-    @ApiResponse(responseCode = "400", description = "Invalid request"),
-    @ApiResponse(responseCode = "404", description = "Task not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Task updated"),
+      @ApiResponse(responseCode = "400", description = "Invalid request"),
+      @ApiResponse(responseCode = "404", description = "Task not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @PutMapping("/{taskId}")
   ResponseEntity<TaskResponse> updateTask(
@@ -63,10 +63,10 @@ public interface TaskRestController {
 
   @Operation(summary = "Delete task")
   @ApiResponses({
-    @ApiResponse(responseCode = "204", description = "Task deleted"),
-    @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
-    @ApiResponse(responseCode = "404", description = "Task not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "204", description = "Task deleted"),
+      @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
+      @ApiResponse(responseCode = "404", description = "Task not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @DeleteMapping("/{taskId}")
   ResponseEntity<Void> deleteTask(@PathVariable String taskId);

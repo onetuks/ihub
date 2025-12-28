@@ -20,4 +20,5 @@ public record ConnectionCreateRequest(
     @NotNull String createdById,
     @NotNull String updatedById
 ) {
+
 }

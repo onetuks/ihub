@@ -15,4 +15,5 @@ public record EventResponse(
     LocalDateTime createdAt,
     LocalDateTime updatedAt
 ) {
+
 }

@@ -4,4 +4,5 @@ public record PostUpdateRequest(
     String title,
     String content
 ) {
+
 }

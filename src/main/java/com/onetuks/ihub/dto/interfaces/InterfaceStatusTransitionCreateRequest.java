@@ -12,4 +12,5 @@ public record InterfaceStatusTransitionCreateRequest(
     @NotNull InterfaceStatusTransitionStatus status,
     @NotNull String createdById
 ) {
+
 }

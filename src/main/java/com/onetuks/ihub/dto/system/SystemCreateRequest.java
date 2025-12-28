@@ -15,4 +15,5 @@ public record SystemCreateRequest(
     @NotNull String createdById,
     @NotNull String updatedById
 ) {
+
 }

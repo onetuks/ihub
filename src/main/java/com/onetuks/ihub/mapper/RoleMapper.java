@@ -6,7 +6,6 @@ import com.onetuks.ihub.dto.role.RoleResponse;
 import com.onetuks.ihub.dto.role.RoleRevokeResponse;
 import com.onetuks.ihub.dto.role.RoleUpdateRequest;
 import com.onetuks.ihub.entity.role.Role;
-import jakarta.validation.constraints.Email;
 import java.util.List;
 
 public final class RoleMapper {

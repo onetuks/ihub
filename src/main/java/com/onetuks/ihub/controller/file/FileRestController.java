@@ -24,37 +24,37 @@ public interface FileRestController {
 
   @Operation(summary = "Create file")
   @ApiResponses({
-    @ApiResponse(responseCode = "201", description = "File created"),
-    @ApiResponse(responseCode = "400", description = "Invalid request"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "201", description = "File created"),
+      @ApiResponse(responseCode = "400", description = "Invalid request"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @PostMapping
   ResponseEntity<FileResponse> createFile(@Valid @RequestBody FileCreateRequest request);
 
   @Operation(summary = "Get file by id")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "File found"),
-    @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
-    @ApiResponse(responseCode = "404", description = "File not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "File found"),
+      @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
+      @ApiResponse(responseCode = "404", description = "File not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping("/{fileId}")
   ResponseEntity<FileResponse> getFile(@PathVariable String fileId);
 
   @Operation(summary = "List files")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Files listed"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Files listed"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping
   ResponseEntity<List<FileResponse>> getFiles();
 
   @Operation(summary = "Update file")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "File updated"),
-    @ApiResponse(responseCode = "400", description = "Invalid request"),
-    @ApiResponse(responseCode = "404", description = "File not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "File updated"),
+      @ApiResponse(responseCode = "400", description = "Invalid request"),
+      @ApiResponse(responseCode = "404", description = "File not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @PutMapping("/{fileId}")
   ResponseEntity<FileResponse> updateFile(
@@ -63,10 +63,10 @@ public interface FileRestController {
 
   @Operation(summary = "Delete file")
   @ApiResponses({
-    @ApiResponse(responseCode = "204", description = "File deleted"),
-    @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
-    @ApiResponse(responseCode = "404", description = "File not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "204", description = "File deleted"),
+      @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
+      @ApiResponse(responseCode = "404", description = "File not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @DeleteMapping("/{fileId}")
   ResponseEntity<Void> deleteFile(@PathVariable String fileId);

@@ -10,4 +10,5 @@ public record AttachmentCreateRequest(
     @NotNull String targetId,
     @NotNull String attachedById
 ) {
+
 }

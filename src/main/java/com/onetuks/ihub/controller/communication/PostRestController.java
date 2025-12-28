@@ -24,37 +24,37 @@ public interface PostRestController {
 
   @Operation(summary = "Create post")
   @ApiResponses({
-    @ApiResponse(responseCode = "201", description = "Post created"),
-    @ApiResponse(responseCode = "400", description = "Invalid request"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "201", description = "Post created"),
+      @ApiResponse(responseCode = "400", description = "Invalid request"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @PostMapping
   ResponseEntity<PostResponse> createPost(@Valid @RequestBody PostCreateRequest request);
 
   @Operation(summary = "Get post by id")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Post found"),
-    @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
-    @ApiResponse(responseCode = "404", description = "Post not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Post found"),
+      @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
+      @ApiResponse(responseCode = "404", description = "Post not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping("/{postId}")
   ResponseEntity<PostResponse> getPost(@PathVariable String postId);
 
   @Operation(summary = "List posts")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Posts listed"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Posts listed"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping
   ResponseEntity<List<PostResponse>> getPosts();
 
   @Operation(summary = "Update post")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Post updated"),
-    @ApiResponse(responseCode = "400", description = "Invalid request"),
-    @ApiResponse(responseCode = "404", description = "Post not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Post updated"),
+      @ApiResponse(responseCode = "400", description = "Invalid request"),
+      @ApiResponse(responseCode = "404", description = "Post not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @PutMapping("/{postId}")
   ResponseEntity<PostResponse> updatePost(
@@ -63,10 +63,10 @@ public interface PostRestController {
 
   @Operation(summary = "Delete post")
   @ApiResponses({
-    @ApiResponse(responseCode = "204", description = "Post deleted"),
-    @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
-    @ApiResponse(responseCode = "404", description = "Post not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "204", description = "Post deleted"),
+      @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
+      @ApiResponse(responseCode = "404", description = "Post not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @DeleteMapping("/{postId}")
   ResponseEntity<Void> deletePost(@PathVariable String postId);

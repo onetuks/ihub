@@ -7,7 +7,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import java.util.List;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.web.PageableDefault;
@@ -24,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Tag(name = "Project", description = "Project management APIs")
 public interface ProjectRestController {
 
-  @Operation(summary = "Create project")
+  @Operation(summary = "프로젝트 생성")
   @ApiResponses({
       @ApiResponse(responseCode = "201", description = "Project created"),
       @ApiResponse(responseCode = "400", description = "Invalid request"),
@@ -36,7 +35,7 @@ public interface ProjectRestController {
   ResponseEntity<ProjectResponse> createProject(
       @Valid @RequestBody ProjectCreateRequest request);
 
-  @Operation(summary = "Get project by id")
+  @Operation(summary = "프로젝트 조회")
   @ApiResponses({
       @ApiResponse(responseCode = "200", description = "Project found"),
       @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
@@ -48,7 +47,7 @@ public interface ProjectRestController {
   @GetMapping("/{projectId}")
   ResponseEntity<ProjectResponse> getProject(@PathVariable String projectId);
 
-  @Operation(summary = "List projects")
+  @Operation(summary = "프로젝트 목록 조회")
   @ApiResponses({
       @ApiResponse(responseCode = "200", description = "Projects listed"),
       @ApiResponse(responseCode = "401", description = "No Authorization"),
@@ -58,7 +57,7 @@ public interface ProjectRestController {
   @GetMapping
   ResponseEntity<Page<ProjectResponse>> getProjects(PageableDefault pageable);
 
-  @Operation(summary = "Update project")
+  @Operation(summary = "프로젝트 수정")
   @ApiResponses({
       @ApiResponse(responseCode = "200", description = "Project updated"),
       @ApiResponse(responseCode = "400", description = "Invalid request"),
@@ -72,7 +71,7 @@ public interface ProjectRestController {
       @PathVariable String projectId,
       @Valid @RequestBody ProjectUpdateRequest request);
 
-  @Operation(summary = "Delete project")
+  @Operation(summary = "프로젝트 삭제(논리삭제)")
   @ApiResponses({
       @ApiResponse(responseCode = "204", description = "Project deleted"),
       @ApiResponse(responseCode = "400", description = "Invalid id supplied"),

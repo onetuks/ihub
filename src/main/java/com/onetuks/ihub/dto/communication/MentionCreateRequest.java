@@ -10,4 +10,5 @@ public record MentionCreateRequest(
     @NotNull String mentionedUserId,
     @NotNull String createdById
 ) {
+
 }

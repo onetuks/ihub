@@ -24,9 +24,9 @@ public interface TaskFilterGroupStatusRestController {
 
   @Operation(summary = "Create task filter group status")
   @ApiResponses({
-    @ApiResponse(responseCode = "201", description = "Task filter group status created"),
-    @ApiResponse(responseCode = "400", description = "Invalid request"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "201", description = "Task filter group status created"),
+      @ApiResponse(responseCode = "400", description = "Invalid request"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @PostMapping
   ResponseEntity<TaskFilterGroupStatusResponse> createTaskFilterGroupStatus(
@@ -34,10 +34,10 @@ public interface TaskFilterGroupStatusRestController {
 
   @Operation(summary = "Get task filter group status by id")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Task filter group status found"),
-    @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
-    @ApiResponse(responseCode = "404", description = "Task filter group status not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Task filter group status found"),
+      @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
+      @ApiResponse(responseCode = "404", description = "Task filter group status not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping("/{statusId}")
   ResponseEntity<TaskFilterGroupStatusResponse> getTaskFilterGroupStatus(
@@ -45,18 +45,18 @@ public interface TaskFilterGroupStatusRestController {
 
   @Operation(summary = "List task filter group statuses")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Task filter group statuses listed"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Task filter group statuses listed"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping
   ResponseEntity<List<TaskFilterGroupStatusResponse>> getTaskFilterGroupStatuses();
 
   @Operation(summary = "Update task filter group status")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Task filter group status updated"),
-    @ApiResponse(responseCode = "400", description = "Invalid request"),
-    @ApiResponse(responseCode = "404", description = "Task filter group status not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Task filter group status updated"),
+      @ApiResponse(responseCode = "400", description = "Invalid request"),
+      @ApiResponse(responseCode = "404", description = "Task filter group status not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @PutMapping("/{statusId}")
   ResponseEntity<TaskFilterGroupStatusResponse> updateTaskFilterGroupStatus(
@@ -65,10 +65,10 @@ public interface TaskFilterGroupStatusRestController {
 
   @Operation(summary = "Delete task filter group status")
   @ApiResponses({
-    @ApiResponse(responseCode = "204", description = "Task filter group status deleted"),
-    @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
-    @ApiResponse(responseCode = "404", description = "Task filter group status not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "204", description = "Task filter group status deleted"),
+      @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
+      @ApiResponse(responseCode = "404", description = "Task filter group status not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @DeleteMapping("/{statusId}")
   ResponseEntity<Void> deleteTaskFilterGroupStatus(@PathVariable String statusId);

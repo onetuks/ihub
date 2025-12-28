@@ -10,7 +10,6 @@ import com.onetuks.ihub.mapper.UserMapper;
 import com.onetuks.ihub.service.user.UserService;
 import jakarta.validation.Valid;
 import java.net.URI;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,7 +17,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -42,7 +40,8 @@ public class UserRestControllerImpl implements UserRestController {
 
   @Override
   public ResponseEntity<Page<UserResponse>> getUsers(PageableDefault pageable) {
-    Page<UserResponse> response = userService.getAll(PageRequest.of(pageable.page(), pageable.size()))
+    Page<UserResponse> response = userService.getAll(
+            PageRequest.of(pageable.page(), pageable.size()))
         .map(UserMapper::toResponse);
     return ResponseEntity.ok(response);
   }
@@ -50,7 +49,8 @@ public class UserRestControllerImpl implements UserRestController {
   @RequiresRole(USER_FULL_ACCESS)
   @Override
   public ResponseEntity<UserResponse> updateUser(
-      @PathVariable(name = "user-id") String userId, @Valid @RequestBody UserUpdateRequest request) {
+      @PathVariable(name = "user-id") String userId,
+      @Valid @RequestBody UserUpdateRequest request) {
     return ResponseEntity.ok(UserMapper.toResponse(userService.update(userId, request)));
   }
 

@@ -35,7 +35,8 @@ public class MentionRestControllerImpl implements MentionRestController {
 
   @Override
   public ResponseEntity<List<MentionResponse>> getMentions() {
-    return ResponseEntity.ok(mentionService.getAll().stream().map(MentionMapper::toResponse).toList());
+    return ResponseEntity.ok(
+        mentionService.getAll().stream().map(MentionMapper::toResponse).toList());
   }
 
   @Override

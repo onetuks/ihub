@@ -16,4 +16,5 @@ public record ProjectResponse(
     LocalDateTime createdAt,
     LocalDateTime updatedAt
 ) {
+
 }

@@ -5,4 +5,5 @@ public record RoleResponse(
     String roleName,
     String description
 ) {
+
 }

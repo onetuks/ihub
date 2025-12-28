@@ -9,4 +9,5 @@ public record FeedItemUpdateRequest(
     String targetId,
     String summary
 ) {
+
 }

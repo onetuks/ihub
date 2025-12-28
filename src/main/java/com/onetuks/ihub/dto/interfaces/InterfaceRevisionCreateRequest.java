@@ -10,4 +10,5 @@ public record InterfaceRevisionCreateRequest(
     Map<String, String> snapshot,
     String reason
 ) {
+
 }

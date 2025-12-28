@@ -18,4 +18,5 @@ public record InterfaceUpdateRequest(
     String batchTimeLabel,
     String remark
 ) {
+
 }

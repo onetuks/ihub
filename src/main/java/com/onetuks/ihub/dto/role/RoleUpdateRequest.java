@@ -4,4 +4,5 @@ public record RoleUpdateRequest(
     String roleName,
     String description
 ) {
+
 }

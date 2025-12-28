@@ -88,5 +88,6 @@ public class JwtTokenService {
   }
 
   public record JwtToken(String value, Instant expiresAt) {
+
   }
 }

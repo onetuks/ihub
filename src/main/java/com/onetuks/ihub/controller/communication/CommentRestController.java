@@ -24,9 +24,9 @@ public interface CommentRestController {
 
   @Operation(summary = "Create comment")
   @ApiResponses({
-    @ApiResponse(responseCode = "201", description = "Comment created"),
-    @ApiResponse(responseCode = "400", description = "Invalid request"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "201", description = "Comment created"),
+      @ApiResponse(responseCode = "400", description = "Invalid request"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @PostMapping
   ResponseEntity<CommentResponse> createComment(
@@ -34,28 +34,28 @@ public interface CommentRestController {
 
   @Operation(summary = "Get comment by id")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Comment found"),
-    @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
-    @ApiResponse(responseCode = "404", description = "Comment not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Comment found"),
+      @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
+      @ApiResponse(responseCode = "404", description = "Comment not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping("/{commentId}")
   ResponseEntity<CommentResponse> getComment(@PathVariable String commentId);
 
   @Operation(summary = "List comments")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Comments listed"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Comments listed"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping
   ResponseEntity<List<CommentResponse>> getComments();
 
   @Operation(summary = "Update comment")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Comment updated"),
-    @ApiResponse(responseCode = "400", description = "Invalid request"),
-    @ApiResponse(responseCode = "404", description = "Comment not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Comment updated"),
+      @ApiResponse(responseCode = "400", description = "Invalid request"),
+      @ApiResponse(responseCode = "404", description = "Comment not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @PutMapping("/{commentId}")
   ResponseEntity<CommentResponse> updateComment(
@@ -64,10 +64,10 @@ public interface CommentRestController {
 
   @Operation(summary = "Delete comment")
   @ApiResponses({
-    @ApiResponse(responseCode = "204", description = "Comment deleted"),
-    @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
-    @ApiResponse(responseCode = "404", description = "Comment not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "204", description = "Comment deleted"),
+      @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
+      @ApiResponse(responseCode = "404", description = "Comment not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @DeleteMapping("/{commentId}")
   ResponseEntity<Void> deleteComment(@PathVariable String commentId);

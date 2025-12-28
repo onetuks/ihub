@@ -24,37 +24,37 @@ public interface FolderRestController {
 
   @Operation(summary = "Create folder")
   @ApiResponses({
-    @ApiResponse(responseCode = "201", description = "Folder created"),
-    @ApiResponse(responseCode = "400", description = "Invalid request"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "201", description = "Folder created"),
+      @ApiResponse(responseCode = "400", description = "Invalid request"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @PostMapping
   ResponseEntity<FolderResponse> createFolder(@Valid @RequestBody FolderCreateRequest request);
 
   @Operation(summary = "Get folder by id")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Folder found"),
-    @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
-    @ApiResponse(responseCode = "404", description = "Folder not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Folder found"),
+      @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
+      @ApiResponse(responseCode = "404", description = "Folder not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping("/{folderId}")
   ResponseEntity<FolderResponse> getFolder(@PathVariable String folderId);
 
   @Operation(summary = "List folders")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Folders listed"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Folders listed"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping
   ResponseEntity<List<FolderResponse>> getFolders();
 
   @Operation(summary = "Update folder")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Folder updated"),
-    @ApiResponse(responseCode = "400", description = "Invalid request"),
-    @ApiResponse(responseCode = "404", description = "Folder not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Folder updated"),
+      @ApiResponse(responseCode = "400", description = "Invalid request"),
+      @ApiResponse(responseCode = "404", description = "Folder not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @PutMapping("/{folderId}")
   ResponseEntity<FolderResponse> updateFolder(
@@ -63,10 +63,10 @@ public interface FolderRestController {
 
   @Operation(summary = "Delete folder")
   @ApiResponses({
-    @ApiResponse(responseCode = "204", description = "Folder deleted"),
-    @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
-    @ApiResponse(responseCode = "404", description = "Folder not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "204", description = "Folder deleted"),
+      @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
+      @ApiResponse(responseCode = "404", description = "Folder not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @DeleteMapping("/{folderId}")
   ResponseEntity<Void> deleteFolder(@PathVariable String folderId);

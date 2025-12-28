@@ -8,4 +8,5 @@ public record FolderCreateRequest(
     String name,
     String createdById
 ) {
+
 }

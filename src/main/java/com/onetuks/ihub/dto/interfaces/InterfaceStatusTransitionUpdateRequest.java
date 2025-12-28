@@ -9,4 +9,5 @@ public record InterfaceStatusTransitionUpdateRequest(
     InterfaceRole allowedRole,
     InterfaceStatusTransitionStatus status
 ) {
+
 }

@@ -12,4 +12,5 @@ public record MentionResponse(
     String createdById,
     LocalDateTime createdAt
 ) {
+
 }

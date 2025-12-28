@@ -12,4 +12,5 @@ public record InterfaceStatusResponse(
     LocalDateTime createdAt,
     LocalDateTime updatedAt
 ) {
+
 }

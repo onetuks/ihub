@@ -33,7 +33,8 @@ public class RoleAuthorizationAspect {
 
     boolean allowed = userRoles.stream().anyMatch(required::contains);
     if (!allowed) {
-      throw new AccessDeniedException("User lacks required role(s): " + String.join(", ", required));
+      throw new AccessDeniedException(
+          "User lacks required role(s): " + String.join(", ", required));
     }
 
     return joinPoint.proceed();

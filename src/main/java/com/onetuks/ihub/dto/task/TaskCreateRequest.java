@@ -23,4 +23,5 @@ public record TaskCreateRequest(
     Integer progress,
     String createdById
 ) {
+
 }

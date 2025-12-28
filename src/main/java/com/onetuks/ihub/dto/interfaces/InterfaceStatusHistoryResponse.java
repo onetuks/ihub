@@ -12,4 +12,5 @@ public record InterfaceStatusHistoryResponse(
     String relatedTaskId,
     String reason
 ) {
+
 }

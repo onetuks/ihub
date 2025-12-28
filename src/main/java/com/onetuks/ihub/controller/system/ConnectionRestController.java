@@ -24,9 +24,9 @@ public interface ConnectionRestController {
 
   @Operation(summary = "Create connection")
   @ApiResponses({
-    @ApiResponse(responseCode = "201", description = "Connection created"),
-    @ApiResponse(responseCode = "400", description = "Invalid request"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "201", description = "Connection created"),
+      @ApiResponse(responseCode = "400", description = "Invalid request"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @PostMapping
   ResponseEntity<ConnectionResponse> createConnection(
@@ -34,28 +34,28 @@ public interface ConnectionRestController {
 
   @Operation(summary = "Get connection by id")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Connection found"),
-    @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
-    @ApiResponse(responseCode = "404", description = "Connection not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Connection found"),
+      @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
+      @ApiResponse(responseCode = "404", description = "Connection not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping("/{connectionId}")
   ResponseEntity<ConnectionResponse> getConnection(@PathVariable String connectionId);
 
   @Operation(summary = "List connections")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Connections listed"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Connections listed"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping
   ResponseEntity<List<ConnectionResponse>> getConnections();
 
   @Operation(summary = "Update connection")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Connection updated"),
-    @ApiResponse(responseCode = "400", description = "Invalid request"),
-    @ApiResponse(responseCode = "404", description = "Connection not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Connection updated"),
+      @ApiResponse(responseCode = "400", description = "Invalid request"),
+      @ApiResponse(responseCode = "404", description = "Connection not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @PutMapping("/{connectionId}")
   ResponseEntity<ConnectionResponse> updateConnection(
@@ -64,10 +64,10 @@ public interface ConnectionRestController {
 
   @Operation(summary = "Delete connection")
   @ApiResponses({
-    @ApiResponse(responseCode = "204", description = "Connection deleted"),
-    @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
-    @ApiResponse(responseCode = "404", description = "Connection not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "204", description = "Connection deleted"),
+      @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
+      @ApiResponse(responseCode = "404", description = "Connection not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @DeleteMapping("/{connectionId}")
   ResponseEntity<Void> deleteConnection(@PathVariable String connectionId);

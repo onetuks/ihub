@@ -4,4 +4,5 @@ public record InterfaceStatusHistoryUpdateRequest(
     String toStatusId,
     String reason
 ) {
+
 }

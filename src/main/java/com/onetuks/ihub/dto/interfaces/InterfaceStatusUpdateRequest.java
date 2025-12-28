@@ -6,4 +6,5 @@ public record InterfaceStatusUpdateRequest(
     Integer seqOrder,
     Boolean isDefault
 ) {
+
 }

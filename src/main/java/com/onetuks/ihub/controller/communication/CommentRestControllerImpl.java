@@ -35,7 +35,8 @@ public class CommentRestControllerImpl implements CommentRestController {
 
   @Override
   public ResponseEntity<List<CommentResponse>> getComments() {
-    return ResponseEntity.ok(commentService.getAll().stream().map(CommentMapper::toResponse).toList());
+    return ResponseEntity.ok(
+        commentService.getAll().stream().map(CommentMapper::toResponse).toList());
   }
 
   @Override

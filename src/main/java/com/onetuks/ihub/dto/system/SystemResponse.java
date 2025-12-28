@@ -18,4 +18,5 @@ public record SystemResponse(
     LocalDateTime createdAt,
     LocalDateTime updatedAt
 ) {
+
 }

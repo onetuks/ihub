@@ -9,4 +9,5 @@ public record EventAttendeeResponse(
     Boolean isMandatory,
     EventAttendeeStatus attendStatus
 ) {
+
 }

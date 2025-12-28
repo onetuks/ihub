@@ -29,15 +29,19 @@ public class RoleRestControllerImpl implements RoleRestController {
 
   @RequiresRole(USER_FULL_ACCESS)
   @Override
-  public ResponseEntity<RoleGrantResponse> grantRoleToUser(@Valid @RequestBody RoleGrantRequest request) {
-    RoleGrantResponse response = RoleMapper.toGrantResponse(request.email(), roleService.grant(request));
+  public ResponseEntity<RoleGrantResponse> grantRoleToUser(
+      @Valid @RequestBody RoleGrantRequest request) {
+    RoleGrantResponse response = RoleMapper.toGrantResponse(request.email(),
+        roleService.grant(request));
     return ResponseEntity.ok(response);
   }
 
   @RequiresRole(USER_FULL_ACCESS)
   @Override
-  public ResponseEntity<RoleRevokeResponse> revokeRoleFromUser(@Valid @RequestBody RoleRevokeRequest request) {
-    RoleRevokeResponse response = RoleMapper.toRevokeResponse(request.email(), roleService.revoke(request));
+  public ResponseEntity<RoleRevokeResponse> revokeRoleFromUser(
+      @Valid @RequestBody RoleRevokeRequest request) {
+    RoleRevokeResponse response = RoleMapper.toRevokeResponse(request.email(),
+        roleService.revoke(request));
     return ResponseEntity.ok(response);
   }
 

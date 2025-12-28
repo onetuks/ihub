@@ -8,4 +8,5 @@ public record InterfaceRevisionUpdateRequest(
     Map<String, String> snapshot,
     String reason
 ) {
+
 }

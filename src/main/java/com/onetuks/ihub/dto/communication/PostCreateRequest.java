@@ -8,4 +8,5 @@ public record PostCreateRequest(
     String content,
     String createdById
 ) {
+
 }

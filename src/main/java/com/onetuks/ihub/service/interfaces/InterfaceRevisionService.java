@@ -60,7 +60,8 @@ public class InterfaceRevisionService {
 
   private InterfaceRevision findEntity(String revisionId) {
     return interfaceRevisionJpaRepository.findById(revisionId)
-        .orElseThrow(() -> new EntityNotFoundException("Interface revision not found: " + revisionId));
+        .orElseThrow(
+            () -> new EntityNotFoundException("Interface revision not found: " + revisionId));
   }
 
   private Interface findInterface(String interfaceId) {

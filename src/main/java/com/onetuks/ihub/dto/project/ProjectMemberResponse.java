@@ -11,4 +11,5 @@ public record ProjectMemberResponse(
     LocalDateTime joinedAt,
     LocalDateTime leftAt
 ) {
+
 }

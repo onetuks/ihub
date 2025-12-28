@@ -7,4 +7,5 @@ public record CommentUpdateRequest(
     String targetId,
     String content
 ) {
+
 }

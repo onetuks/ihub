@@ -11,4 +11,5 @@ public record CommentCreateRequest(
     String content,
     String createdById
 ) {
+
 }

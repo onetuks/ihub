@@ -24,9 +24,9 @@ public interface FeedItemRestController {
 
   @Operation(summary = "Create feed item")
   @ApiResponses({
-    @ApiResponse(responseCode = "201", description = "Feed item created"),
-    @ApiResponse(responseCode = "400", description = "Invalid request"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "201", description = "Feed item created"),
+      @ApiResponse(responseCode = "400", description = "Invalid request"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @PostMapping
   ResponseEntity<FeedItemResponse> createFeedItem(
@@ -34,28 +34,28 @@ public interface FeedItemRestController {
 
   @Operation(summary = "Get feed item by id")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Feed item found"),
-    @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
-    @ApiResponse(responseCode = "404", description = "Feed item not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Feed item found"),
+      @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
+      @ApiResponse(responseCode = "404", description = "Feed item not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping("/{feedItemId}")
   ResponseEntity<FeedItemResponse> getFeedItem(@PathVariable String feedItemId);
 
   @Operation(summary = "List feed items")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Feed items listed"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Feed items listed"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping
   ResponseEntity<List<FeedItemResponse>> getFeedItems();
 
   @Operation(summary = "Update feed item")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Feed item updated"),
-    @ApiResponse(responseCode = "400", description = "Invalid request"),
-    @ApiResponse(responseCode = "404", description = "Feed item not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Feed item updated"),
+      @ApiResponse(responseCode = "400", description = "Invalid request"),
+      @ApiResponse(responseCode = "404", description = "Feed item not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @PutMapping("/{feedItemId}")
   ResponseEntity<FeedItemResponse> updateFeedItem(
@@ -64,10 +64,10 @@ public interface FeedItemRestController {
 
   @Operation(summary = "Delete feed item")
   @ApiResponses({
-    @ApiResponse(responseCode = "204", description = "Feed item deleted"),
-    @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
-    @ApiResponse(responseCode = "404", description = "Feed item not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "204", description = "Feed item deleted"),
+      @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
+      @ApiResponse(responseCode = "404", description = "Feed item not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @DeleteMapping("/{feedItemId}")
   ResponseEntity<Void> deleteFeedItem(@PathVariable String feedItemId);

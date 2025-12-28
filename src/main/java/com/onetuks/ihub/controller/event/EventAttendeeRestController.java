@@ -24,9 +24,9 @@ public interface EventAttendeeRestController {
 
   @Operation(summary = "Create event attendee")
   @ApiResponses({
-    @ApiResponse(responseCode = "201", description = "Event attendee created"),
-    @ApiResponse(responseCode = "400", description = "Invalid request"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "201", description = "Event attendee created"),
+      @ApiResponse(responseCode = "400", description = "Invalid request"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @PostMapping
   ResponseEntity<EventAttendeeResponse> createEventAttendee(
@@ -34,28 +34,28 @@ public interface EventAttendeeRestController {
 
   @Operation(summary = "Get event attendee by id")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Event attendee found"),
-    @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
-    @ApiResponse(responseCode = "404", description = "Event attendee not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Event attendee found"),
+      @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
+      @ApiResponse(responseCode = "404", description = "Event attendee not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping("/{eventAttendeeId}")
   ResponseEntity<EventAttendeeResponse> getEventAttendee(@PathVariable String eventAttendeeId);
 
   @Operation(summary = "List event attendees")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Event attendees listed"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Event attendees listed"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping
   ResponseEntity<List<EventAttendeeResponse>> getEventAttendees();
 
   @Operation(summary = "Update event attendee")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Event attendee updated"),
-    @ApiResponse(responseCode = "400", description = "Invalid request"),
-    @ApiResponse(responseCode = "404", description = "Event attendee not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Event attendee updated"),
+      @ApiResponse(responseCode = "400", description = "Invalid request"),
+      @ApiResponse(responseCode = "404", description = "Event attendee not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @PutMapping("/{eventAttendeeId}")
   ResponseEntity<EventAttendeeResponse> updateEventAttendee(
@@ -64,10 +64,10 @@ public interface EventAttendeeRestController {
 
   @Operation(summary = "Delete event attendee")
   @ApiResponses({
-    @ApiResponse(responseCode = "204", description = "Event attendee deleted"),
-    @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
-    @ApiResponse(responseCode = "404", description = "Event attendee not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "204", description = "Event attendee deleted"),
+      @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
+      @ApiResponse(responseCode = "404", description = "Event attendee not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @DeleteMapping("/{eventAttendeeId}")
   ResponseEntity<Void> deleteEventAttendee(@PathVariable String eventAttendeeId);

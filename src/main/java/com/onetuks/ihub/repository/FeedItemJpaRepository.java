@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface FeedItemJpaRepository extends JpaRepository<FeedItem, String> {
+
 }

@@ -25,4 +25,5 @@ public record TaskResponse(
     LocalDateTime createdAt,
     LocalDateTime updatedAt
 ) {
+
 }

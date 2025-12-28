@@ -24,37 +24,37 @@ public interface SystemRestController {
 
   @Operation(summary = "Create system")
   @ApiResponses({
-    @ApiResponse(responseCode = "201", description = "System created"),
-    @ApiResponse(responseCode = "400", description = "Invalid request"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "201", description = "System created"),
+      @ApiResponse(responseCode = "400", description = "Invalid request"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @PostMapping
   ResponseEntity<SystemResponse> createSystem(@Valid @RequestBody SystemCreateRequest request);
 
   @Operation(summary = "Get system by id")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "System found"),
-    @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
-    @ApiResponse(responseCode = "404", description = "System not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "System found"),
+      @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
+      @ApiResponse(responseCode = "404", description = "System not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping("/{systemId}")
   ResponseEntity<SystemResponse> getSystem(@PathVariable String systemId);
 
   @Operation(summary = "List systems")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Systems listed"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Systems listed"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping
   ResponseEntity<List<SystemResponse>> getSystems();
 
   @Operation(summary = "Update system")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "System updated"),
-    @ApiResponse(responseCode = "400", description = "Invalid request"),
-    @ApiResponse(responseCode = "404", description = "System not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "System updated"),
+      @ApiResponse(responseCode = "400", description = "Invalid request"),
+      @ApiResponse(responseCode = "404", description = "System not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @PutMapping("/{systemId}")
   ResponseEntity<SystemResponse> updateSystem(
@@ -63,10 +63,10 @@ public interface SystemRestController {
 
   @Operation(summary = "Delete system")
   @ApiResponses({
-    @ApiResponse(responseCode = "204", description = "System deleted"),
-    @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
-    @ApiResponse(responseCode = "404", description = "System not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "204", description = "System deleted"),
+      @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
+      @ApiResponse(responseCode = "404", description = "System not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @DeleteMapping("/{systemId}")
   ResponseEntity<Void> deleteSystem(@PathVariable String systemId);

@@ -15,4 +15,5 @@ public record TaskFilterGroupCreateRequest(
     LocalDate dateFrom,
     LocalDate dateTo
 ) {
+
 }

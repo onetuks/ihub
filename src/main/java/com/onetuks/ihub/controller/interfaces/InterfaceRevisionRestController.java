@@ -24,9 +24,9 @@ public interface InterfaceRevisionRestController {
 
   @Operation(summary = "Create interface revision")
   @ApiResponses({
-    @ApiResponse(responseCode = "201", description = "Interface revision created"),
-    @ApiResponse(responseCode = "400", description = "Invalid request"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "201", description = "Interface revision created"),
+      @ApiResponse(responseCode = "400", description = "Invalid request"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @PostMapping
   ResponseEntity<InterfaceRevisionResponse> createInterfaceRevision(
@@ -34,28 +34,28 @@ public interface InterfaceRevisionRestController {
 
   @Operation(summary = "Get interface revision by id")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Interface revision found"),
-    @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
-    @ApiResponse(responseCode = "404", description = "Interface revision not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Interface revision found"),
+      @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
+      @ApiResponse(responseCode = "404", description = "Interface revision not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping("/{revisionId}")
   ResponseEntity<InterfaceRevisionResponse> getInterfaceRevision(@PathVariable String revisionId);
 
   @Operation(summary = "List interface revisions")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Interface revisions listed"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Interface revisions listed"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping
   ResponseEntity<List<InterfaceRevisionResponse>> getInterfaceRevisions();
 
   @Operation(summary = "Update interface revision")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Interface revision updated"),
-    @ApiResponse(responseCode = "400", description = "Invalid request"),
-    @ApiResponse(responseCode = "404", description = "Interface revision not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Interface revision updated"),
+      @ApiResponse(responseCode = "400", description = "Invalid request"),
+      @ApiResponse(responseCode = "404", description = "Interface revision not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @PutMapping("/{revisionId}")
   ResponseEntity<InterfaceRevisionResponse> updateInterfaceRevision(
@@ -64,10 +64,10 @@ public interface InterfaceRevisionRestController {
 
   @Operation(summary = "Delete interface revision")
   @ApiResponses({
-    @ApiResponse(responseCode = "204", description = "Interface revision deleted"),
-    @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
-    @ApiResponse(responseCode = "404", description = "Interface revision not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "204", description = "Interface revision deleted"),
+      @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
+      @ApiResponse(responseCode = "404", description = "Interface revision not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @DeleteMapping("/{revisionId}")
   ResponseEntity<Void> deleteInterfaceRevision(@PathVariable String revisionId);

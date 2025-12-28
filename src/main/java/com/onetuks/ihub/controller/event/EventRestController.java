@@ -24,37 +24,37 @@ public interface EventRestController {
 
   @Operation(summary = "Create event")
   @ApiResponses({
-    @ApiResponse(responseCode = "201", description = "Event created"),
-    @ApiResponse(responseCode = "400", description = "Invalid request"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "201", description = "Event created"),
+      @ApiResponse(responseCode = "400", description = "Invalid request"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @PostMapping
   ResponseEntity<EventResponse> createEvent(@Valid @RequestBody EventCreateRequest request);
 
   @Operation(summary = "Get event by id")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Event found"),
-    @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
-    @ApiResponse(responseCode = "404", description = "Event not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Event found"),
+      @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
+      @ApiResponse(responseCode = "404", description = "Event not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping("/{eventId}")
   ResponseEntity<EventResponse> getEvent(@PathVariable String eventId);
 
   @Operation(summary = "List events")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Events listed"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Events listed"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping
   ResponseEntity<List<EventResponse>> getEvents();
 
   @Operation(summary = "Update event")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Event updated"),
-    @ApiResponse(responseCode = "400", description = "Invalid request"),
-    @ApiResponse(responseCode = "404", description = "Event not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Event updated"),
+      @ApiResponse(responseCode = "400", description = "Invalid request"),
+      @ApiResponse(responseCode = "404", description = "Event not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @PutMapping("/{eventId}")
   ResponseEntity<EventResponse> updateEvent(
@@ -63,10 +63,10 @@ public interface EventRestController {
 
   @Operation(summary = "Delete event")
   @ApiResponses({
-    @ApiResponse(responseCode = "204", description = "Event deleted"),
-    @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
-    @ApiResponse(responseCode = "404", description = "Event not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "204", description = "Event deleted"),
+      @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
+      @ApiResponse(responseCode = "404", description = "Event not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @DeleteMapping("/{eventId}")
   ResponseEntity<Void> deleteEvent(@PathVariable String eventId);

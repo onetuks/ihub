@@ -24,9 +24,9 @@ public interface InterfaceStatusTransitionRestController {
 
   @Operation(summary = "Create interface status transition")
   @ApiResponses({
-    @ApiResponse(responseCode = "201", description = "Interface status transition created"),
-    @ApiResponse(responseCode = "400", description = "Invalid request"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "201", description = "Interface status transition created"),
+      @ApiResponse(responseCode = "400", description = "Invalid request"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @PostMapping
   ResponseEntity<InterfaceStatusTransitionResponse> createInterfaceStatusTransition(
@@ -34,10 +34,10 @@ public interface InterfaceStatusTransitionRestController {
 
   @Operation(summary = "Get interface status transition by id")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Interface status transition found"),
-    @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
-    @ApiResponse(responseCode = "404", description = "Interface status transition not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Interface status transition found"),
+      @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
+      @ApiResponse(responseCode = "404", description = "Interface status transition not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping("/{transitionId}")
   ResponseEntity<InterfaceStatusTransitionResponse> getInterfaceStatusTransition(
@@ -45,18 +45,18 @@ public interface InterfaceStatusTransitionRestController {
 
   @Operation(summary = "List interface status transitions")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Interface status transitions listed"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Interface status transitions listed"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping
   ResponseEntity<List<InterfaceStatusTransitionResponse>> getInterfaceStatusTransitions();
 
   @Operation(summary = "Update interface status transition")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Interface status transition updated"),
-    @ApiResponse(responseCode = "400", description = "Invalid request"),
-    @ApiResponse(responseCode = "404", description = "Interface status transition not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Interface status transition updated"),
+      @ApiResponse(responseCode = "400", description = "Invalid request"),
+      @ApiResponse(responseCode = "404", description = "Interface status transition not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @PutMapping("/{transitionId}")
   ResponseEntity<InterfaceStatusTransitionResponse> updateInterfaceStatusTransition(
@@ -65,10 +65,10 @@ public interface InterfaceStatusTransitionRestController {
 
   @Operation(summary = "Delete interface status transition")
   @ApiResponses({
-    @ApiResponse(responseCode = "204", description = "Interface status transition deleted"),
-    @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
-    @ApiResponse(responseCode = "404", description = "Interface status transition not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "204", description = "Interface status transition deleted"),
+      @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
+      @ApiResponse(responseCode = "404", description = "Interface status transition not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @DeleteMapping("/{transitionId}")
   ResponseEntity<Void> deleteInterfaceStatusTransition(@PathVariable String transitionId);

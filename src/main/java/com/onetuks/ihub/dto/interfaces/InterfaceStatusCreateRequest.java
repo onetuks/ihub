@@ -10,4 +10,5 @@ public record InterfaceStatusCreateRequest(
     @NotNull Integer seqOrder,
     @NotNull Boolean isDefault
 ) {
+
 }

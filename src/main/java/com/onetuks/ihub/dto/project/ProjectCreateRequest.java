@@ -13,4 +13,5 @@ public record ProjectCreateRequest(
     @NotNull String currentAdminId,
     @NotNull ProjectStatus status
 ) {
+
 }

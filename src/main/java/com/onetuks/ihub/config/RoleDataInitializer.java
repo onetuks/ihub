@@ -23,8 +23,10 @@ public class RoleDataInitializer implements ApplicationRunner {
   public static final String POST_FULL_ACCESS = "POST_FULL_ACCESS";
   public static final Map<String, String> PREPARED_ROLES = Map.of(
       USER_FULL_ACCESS, "계정을 생성하고 수정할 수 있습니다.\n계정에 권한을 부여하고 수정할 수 있습니다.",
-      PROJECT_FULL_ACCESS, "프로젝트를 생성 및 수정할 수 있습니다.\n프로젝트에 초대되는 멤버의 권한(ADMIN, MEMBER, VIEWER)을 관리할 수 있습니다.\n프로젝트에 초대된 멤버를 삭제할 수 있습니다.",
-      SYSTEM_FULL_ACCESS, "프로젝트 내에서 시스템을 생성하고 수정하고, 삭제할 수 있습니다.\n프로젝트 내에서 시스템 별로 접속 정보를 관리할 담당자를 지정할 수 있습니다.",
+      PROJECT_FULL_ACCESS,
+      "프로젝트를 생성 및 수정할 수 있습니다.\n프로젝트에 초대되는 멤버의 권한(ADMIN, MEMBER, VIEWER)을 관리할 수 있습니다.\n프로젝트에 초대된 멤버를 삭제할 수 있습니다.",
+      SYSTEM_FULL_ACCESS,
+      "프로젝트 내에서 시스템을 생성하고 수정하고, 삭제할 수 있습니다.\n프로젝트 내에서 시스템 별로 접속 정보를 관리할 담당자를 지정할 수 있습니다.",
       TASK_FULL_ACCESS, "프로젝트 내 전체 일감에 대한 리스트 및 상세 내역을 조회할 수 있습니다.",
       POST_FULL_ACCESS, "프로젝트 내 메모를 작성하고, 조회할 수 있습니다.\n프로젝트 내 메모란은 EAI 개발자들을 위해 만들어진 공유 공간입니다."
   );

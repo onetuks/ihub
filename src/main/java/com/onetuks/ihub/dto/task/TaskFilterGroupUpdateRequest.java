@@ -12,4 +12,5 @@ public record TaskFilterGroupUpdateRequest(
     LocalDate dateTo,
     LocalDate deletedAt
 ) {
+
 }
