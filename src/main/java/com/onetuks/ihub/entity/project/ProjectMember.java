@@ -12,7 +12,9 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
@@ -20,6 +22,8 @@ import lombok.Setter;
     @UniqueConstraint(name = "unq_project_user", columnNames = {"project_id", "user_id"})})
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class ProjectMember {
 
   public static final String TABLE_NAME = "project_members";

@@ -9,6 +9,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,9 +26,11 @@ public interface ProjectRestController {
 
   @Operation(summary = "Create project")
   @ApiResponses({
-    @ApiResponse(responseCode = "201", description = "Project created"),
-    @ApiResponse(responseCode = "400", description = "Invalid request"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "201", description = "Project created"),
+      @ApiResponse(responseCode = "400", description = "Invalid request"),
+      @ApiResponse(responseCode = "401", description = "No Authorization"),
+      @ApiResponse(responseCode = "403", description = "Forbidden"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @PostMapping
   ResponseEntity<ProjectResponse> createProject(
@@ -34,28 +38,34 @@ public interface ProjectRestController {
 
   @Operation(summary = "Get project by id")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Project found"),
-    @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
-    @ApiResponse(responseCode = "404", description = "Project not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Project found"),
+      @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
+      @ApiResponse(responseCode = "401", description = "No Authorization"),
+      @ApiResponse(responseCode = "403", description = "Forbidden"),
+      @ApiResponse(responseCode = "404", description = "Project not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping("/{projectId}")
   ResponseEntity<ProjectResponse> getProject(@PathVariable String projectId);
 
   @Operation(summary = "List projects")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Projects listed"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Projects listed"),
+      @ApiResponse(responseCode = "401", description = "No Authorization"),
+      @ApiResponse(responseCode = "403", description = "Forbidden"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping
-  ResponseEntity<List<ProjectResponse>> getProjects();
+  ResponseEntity<Page<ProjectResponse>> getProjects(PageableDefault pageable);
 
   @Operation(summary = "Update project")
   @ApiResponses({
-    @ApiResponse(responseCode = "200", description = "Project updated"),
-    @ApiResponse(responseCode = "400", description = "Invalid request"),
-    @ApiResponse(responseCode = "404", description = "Project not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "200", description = "Project updated"),
+      @ApiResponse(responseCode = "400", description = "Invalid request"),
+      @ApiResponse(responseCode = "401", description = "No Authorization"),
+      @ApiResponse(responseCode = "403", description = "Forbidden"),
+      @ApiResponse(responseCode = "404", description = "Project not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @PutMapping("/{projectId}")
   ResponseEntity<ProjectResponse> updateProject(
@@ -64,10 +74,12 @@ public interface ProjectRestController {
 
   @Operation(summary = "Delete project")
   @ApiResponses({
-    @ApiResponse(responseCode = "204", description = "Project deleted"),
-    @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
-    @ApiResponse(responseCode = "404", description = "Project not found"),
-    @ApiResponse(responseCode = "500", description = "Internal server error")
+      @ApiResponse(responseCode = "204", description = "Project deleted"),
+      @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
+      @ApiResponse(responseCode = "401", description = "No Authorization"),
+      @ApiResponse(responseCode = "403", description = "Forbidden"),
+      @ApiResponse(responseCode = "404", description = "Project not found"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @DeleteMapping("/{projectId}")
   ResponseEntity<Void> deleteProject(@PathVariable String projectId);

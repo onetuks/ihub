@@ -1,9 +1,12 @@
 package com.onetuks.ihub.mapper;
 
-import com.onetuks.ihub.dto.project.ProjectMemberCreateRequest;
 import com.onetuks.ihub.dto.project.ProjectMemberResponse;
 import com.onetuks.ihub.dto.project.ProjectMemberUpdateRequest;
+import com.onetuks.ihub.entity.project.Project;
 import com.onetuks.ihub.entity.project.ProjectMember;
+import com.onetuks.ihub.entity.project.ProjectMemberRole;
+import com.onetuks.ihub.entity.user.User;
+import java.time.LocalDateTime;
 
 public final class ProjectMemberMapper {
 
@@ -20,11 +23,14 @@ public final class ProjectMemberMapper {
         projectMember.getLeftAt());
   }
 
-  public static void applyCreate(ProjectMember projectMember, ProjectMemberCreateRequest request) {
-    projectMember.setProjectMemberId(UUIDProvider.provideUUID(ProjectMember.TABLE_NAME));
-    projectMember.setRole(request.role());
-    projectMember.setJoinedAt(request.joinedAt());
-    projectMember.setLeftAt(request.leftAt());
+  public static ProjectMember applyCreate(Project project, User currentUser) {
+    return new ProjectMember(
+        UUIDProvider.provideUUID(ProjectMember.TABLE_NAME),
+        project,
+        currentUser,
+        ProjectMemberRole.PROJECT_OWNER,
+        LocalDateTime.now(),
+        null);
   }
 
   public static void applyUpdate(ProjectMember projectMember, ProjectMemberUpdateRequest request) {

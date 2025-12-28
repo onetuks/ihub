@@ -1,5 +1,7 @@
 package com.onetuks.ihub.service.project;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -8,21 +10,26 @@ import com.onetuks.ihub.TestcontainersConfiguration;
 import com.onetuks.ihub.dto.project.ProjectCreateRequest;
 import com.onetuks.ihub.dto.project.ProjectResponse;
 import com.onetuks.ihub.dto.project.ProjectUpdateRequest;
+import com.onetuks.ihub.entity.project.Project;
 import com.onetuks.ihub.entity.project.ProjectStatus;
 import com.onetuks.ihub.entity.user.User;
 import com.onetuks.ihub.entity.user.UserStatus;
+import com.onetuks.ihub.exception.AccessDeniedException;
 import com.onetuks.ihub.mapper.ProjectMapper;
 import com.onetuks.ihub.repository.ProjectJpaRepository;
+import com.onetuks.ihub.repository.ProjectMemberJpaRepository;
 import com.onetuks.ihub.repository.UserJpaRepository;
 import jakarta.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.util.List;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 @SpringBootTest
 @Import(TestcontainersConfiguration.class)
@@ -35,55 +42,41 @@ class ProjectServiceTest {
   private ProjectJpaRepository projectJpaRepository;
 
   @Autowired
+  private ProjectMemberJpaRepository projectMemberJpaRepository;
+
+  @Autowired
   private UserJpaRepository userJpaRepository;
 
   private User creator;
   private User admin;
+  private User hacker;
 
   @BeforeEach
   void setUp() {
     creator = userJpaRepository.save(buildUser("creator@example.com", "Creator"));
     admin = userJpaRepository.save(buildUser("admin@example.com", "Admin"));
-  }
-
-  @AfterEach
-  void tearDown() {
-    projectJpaRepository.deleteAll();
-    userJpaRepository.deleteAll();
+    hacker = userJpaRepository.save(buildUser("hacker@example.com", "Hacker"));
   }
 
   @Test
   void createProject_success() {
-    ProjectCreateRequest request = new ProjectCreateRequest(
-        "Project A",
-        "Desc",
-        LocalDate.now(),
-        LocalDate.now().plusDays(10),
-        creator.getEmail(),
-        admin.getEmail(),
-        ProjectStatus.ACTIVE);
+    ProjectCreateRequest request = createRequest("PRoject Create");
 
-    ProjectResponse response = ProjectMapper.toResponse(projectService.create(request));
+    Project result = projectService.create(creator, request);
 
-    assertNotNull(response.projectId());
-    assertEquals("Project A", response.title());
-    assertEquals(ProjectStatus.ACTIVE, response.status());
-    assertEquals(creator.getEmail(), response.createdById());
-    assertEquals(admin.getEmail(), response.currentAdminId());
+    assertThat(result.getProjectId()).isNotNull();
+    assertThat(result.getTitle()).isEqualToIgnoringCase(request.title());
+    assertThat(result.getStatus()).isEqualTo(ProjectStatus.ACTIVE);
+    assertThat(result.getCreatedBy().getUserId()).isEqualTo(creator.getUserId());
+    assertThat(result.getCurrentAdmin().getUserId()).isEqualTo(admin.getUserId());
   }
 
   @Test
   void updateProject_success() {
-    ProjectResponse created = ProjectMapper.toResponse(projectService.create(new ProjectCreateRequest(
-        "Project B",
-        "Desc",
-        LocalDate.now(),
-        LocalDate.now().plusDays(5),
-        creator.getEmail(),
-        admin.getEmail(),
-        ProjectStatus.ACTIVE)));
+    // Given
+    Project created = projectService.create(creator, createRequest("Project update"));
 
-    ProjectUpdateRequest updateRequest = new ProjectUpdateRequest(
+    ProjectUpdateRequest request = new ProjectUpdateRequest(
         "Project B Updated",
         "New Desc",
         LocalDate.now().plusDays(1),
@@ -91,36 +84,46 @@ class ProjectServiceTest {
         creator.getEmail(), // swap admin
         ProjectStatus.INACTIVE);
 
-    ProjectResponse updated = ProjectMapper.toResponse(projectService.update(created.projectId(), updateRequest));
+    // When
+    Project result = projectService.update(creator, created.getProjectId(), request);
 
-    assertEquals("Project B Updated", updated.title());
-    assertEquals("New Desc", updated.description());
-    assertEquals(ProjectStatus.INACTIVE, updated.status());
-    assertEquals(creator.getEmail(), updated.currentAdminId());
+    // Then
+    assertThat(result.getProjectId()).isNotNull();
+    assertThat(result.getTitle()).isEqualToIgnoringCase(request.title());
+    assertThat(result.getStatus()).isEqualTo(request.status());
+    assertThat(result.getCreatedBy().getUserId()).isEqualTo(creator.getUserId());
+    assertThat(result.getCurrentAdmin().getUserId()).isEqualTo(request.currentAdminId());
+  }
+
+  @Test
+  void getProject_exception() {
+    // Given
+    Project created = projectService.create(creator, createRequest("Project get exception"));
+
+    // When & Then
+    assertThatThrownBy(() -> projectService.getById(hacker, created.getProjectId()))
+        .isInstanceOf(AccessDeniedException.class);
   }
 
   @Test
   void getProjects_returnsAll() {
-    projectService.create(new ProjectCreateRequest(
-        "P1", null, null, null, creator.getEmail(), admin.getEmail(), ProjectStatus.ACTIVE));
-    projectService.create(new ProjectCreateRequest(
-        "P2", null, null, null, creator.getEmail(), admin.getEmail(), ProjectStatus.ACTIVE));
+    Pageable pageable = PageRequest.of(10, 10);
+    long expected = projectJpaRepository.count() + 2;
+    projectService.create(creator, createRequest("Project getAll1"));
+    projectService.create(creator, createRequest("Project getAll2"));
 
-    List<ProjectResponse> responses =
-        projectService.getAll().stream().map(ProjectMapper::toResponse).toList();
+    Page<Project> results = projectService.getAll(creator, pageable);
 
-    assertEquals(2, responses.size());
+    assertThat(results.getTotalElements()).isEqualTo((int) expected);
   }
 
   @Test
   void deleteProject_success() {
-    ProjectResponse created = ProjectMapper.toResponse(projectService.create(new ProjectCreateRequest(
-        "P3", null, null, null, creator.getEmail(), admin.getEmail(), ProjectStatus.ACTIVE)));
+    Project created = projectService.create(creator, createRequest("Project Delete"));
 
-    projectService.delete(created.projectId());
+    Project result = projectService.delete(creator, created.getProjectId());
 
-    assertEquals(0, projectJpaRepository.count());
-    assertThrows(EntityNotFoundException.class, () -> projectService.getById(created.projectId()));
+    assertThat(result.getStatus()).isEqualTo(ProjectStatus.DELETED);
   }
 
   private User buildUser(String email, String name) {
@@ -131,5 +134,15 @@ class ProjectServiceTest {
     user.setName(name);
     user.setStatus(UserStatus.ACTIVE);
     return user;
+  }
+
+  private ProjectCreateRequest createRequest(String title) {
+    return new ProjectCreateRequest(
+        title,
+        "Desc",
+        LocalDate.now(),
+        LocalDate.now().plusDays(5),
+        admin.getEmail(),
+        ProjectStatus.ACTIVE);
   }
 }
