@@ -9,6 +9,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RequestMapping("/api/users")
 @Tag(name = "User", description = "User management APIs")
@@ -47,7 +50,7 @@ public interface UserRestController {
     @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping
-  ResponseEntity<List<UserResponse>> getUsers();
+  ResponseEntity<Page<UserResponse>> getUsers(PageableDefault pageable);
 
   @Operation(summary = "Update user")
   @ApiResponses({

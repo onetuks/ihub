@@ -12,9 +12,13 @@ import jakarta.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -37,8 +41,10 @@ public class UserRestControllerImpl implements UserRestController {
   }
 
   @Override
-  public ResponseEntity<List<UserResponse>> getUsers() {
-    return ResponseEntity.ok(userService.getAll().stream().map(UserMapper::toResponse).toList());
+  public ResponseEntity<Page<UserResponse>> getUsers(PageableDefault pageable) {
+    Page<UserResponse> response = userService.getAll(PageRequest.of(pageable.page(), pageable.size()))
+        .map(UserMapper::toResponse);
+    return ResponseEntity.ok(response);
   }
 
   @RequiresRole(USER_FULL_ACCESS)

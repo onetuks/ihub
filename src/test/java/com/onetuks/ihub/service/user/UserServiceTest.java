@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.onetuks.ihub.IHubApplicationTests;
 import com.onetuks.ihub.TestcontainersConfiguration;
 import com.onetuks.ihub.dto.user.UserCreateRequest;
 import com.onetuks.ihub.dto.user.UserResponse;
@@ -14,12 +13,14 @@ import com.onetuks.ihub.entity.user.User;
 import com.onetuks.ihub.entity.user.UserStatus;
 import com.onetuks.ihub.mapper.UserMapper;
 import com.onetuks.ihub.repository.UserJpaRepository;
-import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 @SpringBootTest
 @Import(TestcontainersConfiguration.class)
@@ -73,13 +74,13 @@ class UserServiceTest {
   @Test
   void getUsers_returnsAll() {
     long expected = userJpaRepository.count() + 2;
+    Pageable pageable = PageRequest.of(10, 10);
     userService.create(createRequest("a@example.com", "A"));
     userService.create(createRequest("b@example.com", "B"));
 
-    List<UserResponse> responses = userService.getAll().stream().map(UserMapper::toResponse)
-        .toList();
+    Page<User> results = userService.getAll(pageable);
 
-    assertEquals(expected, responses.size());
+    assertThat(results.getTotalElements()).isEqualTo(expected);
   }
 
   @Test

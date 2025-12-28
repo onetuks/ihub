@@ -9,6 +9,9 @@ import com.onetuks.ihub.repository.UserJpaRepository;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,8 +37,8 @@ public class UserService {
   }
 
   @Transactional(readOnly = true)
-  public List<User> getAll() {
-    return userJpaRepository.findAll();
+  public Page<User> getAll(Pageable pageable) {
+    return userJpaRepository.findAll(pageable);
   }
 
   @Transactional
