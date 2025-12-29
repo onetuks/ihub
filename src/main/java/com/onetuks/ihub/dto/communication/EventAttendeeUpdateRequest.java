@@ -1,6 +1,6 @@
-package com.onetuks.ihub.dto.event;
+package com.onetuks.ihub.dto.communication;
 
-import com.onetuks.ihub.entity.event.EventAttendeeStatus;
+import com.onetuks.ihub.entity.communication.EventAttendeeStatus;
 
 public record EventAttendeeUpdateRequest(
     Boolean isMandatory,

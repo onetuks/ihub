@@ -1,4 +1,4 @@
-package com.onetuks.ihub.entity.event;
+package com.onetuks.ihub.entity.communication;
 
 import com.onetuks.ihub.entity.project.Project;
 import com.onetuks.ihub.entity.user.User;
@@ -10,13 +10,17 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = Event.TABLE_NAME)
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Event {
 
   public static final String TABLE_NAME = "events";

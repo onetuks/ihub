@@ -214,7 +214,7 @@ Ref: task_filter_group_statuses.group_id - task_filter_groups.group_id
 ///////////////////////////////////////////////////////
 // Posts / Events (일정) / Feed /
 ///////////////////////////////////////////////////////
-
+**done**
 Table posts { //글
 post_id varchar2 [pk]
 project_id varchar2 [not null]

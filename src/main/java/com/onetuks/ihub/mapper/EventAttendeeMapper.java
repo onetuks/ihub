@@ -1,9 +1,9 @@
 package com.onetuks.ihub.mapper;
 
-import com.onetuks.ihub.dto.event.EventAttendeeCreateRequest;
-import com.onetuks.ihub.dto.event.EventAttendeeResponse;
-import com.onetuks.ihub.dto.event.EventAttendeeUpdateRequest;
-import com.onetuks.ihub.entity.event.EventAttendee;
+import com.onetuks.ihub.dto.communication.EventAttendeeCreateRequest;
+import com.onetuks.ihub.dto.communication.EventAttendeeResponse;
+import com.onetuks.ihub.dto.communication.EventAttendeeUpdateRequest;
+import com.onetuks.ihub.entity.communication.EventAttendee;
 
 public final class EventAttendeeMapper {
 

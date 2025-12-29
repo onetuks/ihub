@@ -1,4 +1,4 @@
-package com.onetuks.ihub.dto.event;
+package com.onetuks.ihub.dto.communication;
 
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -10,8 +10,7 @@ public record EventCreateRequest(
     LocalDateTime endDatetime,
     String location,
     String content,
-    Integer remindBeforeMinutes,
-    String createdById
+    Integer remindBeforeMinutes
 ) {
 
 }

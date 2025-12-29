@@ -12,6 +12,7 @@ import com.onetuks.ihub.repository.PostJpaRepository;
 import com.onetuks.ihub.repository.ProjectJpaRepository;
 import com.onetuks.ihub.repository.ProjectMemberJpaRepository;
 import com.onetuks.ihub.repository.UserJpaRepository;
+import com.onetuks.ihub.service.project.ProjectMemberCheckComponent;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -23,10 +24,9 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class PostService {
 
+  private final ProjectMemberCheckComponent projectMemberCheckComponent;
   private final PostJpaRepository postJpaRepository;
   private final ProjectJpaRepository projectJpaRepository;
-  private final ProjectMemberJpaRepository projectMemberJpaRepository;
-  private final UserJpaRepository userJpaRepository;
 
   @Transactional
   public Post create(User currentUser, PostCreateRequest request) {
@@ -40,20 +40,20 @@ public class PostService {
   @Transactional(readOnly = true)
   public Post getById(User currentUser, String postId) {
     Post post = findEntity(postId);
-    checkIsProjectMember(currentUser, post.getProject().getProjectId());
+    projectMemberCheckComponent.checkIsProjectMember(currentUser, post.getProject().getProjectId());
     return post;
   }
 
   @Transactional(readOnly = true)
   public Page<Post> getAll(User currentUser, String projectId, Pageable pageable) {
-    checkIsProjectMember(currentUser, projectId);
+    projectMemberCheckComponent.checkIsProjectMember(currentUser, projectId);
     return postJpaRepository.findAllByProject_ProjectId(projectId, pageable);
   }
 
   @Transactional
   public Post update(User currentUser, String postId, PostUpdateRequest request) {
     Post post = findEntity(postId);
-    checkIsProjectMember(currentUser, post.getProject().getProjectId());
+    projectMemberCheckComponent.checkIsProjectMember(currentUser, post.getProject().getProjectId());
     PostMapper.applyUpdate(post, request);
     return post;
   }
@@ -61,7 +61,7 @@ public class PostService {
   @Transactional
   public Post delete(User currentUser, String postId) {
     Post post = findEntity(postId);
-    checkIsProjectMember(currentUser, post.getProject().getProjectId());
+    projectMemberCheckComponent.checkIsProjectMember(currentUser, post.getProject().getProjectId());
     post.setStatus(PostStatus.DELETED);
     return post;
   }
@@ -74,13 +74,5 @@ public class PostService {
   private Project findProject(String projectId) {
     return projectJpaRepository.findById(projectId)
         .orElseThrow(() -> new EntityNotFoundException("Project not found: " + projectId));
-  }
-
-  private void checkIsProjectMember(User currentUser, String projectId) {
-    boolean isProjectMember =
-        projectMemberJpaRepository.existsByProject_ProjectIdAndUser(projectId, currentUser);
-    if (!isProjectMember) {
-      throw new AccessDeniedException("프로젝트 멤버가 아닙니다.");
-    }
   }
 }

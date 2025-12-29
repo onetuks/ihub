@@ -1,11 +1,12 @@
-package com.onetuks.ihub.dto.connection;
+package com.onetuks.ihub.dto.system;
 
 import com.onetuks.ihub.entity.system.ConnectionStatus;
 import com.onetuks.ihub.entity.system.Protocol;
+import jakarta.validation.constraints.NotNull;
 
-public record ConnectionUpdateRequest(
-    String projectId,
-    String systemId,
+public record ConnectionCreateRequest(
+    @NotNull String projectId,
+    @NotNull String systemId,
     String name,
     Protocol protocol,
     String host,
@@ -14,9 +15,10 @@ public record ConnectionUpdateRequest(
     String username,
     String authType,
     String extraConfig,
-    ConnectionStatus status,
+    @NotNull ConnectionStatus status,
     String description,
-    String updatedById
+    @NotNull String createdById,
+    @NotNull String updatedById
 ) {
 
 }

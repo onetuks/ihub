@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class ProjectService {
 
+  private final ProjectMemberCheckComponent projectMemberCheckComponent;
   private final ProjectJpaRepository projectRepository;
   private final ProjectMemberJpaRepository projectMemberRepository;
   private final UserJpaRepository userRepository;
@@ -37,7 +38,7 @@ public class ProjectService {
 
   @Transactional(readOnly = true)
   public Project getById(User currentUser, String projectId) {
-    checkIsProjectMember(currentUser, projectId);
+    projectMemberCheckComponent.checkIsProjectMember(currentUser, projectId);
     return findEntity(projectId);
   }
 
@@ -49,12 +50,12 @@ public class ProjectService {
 
   @Transactional
   public Project update(User currentUser, String projectId, ProjectUpdateRequest request) {
-    checkIsProjectMember(currentUser, projectId);
+    projectMemberCheckComponent.checkIsProjectMember(currentUser, projectId);
 
     Project project = findEntity(projectId);
     ProjectMapper.applyUpdate(project, request);
     if (request.currentAdminId() != null) {
-      checkIsProjectMember(findUser(request.currentAdminId()), projectId);
+      projectMemberCheckComponent.checkIsProjectMember(findUser(request.currentAdminId()), projectId);
       project.setCurrentAdmin(findUser(request.currentAdminId()));
     }
     return project;
@@ -62,18 +63,11 @@ public class ProjectService {
 
   @Transactional
   public Project delete(User currentUser, String projectId) {
-    checkIsProjectMember(currentUser, projectId);
+    projectMemberCheckComponent.checkIsProjectMember(currentUser, projectId);
 
     Project project = findEntity(projectId);
     project.setStatus(ProjectStatus.DELETED);
     return project;
-  }
-
-  private void checkIsProjectMember(User user, String projectId) {
-    boolean isProjectMember = projectMemberRepository.existsByProject_ProjectIdAndUser(projectId, user);
-    if (!isProjectMember) {
-      throw new AccessDeniedException("프로젝트 멤버가 아닙니다.");
-    }
   }
 
   private Project findEntity(String projectId) {

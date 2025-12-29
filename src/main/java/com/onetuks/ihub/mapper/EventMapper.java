@@ -1,9 +1,11 @@
 package com.onetuks.ihub.mapper;
 
-import com.onetuks.ihub.dto.event.EventCreateRequest;
-import com.onetuks.ihub.dto.event.EventResponse;
-import com.onetuks.ihub.dto.event.EventUpdateRequest;
-import com.onetuks.ihub.entity.event.Event;
+import com.onetuks.ihub.dto.communication.EventCreateRequest;
+import com.onetuks.ihub.dto.communication.EventResponse;
+import com.onetuks.ihub.dto.communication.EventUpdateRequest;
+import com.onetuks.ihub.entity.communication.Event;
+import com.onetuks.ihub.entity.project.Project;
+import com.onetuks.ihub.entity.user.User;
 import java.time.LocalDateTime;
 
 public final class EventMapper {
@@ -26,17 +28,22 @@ public final class EventMapper {
         event.getUpdatedAt());
   }
 
-  public static void applyCreate(Event event, EventCreateRequest request) {
+  public static Event applyCreate(
+      User currentUser, Project project, EventCreateRequest request) {
     LocalDateTime now = LocalDateTime.now();
-    event.setEventId(UUIDProvider.provideUUID(Event.TABLE_NAME));
-    event.setTitle(request.title());
-    event.setStartDatetime(request.startDatetime());
-    event.setEndDatetime(request.endDatetime());
-    event.setLocation(request.location());
-    event.setContent(request.content());
-    event.setRemindBeforeMinutes(request.remindBeforeMinutes());
-    event.setCreatedAt(now);
-    event.setUpdatedAt(now);
+    return new Event(
+        UUIDProvider.provideUUID(Event.TABLE_NAME),
+        project,
+        request.title(),
+        request.startDatetime(),
+        request.endDatetime(),
+        request.location(),
+        request.content(),
+        request.remindBeforeMinutes(),
+        currentUser,
+        now,
+        now
+    );
   }
 
   public static void applyUpdate(Event event, EventUpdateRequest request) {

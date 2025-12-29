@@ -1,8 +1,8 @@
 package com.onetuks.ihub.mapper;
 
-import com.onetuks.ihub.dto.connection.ConnectionCreateRequest;
-import com.onetuks.ihub.dto.connection.ConnectionResponse;
-import com.onetuks.ihub.dto.connection.ConnectionUpdateRequest;
+import com.onetuks.ihub.dto.system.ConnectionCreateRequest;
+import com.onetuks.ihub.dto.system.ConnectionResponse;
+import com.onetuks.ihub.dto.system.ConnectionUpdateRequest;
 import com.onetuks.ihub.entity.system.Connection;
 import java.time.LocalDateTime;
 

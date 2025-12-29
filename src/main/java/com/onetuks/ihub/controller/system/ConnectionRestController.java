@@ -1,8 +1,8 @@
 package com.onetuks.ihub.controller.system;
 
-import com.onetuks.ihub.dto.connection.ConnectionCreateRequest;
-import com.onetuks.ihub.dto.connection.ConnectionResponse;
-import com.onetuks.ihub.dto.connection.ConnectionUpdateRequest;
+import com.onetuks.ihub.dto.system.ConnectionCreateRequest;
+import com.onetuks.ihub.dto.system.ConnectionResponse;
+import com.onetuks.ihub.dto.system.ConnectionUpdateRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

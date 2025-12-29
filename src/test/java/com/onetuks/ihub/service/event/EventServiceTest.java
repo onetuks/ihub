@@ -1,28 +1,33 @@
 package com.onetuks.ihub.service.event;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.onetuks.ihub.TestcontainersConfiguration;
-import com.onetuks.ihub.dto.event.EventCreateRequest;
-import com.onetuks.ihub.dto.event.EventResponse;
-import com.onetuks.ihub.dto.event.EventUpdateRequest;
+import com.onetuks.ihub.dto.communication.EventCreateRequest;
+import com.onetuks.ihub.dto.communication.EventUpdateRequest;
+import com.onetuks.ihub.entity.communication.Event;
 import com.onetuks.ihub.entity.project.Project;
 import com.onetuks.ihub.entity.user.User;
-import com.onetuks.ihub.mapper.EventMapper;
+import com.onetuks.ihub.exception.AccessDeniedException;
 import com.onetuks.ihub.repository.EventJpaRepository;
 import com.onetuks.ihub.repository.ProjectJpaRepository;
+import com.onetuks.ihub.repository.ProjectMemberJpaRepository;
 import com.onetuks.ihub.repository.UserJpaRepository;
 import com.onetuks.ihub.service.ServiceTestDataFactory;
+import com.onetuks.ihub.service.communication.EventService;
 import jakarta.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 @SpringBootTest
 @Import(TestcontainersConfiguration.class)
@@ -33,12 +38,12 @@ class EventServiceTest {
 
   @Autowired
   private EventJpaRepository eventJpaRepository;
-
   @Autowired
   private ProjectJpaRepository projectJpaRepository;
-
   @Autowired
   private UserJpaRepository userJpaRepository;
+  @Autowired
+  private ProjectMemberJpaRepository projectMemberJpaRepository;
 
   private Project project;
   private User creator;
@@ -46,41 +51,37 @@ class EventServiceTest {
   @BeforeEach
   void setUp() {
     creator = ServiceTestDataFactory.createUser(userJpaRepository);
-    project = ServiceTestDataFactory.createProject(projectJpaRepository, creator, creator, "EventProj");
+    project = ServiceTestDataFactory.createProject(projectJpaRepository, creator, creator,
+        "EventProj");
+    ServiceTestDataFactory.createProjectMember(projectMemberJpaRepository, project, creator);
   }
 
-  @AfterEach
-  void tearDown() {
-    eventJpaRepository.deleteAll();
-    projectJpaRepository.deleteAll();
-    userJpaRepository.deleteAll();
-  }
-
-  @Test
-  void createEvent_success() {
-    EventCreateRequest request = new EventCreateRequest(
+  private EventCreateRequest buildEventCreateRequest() {
+    return new EventCreateRequest(
         project.getProjectId(),
         "Kickoff",
         LocalDateTime.now(),
         LocalDateTime.now().plusHours(2),
         "Room1",
         "Content",
-        30,
-        creator.getEmail());
+        30);
+  }
 
-    EventResponse response = EventMapper.toResponse(eventService.create(request));
+  @Test
+  void createEvent_success() {
+    EventCreateRequest request = buildEventCreateRequest();
 
-    assertNotNull(response.eventId());
-    assertEquals("Kickoff", response.title());
-    assertEquals(project.getProjectId(), response.projectId());
+    Event result = eventService.create(creator, request);
+
+    assertThat(result.getEventId()).isNotNull();
+    assertThat(result.getTitle()).isEqualToIgnoringCase(request.title());
+    assertThat(result.getProject().getProjectId()).isEqualToIgnoringCase(request.projectId());
+    assertThat(result.getCreatedBy().getUserId()).isEqualToIgnoringCase(creator.getUserId());
   }
 
   @Test
   void updateEvent_success() {
-    EventResponse created = EventMapper.toResponse(eventService.create(new EventCreateRequest(
-        project.getProjectId(), "Planning", LocalDateTime.now(), LocalDateTime.now().plusHours(1),
-        "Room2", "desc", 15, creator.getEmail())));
-
+    Event created = eventService.create(creator, buildEventCreateRequest());
     EventUpdateRequest updateRequest = new EventUpdateRequest(
         "Planning Updated",
         LocalDateTime.now().plusHours(1),
@@ -89,30 +90,41 @@ class EventServiceTest {
         "new content",
         10);
 
-    EventResponse updated = EventMapper.toResponse(eventService.update(created.eventId(), updateRequest));
+    Event result = eventService.update(creator, created.getEventId(), updateRequest);
 
-    assertEquals("Planning Updated", updated.title());
-    assertEquals("Room3", updated.location());
+    assertThat(result.getTitle()).isEqualToIgnoringCase(updateRequest.title());
+    assertThat(result.getEndDatetime()).isEqualTo(updateRequest.endDatetime());
+  }
+
+  @Test
+  void getEventById_exception() {
+    // Given
+    User hacker = ServiceTestDataFactory.createUser(userJpaRepository);
+    Event created = eventService.create(creator, buildEventCreateRequest());
+
+    // When & Then
+    assertThatThrownBy(() -> eventService.getById(hacker, created.getEventId()))
+        .isInstanceOf(AccessDeniedException.class);
   }
 
   @Test
   void getEvents_returnsAll() {
-    eventService.create(new EventCreateRequest(
-        project.getProjectId(), "E1", null, null, null, null, null, creator.getEmail()));
-    eventService.create(new EventCreateRequest(
-        project.getProjectId(), "E2", null, null, null, null, null, creator.getEmail()));
+    long expected = eventJpaRepository.count();
+    Pageable pageable = PageRequest.of(0, 10);
+    eventService.create(creator, buildEventCreateRequest());
+    eventService.create(creator, buildEventCreateRequest());
 
-    assertEquals(2, eventService.getAll().size());
+    Page<Event> results = eventService.getAll(creator, project.getProjectId(), pageable);
+
+    assertThat(results.getTotalElements()).isEqualTo(expected);
   }
 
   @Test
   void deleteEvent_success() {
-    EventResponse created = EventMapper.toResponse(eventService.create(new EventCreateRequest(
-        project.getProjectId(), "E3", null, null, null, null, null, creator.getEmail())));
+    Event created =eventService.create(creator, buildEventCreateRequest());
 
-    eventService.delete(created.eventId());
+    eventService.delete(creator, created.getEventId());
 
-    assertEquals(0, eventJpaRepository.count());
-    assertThrows(EntityNotFoundException.class, () -> eventService.getById(created.eventId()));
+    assertThrows(EntityNotFoundException.class, () -> eventService.getById(creator, created.getEventId()));
   }
 }

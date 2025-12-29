@@ -1,7 +1,7 @@
 package com.onetuks.ihub.service.system;
 
-import com.onetuks.ihub.dto.connection.ConnectionCreateRequest;
-import com.onetuks.ihub.dto.connection.ConnectionUpdateRequest;
+import com.onetuks.ihub.dto.system.ConnectionCreateRequest;
+import com.onetuks.ihub.dto.system.ConnectionUpdateRequest;
 import com.onetuks.ihub.entity.project.Project;
 import com.onetuks.ihub.entity.system.Connection;
 import com.onetuks.ihub.entity.system.System;

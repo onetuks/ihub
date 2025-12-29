@@ -1,4 +1,4 @@
-package com.onetuks.ihub.entity.event;
+package com.onetuks.ihub.entity.communication;
 
 import com.onetuks.ihub.entity.user.User;
 import jakarta.persistence.Column;

@@ -1,4 +1,4 @@
-package com.onetuks.ihub.entity.event;
+package com.onetuks.ihub.entity.communication;
 
 public enum EventAttendeeStatus {
   INVITED,

@@ -1,4 +1,4 @@
-package com.onetuks.ihub.dto.event;
+package com.onetuks.ihub.dto.communication;
 
 import java.time.LocalDateTime;
 

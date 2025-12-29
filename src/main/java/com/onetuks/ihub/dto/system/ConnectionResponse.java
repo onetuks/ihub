@@ -1,4 +1,4 @@
-package com.onetuks.ihub.dto.connection;
+package com.onetuks.ihub.dto.system;
 
 import com.onetuks.ihub.entity.system.ConnectionStatus;
 import com.onetuks.ihub.entity.system.Protocol;

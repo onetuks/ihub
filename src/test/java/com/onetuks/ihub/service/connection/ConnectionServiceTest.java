@@ -5,9 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.onetuks.ihub.TestcontainersConfiguration;
-import com.onetuks.ihub.dto.connection.ConnectionCreateRequest;
-import com.onetuks.ihub.dto.connection.ConnectionResponse;
-import com.onetuks.ihub.dto.connection.ConnectionUpdateRequest;
+import com.onetuks.ihub.dto.system.ConnectionCreateRequest;
+import com.onetuks.ihub.dto.system.ConnectionResponse;
+import com.onetuks.ihub.dto.system.ConnectionUpdateRequest;
 import com.onetuks.ihub.entity.system.ConnectionStatus;
 import com.onetuks.ihub.entity.system.Protocol;
 import com.onetuks.ihub.entity.project.Project;
