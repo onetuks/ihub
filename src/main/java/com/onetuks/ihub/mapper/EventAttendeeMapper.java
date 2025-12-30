@@ -1,9 +1,10 @@
 package com.onetuks.ihub.mapper;
 
-import com.onetuks.ihub.dto.communication.EventAttendeeCreateRequest;
+import com.onetuks.ihub.dto.communication.EventAttendeeRequest;
 import com.onetuks.ihub.dto.communication.EventAttendeeResponse;
-import com.onetuks.ihub.dto.communication.EventAttendeeUpdateRequest;
+import com.onetuks.ihub.entity.communication.Event;
 import com.onetuks.ihub.entity.communication.EventAttendee;
+import com.onetuks.ihub.entity.user.User;
 
 public final class EventAttendeeMapper {
 
@@ -19,18 +20,13 @@ public final class EventAttendeeMapper {
         eventAttendee.getAttendStatus());
   }
 
-  public static void applyCreate(EventAttendee eventAttendee, EventAttendeeCreateRequest request) {
-    eventAttendee.setEventAttendeeId(UUIDProvider.provideUUID(EventAttendee.TABLE_NAME));
-    eventAttendee.setIsMandatory(request.isMandatory());
-    eventAttendee.setAttendStatus(request.attendStatus());
-  }
-
-  public static void applyUpdate(EventAttendee eventAttendee, EventAttendeeUpdateRequest request) {
-    if (request.isMandatory() != null) {
-      eventAttendee.setIsMandatory(request.isMandatory());
-    }
-    if (request.attendStatus() != null) {
-      eventAttendee.setAttendStatus(request.attendStatus());
-    }
+  public static EventAttendee applyCreate(Event event, User user, EventAttendeeRequest request) {
+    return new EventAttendee(
+        UUIDProvider.provideUUID(EventAttendee.TABLE_NAME),
+        event,
+        user,
+        request.isMandatory(),
+        request.attendStatus()
+    );
   }
 }

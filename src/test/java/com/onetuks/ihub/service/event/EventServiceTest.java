@@ -56,17 +56,6 @@ class EventServiceTest {
     ServiceTestDataFactory.createProjectMember(projectMemberJpaRepository, project, creator);
   }
 
-  private EventCreateRequest buildEventCreateRequest() {
-    return new EventCreateRequest(
-        project.getProjectId(),
-        "Kickoff",
-        LocalDateTime.now(),
-        LocalDateTime.now().plusHours(2),
-        "Room1",
-        "Content",
-        30);
-  }
-
   @Test
   void createEvent_success() {
     EventCreateRequest request = buildEventCreateRequest();
@@ -109,7 +98,7 @@ class EventServiceTest {
 
   @Test
   void getEvents_returnsAll() {
-    long expected = eventJpaRepository.count();
+    long expected = eventJpaRepository.count() + 2;
     Pageable pageable = PageRequest.of(0, 10);
     eventService.create(creator, buildEventCreateRequest());
     eventService.create(creator, buildEventCreateRequest());
@@ -121,10 +110,21 @@ class EventServiceTest {
 
   @Test
   void deleteEvent_success() {
-    Event created =eventService.create(creator, buildEventCreateRequest());
+    Event created = eventService.create(creator, buildEventCreateRequest());
 
     eventService.delete(creator, created.getEventId());
 
     assertThrows(EntityNotFoundException.class, () -> eventService.getById(creator, created.getEventId()));
+  }
+
+  private EventCreateRequest buildEventCreateRequest() {
+    return new EventCreateRequest(
+        project.getProjectId(),
+        "Kickoff",
+        LocalDateTime.now(),
+        LocalDateTime.now().plusHours(2),
+        "Room1",
+        "Content",
+        30);
   }
 }

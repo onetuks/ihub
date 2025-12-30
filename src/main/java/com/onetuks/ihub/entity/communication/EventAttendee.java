@@ -10,13 +10,17 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = EventAttendee.TABLE_NAME)
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class EventAttendee {
 
   public static final String TABLE_NAME = "event_attendees";

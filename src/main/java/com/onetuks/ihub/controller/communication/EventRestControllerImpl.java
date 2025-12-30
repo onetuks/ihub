@@ -1,14 +1,19 @@
 package com.onetuks.ihub.controller.communication;
 
+import com.onetuks.ihub.dto.communication.EventAttendeeRequest.EventAttendeeRequests;
+import com.onetuks.ihub.dto.communication.EventAttendeeResponse;
 import com.onetuks.ihub.dto.communication.EventCreateRequest;
 import com.onetuks.ihub.dto.communication.EventResponse;
 import com.onetuks.ihub.dto.communication.EventUpdateRequest;
 import com.onetuks.ihub.entity.communication.Event;
+import com.onetuks.ihub.entity.communication.EventAttendee;
+import com.onetuks.ihub.mapper.EventAttendeeMapper;
 import com.onetuks.ihub.mapper.EventMapper;
 import com.onetuks.ihub.security.CurrentUserProvider;
 import com.onetuks.ihub.service.communication.EventService;
 import jakarta.validation.Valid;
 import java.net.URI;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -60,5 +65,19 @@ public class EventRestControllerImpl implements EventRestController {
   public ResponseEntity<Void> deleteEvent(@PathVariable String eventId) {
     eventService.delete(currentUserProvider.resolveUser(), eventId);
     return ResponseEntity.noContent().build();
+  }
+
+  @Override
+  public ResponseEntity<List<EventAttendeeResponse>> manageEventAttendees(
+      String eventId, EventAttendeeRequests request) {
+    List<EventAttendee> results = eventService.manageAttendees(currentUserProvider.resolveUser(), eventId, request);
+    return ResponseEntity.ok(results.stream().map(EventAttendeeMapper::toResponse).toList());
+  }
+
+  @Override
+  public ResponseEntity<Page<EventAttendeeResponse>> getEventAttendees(
+      String eventId, Pageable pageable) {
+    Page<EventAttendee> results = eventService.getAllAttendees(currentUserProvider.resolveUser(), eventId, pageable);
+    return ResponseEntity.ok(results.map(EventAttendeeMapper::toResponse));
   }
 }
