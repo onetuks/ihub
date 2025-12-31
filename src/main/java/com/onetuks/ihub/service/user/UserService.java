@@ -29,6 +29,10 @@ public class UserService {
     return findEntity(userId);
   }
 
+  public Page<User> getAllByName(String query, Pageable pageable) {
+    return userJpaRepository.findAllByNameContainingIgnoreCase(query, pageable);
+  }
+
   @Transactional(readOnly = true)
   public Page<User> getAll(Pageable pageable) {
     return userJpaRepository.findAll(pageable);
@@ -44,6 +48,18 @@ public class UserService {
     User target = findEntity(userId);
     target.setStatus(UserStatus.DELETED);
     return target;
+  }
+
+  public User updatePassword(String userId, String encodedPassword) {
+    User user = findEntity(userId);
+    user.setPassword(encodedPassword);
+    return user;
+  }
+
+  public User updateStatus(String userId, UserStatus status) {
+    User user = findEntity(userId);
+    user.setStatus(status);
+    return user;
   }
 
   private User findEntity(String userId) {

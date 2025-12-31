@@ -4,7 +4,9 @@ import static com.onetuks.ihub.config.RoleDataInitializer.USER_FULL_ACCESS;
 
 import com.onetuks.ihub.annotation.RequiresRole;
 import com.onetuks.ihub.dto.user.UserCreateRequest;
+import com.onetuks.ihub.dto.user.UserPasswordUpdateRequest;
 import com.onetuks.ihub.dto.user.UserResponse;
+import com.onetuks.ihub.dto.user.UserStatusUpdateRequest;
 import com.onetuks.ihub.dto.user.UserUpdateRequest;
 import com.onetuks.ihub.entity.user.User;
 import com.onetuks.ihub.mapper.UserMapper;
@@ -13,7 +15,6 @@ import jakarta.validation.Valid;
 import java.net.URI;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
@@ -44,12 +45,19 @@ public class UserRestControllerImpl implements UserRestController {
 
   @RequiresRole(USER_FULL_ACCESS)
   @Override
-  public ResponseEntity<UserResponse> getUser(
+  public ResponseEntity<UserResponse> getUserById(
       @PathVariable String userId
   ) {
     User result = userService.getById(userId);
     UserResponse response = UserMapper.toResponse(result);
     return ResponseEntity.ok(response);
+  }
+
+  @Override
+  public ResponseEntity<Page<UserResponse>> getUsers(String query, Pageable pageable) {
+    Page<User> results = userService.getAllByName(query, pageable);
+    Page<UserResponse> responses = results.map(UserMapper::toResponse);
+    return ResponseEntity.ok(responses);
   }
 
   @Override
@@ -69,6 +77,22 @@ public class UserRestControllerImpl implements UserRestController {
   ) {
     User result = userService.update(userId,
         request.applyEncodedPassword(passwordEncoder.encode(request.password())));
+    UserResponse response = UserMapper.toResponse(result);
+    return ResponseEntity.ok(response);
+  }
+
+  @Override
+  public ResponseEntity<UserResponse> updateUserPassword(
+      String userId, @Valid @RequestBody UserPasswordUpdateRequest request) {
+    User result = userService.updatePassword(userId, passwordEncoder.encode(request.password()));
+    UserResponse response = UserMapper.toResponse(result);
+    return ResponseEntity.ok(response);
+  }
+
+  @Override
+  public ResponseEntity<UserResponse> updateUserStatus(
+      String userId, @Valid @RequestBody UserStatusUpdateRequest request) {
+    User result = userService.updateStatus(userId, request.status());
     UserResponse response = UserMapper.toResponse(result);
     return ResponseEntity.ok(response);
   }
