@@ -1,15 +1,12 @@
 package com.onetuks.ihub.dto.communication;
 
-import com.onetuks.ihub.entity.communication.TargetType;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
+import java.util.List;
 
 public record CommentCreateRequest(
-    @NotNull String projectId,
+    @NotBlank String content,
     String parentCommentId,
-    TargetType targetType,
-    String targetId,
-    String content,
-    String createdById
+    List<String> mentions
 ) {
 
 }

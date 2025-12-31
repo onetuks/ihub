@@ -84,7 +84,7 @@ public interface UserRestController {
       @ApiResponse(responseCode = "404", description = "User not found"),
       @ApiResponse(responseCode = "500", description = "Internal server error")
   })
-  @PatchMapping("/{userId}")
+  @PutMapping("/{userId}")
   ResponseEntity<UserResponse> updateUser(
       @PathVariable String userId,
       @Valid @RequestBody UserUpdateRequest request);

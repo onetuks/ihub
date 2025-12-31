@@ -1,11 +1,7 @@
 package com.onetuks.ihub.controller.role;
 
 import com.onetuks.ihub.dto.role.RoleCreateRequest;
-import com.onetuks.ihub.dto.role.RoleGrantRequest;
-import com.onetuks.ihub.dto.role.RoleGrantResponse;
 import com.onetuks.ihub.dto.role.RoleResponse;
-import com.onetuks.ihub.dto.role.RoleRevokeRequest;
-import com.onetuks.ihub.dto.role.RoleRevokeResponse;
 import com.onetuks.ihub.dto.role.RoleUpdateRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -16,7 +12,6 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -26,25 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(path = "/api/roles")
 @Tag(name = "Role", description = "Role management APIs")
 public interface RoleRestController {
-
-  @Operation(summary = "Grant role to user")
-  @ApiResponses(value = {
-      @ApiResponse(responseCode = "200", description = "Role granted"),
-      @ApiResponse(responseCode = "400", description = "Invalid request"),
-      @ApiResponse(responseCode = "500", description = "Internal server error")
-  })
-  @PostMapping(path = "/grant")
-  ResponseEntity<RoleGrantResponse> grantRoleToUser(@Valid @RequestBody RoleGrantRequest request);
-
-  @Operation(summary = "Revoke role from user")
-  @ApiResponses(value = {
-      @ApiResponse(responseCode = "200", description = "Role revoked"),
-      @ApiResponse(responseCode = "400", description = "Invalid request"),
-      @ApiResponse(responseCode = "500", description = "Internal server error")
-  })
-  @PatchMapping(path = "/revoke")
-  ResponseEntity<RoleRevokeResponse> revokeRoleFromUser(
-      @Valid @RequestBody RoleRevokeRequest request);
 
   @Operation(summary = "Create role")
   @ApiResponses({

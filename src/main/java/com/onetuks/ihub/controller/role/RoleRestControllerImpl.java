@@ -4,11 +4,7 @@ import static com.onetuks.ihub.config.RoleDataInitializer.USER_FULL_ACCESS;
 
 import com.onetuks.ihub.annotation.RequiresRole;
 import com.onetuks.ihub.dto.role.RoleCreateRequest;
-import com.onetuks.ihub.dto.role.RoleGrantRequest;
-import com.onetuks.ihub.dto.role.RoleGrantResponse;
 import com.onetuks.ihub.dto.role.RoleResponse;
-import com.onetuks.ihub.dto.role.RoleRevokeRequest;
-import com.onetuks.ihub.dto.role.RoleRevokeResponse;
 import com.onetuks.ihub.dto.role.RoleUpdateRequest;
 import com.onetuks.ihub.entity.role.Role;
 import com.onetuks.ihub.mapper.RoleMapper;
@@ -27,26 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class RoleRestControllerImpl implements RoleRestController {
 
   private final RoleService roleService;
-
-  @RequiresRole(USER_FULL_ACCESS)
-  @Override
-  public ResponseEntity<RoleGrantResponse> grantRoleToUser(
-      @Valid @RequestBody RoleGrantRequest request
-  ) {
-    List<Role> results = roleService.grant(request);
-    RoleGrantResponse response = RoleMapper.toGrantResponse(request.email(), results);
-    return ResponseEntity.ok(response);
-  }
-
-  @RequiresRole(USER_FULL_ACCESS)
-  @Override
-  public ResponseEntity<RoleRevokeResponse> revokeRoleFromUser(
-      @Valid @RequestBody RoleRevokeRequest request
-  ) {
-    List<Role> results = roleService.revoke(request);
-    RoleRevokeResponse response = RoleMapper.toRevokeResponse(request.email(), results);
-    return ResponseEntity.ok(response);
-  }
 
   @RequiresRole(USER_FULL_ACCESS)
   @Override

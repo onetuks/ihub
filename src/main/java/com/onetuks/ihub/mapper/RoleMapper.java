@@ -1,9 +1,7 @@
 package com.onetuks.ihub.mapper;
 
 import com.onetuks.ihub.dto.role.RoleCreateRequest;
-import com.onetuks.ihub.dto.role.RoleGrantResponse;
 import com.onetuks.ihub.dto.role.RoleResponse;
-import com.onetuks.ihub.dto.role.RoleRevokeResponse;
 import com.onetuks.ihub.dto.role.RoleUpdateRequest;
 import com.onetuks.ihub.entity.role.Role;
 import java.util.List;
@@ -33,13 +31,5 @@ public final class RoleMapper {
       role.setDescription(request.description());
     }
     return role;
-  }
-
-  public static RoleGrantResponse toGrantResponse(String email, List<Role> roles) {
-    return new RoleGrantResponse(email, roles.stream().map(Role::getRoleName).toList());
-  }
-
-  public static RoleRevokeResponse toRevokeResponse(String email, List<Role> revoke) {
-    return new RoleRevokeResponse(email, revoke.stream().map(Role::getRoleName).toList());
   }
 }

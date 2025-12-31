@@ -1,26 +1,18 @@
 package com.onetuks.ihub.service.role;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.onetuks.ihub.IHubApplicationTests;
 import com.onetuks.ihub.TestcontainersConfiguration;
 import com.onetuks.ihub.dto.role.RoleCreateRequest;
-import com.onetuks.ihub.dto.role.RoleGrantRequest;
 import com.onetuks.ihub.dto.role.RoleResponse;
-import com.onetuks.ihub.dto.role.RoleRevokeRequest;
 import com.onetuks.ihub.dto.role.RoleUpdateRequest;
 import com.onetuks.ihub.entity.role.Role;
-import com.onetuks.ihub.entity.user.User;
 import com.onetuks.ihub.mapper.RoleMapper;
 import com.onetuks.ihub.repository.RoleJpaRepository;
-import com.onetuks.ihub.repository.UserJpaRepository;
-import com.onetuks.ihub.service.ServiceTestDataFactory;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -35,17 +27,6 @@ class RoleServiceTest {
 
   @Autowired
   private RoleJpaRepository roleJpaRepository;
-  @Autowired
-  private UserJpaRepository userJpaRepository;
-
-  private User user;
-  private List<Role> roles;
-
-  @BeforeEach
-  void setup() {
-    user = ServiceTestDataFactory.createUser(userJpaRepository);
-    roles = ServiceTestDataFactory.createRoles(roleJpaRepository);
-  }
 
   @Test
   void createRole_success() {
@@ -94,38 +75,5 @@ class RoleServiceTest {
 
     assertEquals(expected, roleJpaRepository.count());
     assertThrows(EntityNotFoundException.class, () -> roleService.getById(role.getRoleId()));
-  }
-
-  @Test
-  void grantRole_success() {
-    // Given
-    RoleGrantRequest request = createRoleGrantRequest();
-
-    // When
-    List<Role> results = roleService.grant(request);
-
-    // Then
-    assertThat(results).hasSize(request.roleIds().size());
-  }
-
-  @Test
-  void revokeRole_success() {
-    // Given
-    roleService.grant(createRoleGrantRequest());
-    RoleRevokeRequest request = createRoleRevokeRequest();
-
-    // When
-    List<Role> results = roleService.revoke(request);
-
-    // Then
-    assertThat(results).hasSize(0);
-  }
-
-  private RoleGrantRequest createRoleGrantRequest() {
-    return new RoleGrantRequest(user.getEmail(), roles.stream().map(Role::getRoleId).toList());
-  }
-
-  private RoleRevokeRequest createRoleRevokeRequest() {
-    return new RoleRevokeRequest(user.getEmail(), roles.stream().map(Role::getRoleId).toList());
   }
 }

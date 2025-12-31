@@ -1,11 +1,9 @@
 package com.onetuks.ihub.dto.communication;
 
-import com.onetuks.ihub.entity.communication.TargetType;
+import jakarta.validation.constraints.NotBlank;
 
 public record CommentUpdateRequest(
-    TargetType targetType,
-    String targetId,
-    String content
+    @NotBlank String content
 ) {
 
 }

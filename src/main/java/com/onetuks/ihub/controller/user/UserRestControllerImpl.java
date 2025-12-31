@@ -21,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -54,7 +55,8 @@ public class UserRestControllerImpl implements UserRestController {
   }
 
   @Override
-  public ResponseEntity<Page<UserResponse>> getUsers(String query, Pageable pageable) {
+  public ResponseEntity<Page<UserResponse>> getUsers(
+      @RequestParam String query, @PageableDefault Pageable pageable) {
     Page<User> results = userService.getAllByName(query, pageable);
     Page<UserResponse> responses = results.map(UserMapper::toResponse);
     return ResponseEntity.ok(responses);
@@ -83,7 +85,7 @@ public class UserRestControllerImpl implements UserRestController {
 
   @Override
   public ResponseEntity<UserResponse> updateUserPassword(
-      String userId, @Valid @RequestBody UserPasswordUpdateRequest request) {
+      @PathVariable String userId, @Valid @RequestBody UserPasswordUpdateRequest request) {
     User result = userService.updatePassword(userId, passwordEncoder.encode(request.password()));
     UserResponse response = UserMapper.toResponse(result);
     return ResponseEntity.ok(response);
@@ -91,7 +93,7 @@ public class UserRestControllerImpl implements UserRestController {
 
   @Override
   public ResponseEntity<UserResponse> updateUserStatus(
-      String userId, @Valid @RequestBody UserStatusUpdateRequest request) {
+      @PathVariable String userId, @Valid @RequestBody UserStatusUpdateRequest request) {
     User result = userService.updateStatus(userId, request.status());
     UserResponse response = UserMapper.toResponse(result);
     return ResponseEntity.ok(response);
