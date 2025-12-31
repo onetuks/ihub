@@ -14,7 +14,6 @@ import jakarta.validation.Valid;
 import java.net.URI;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
@@ -53,10 +52,17 @@ public class ProjectRestControllerImpl implements ProjectRestController {
 
   @RequiresRole({PROJECT_FULL_ACCESS})
   @Override
-  public ResponseEntity<Page<ProjectResponse>> getProjects(
+  public ResponseEntity<Page<ProjectResponse>> getMyProjects(
       @PageableDefault Pageable pageable
   ) {
-    Page<Project> results = projectService.getAll(currentUserProvider.resolveUser(), pageable);
+    Page<Project> results = projectService.getAllMine(currentUserProvider.resolveUser(), pageable);
+    Page<ProjectResponse> responses = results.map(ProjectMapper::toResponse);
+    return ResponseEntity.ok(responses);
+  }
+
+  @Override
+  public ResponseEntity<Page<ProjectResponse>> getProjects(@PageableDefault Pageable pageable) {
+    Page<Project> results = projectService.getAll(pageable);
     Page<ProjectResponse> responses = results.map(ProjectMapper::toResponse);
     return ResponseEntity.ok(responses);
   }

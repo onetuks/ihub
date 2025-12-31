@@ -8,20 +8,15 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.onetuks.ihub.TestcontainersConfiguration;
 import com.onetuks.ihub.dto.project.ProjectCreateRequest;
-import com.onetuks.ihub.dto.project.ProjectResponse;
 import com.onetuks.ihub.dto.project.ProjectUpdateRequest;
 import com.onetuks.ihub.entity.project.Project;
 import com.onetuks.ihub.entity.project.ProjectStatus;
 import com.onetuks.ihub.entity.user.User;
 import com.onetuks.ihub.entity.user.UserStatus;
 import com.onetuks.ihub.exception.AccessDeniedException;
-import com.onetuks.ihub.mapper.ProjectMapper;
 import com.onetuks.ihub.repository.ProjectJpaRepository;
-import com.onetuks.ihub.repository.ProjectMemberJpaRepository;
 import com.onetuks.ihub.repository.UserJpaRepository;
-import jakarta.persistence.EntityNotFoundException;
 import java.time.LocalDate;
-import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,7 +100,7 @@ class ProjectServiceTest {
     projectService.create(creator, createRequest("Project getAll1"));
     projectService.create(creator, createRequest("Project getAll2"));
 
-    Page<Project> results = projectService.getAll(creator, pageable);
+    Page<Project> results = projectService.getAllMine(creator, pageable);
 
     assertThat(results.getTotalElements()).isEqualTo((int) expected);
   }

@@ -10,7 +10,6 @@ import com.onetuks.ihub.mapper.ProjectMapper;
 import com.onetuks.ihub.mapper.ProjectMemberMapper;
 import com.onetuks.ihub.repository.ProjectJpaRepository;
 import com.onetuks.ihub.repository.ProjectMemberJpaRepository;
-import com.onetuks.ihub.repository.UserJpaRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -40,9 +39,14 @@ public class ProjectService {
   }
 
   @Transactional(readOnly = true)
-  public Page<Project> getAll(User currentUser, Pageable pageable) {
+  public Page<Project> getAllMine(User currentUser, Pageable pageable) {
     return projectMemberRepository.findAllByUser(currentUser, pageable)
         .map(ProjectMember::getProject);
+  }
+
+  @Transactional(readOnly = true)
+  public Page<Project> getAll(Pageable pageable) {
+    return projectRepository.findAll(pageable);
   }
 
   @Transactional

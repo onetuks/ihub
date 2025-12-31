@@ -48,6 +48,16 @@ public interface ProjectRestController {
   @GetMapping("/{projectId}")
   ResponseEntity<ProjectResponse> getProject(@PathVariable String projectId);
 
+  @Operation(summary = "내 프로젝트 목록 조회")
+  @ApiResponses({
+      @ApiResponse(responseCode = "200", description = "Projects listed"),
+      @ApiResponse(responseCode = "401", description = "No Authorization"),
+      @ApiResponse(responseCode = "403", description = "Forbidden"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
+  })
+  @GetMapping("/my")
+  ResponseEntity<Page<ProjectResponse>> getMyProjects(@PageableDefault Pageable pageable);
+
   @Operation(summary = "프로젝트 목록 조회")
   @ApiResponses({
       @ApiResponse(responseCode = "200", description = "Projects listed"),
@@ -57,6 +67,7 @@ public interface ProjectRestController {
   })
   @GetMapping
   ResponseEntity<Page<ProjectResponse>> getProjects(@PageableDefault Pageable pageable);
+
 
   @Operation(summary = "프로젝트 수정")
   @ApiResponses({
