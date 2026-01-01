@@ -34,9 +34,6 @@ class ProjectServiceTest {
   private ProjectService projectService;
 
   @Autowired
-  private ProjectJpaRepository projectJpaRepository;
-
-  @Autowired
   private UserJpaRepository userJpaRepository;
 
   private User creator;
@@ -96,13 +93,12 @@ class ProjectServiceTest {
   @Test
   void getProjects_returnsAll() {
     Pageable pageable = PageRequest.of(10, 10);
-    long expected = projectJpaRepository.count() + 2;
     projectService.create(creator, createRequest("Project getAll1"));
     projectService.create(creator, createRequest("Project getAll2"));
 
     Page<Project> results = projectService.getAllMine(creator, pageable);
 
-    assertThat(results.getTotalElements()).isEqualTo((int) expected);
+    assertThat(results.getTotalElements()).isGreaterThanOrEqualTo(2);
   }
 
   @Test

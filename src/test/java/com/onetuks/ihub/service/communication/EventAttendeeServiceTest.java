@@ -1,0 +1,113 @@
+package com.onetuks.ihub.service.communication;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+import com.onetuks.ihub.TestcontainersConfiguration;
+import com.onetuks.ihub.dto.communication.EventAttendeeRequest;
+import com.onetuks.ihub.dto.communication.EventAttendeeRequest.EventAttendeeRequests;
+import com.onetuks.ihub.dto.communication.EventCreateRequest;
+import com.onetuks.ihub.entity.communication.Event;
+import com.onetuks.ihub.entity.communication.EventAttendee;
+import com.onetuks.ihub.entity.communication.EventAttendeeStatus;
+import com.onetuks.ihub.entity.project.Project;
+import com.onetuks.ihub.entity.user.User;
+import com.onetuks.ihub.repository.ProjectJpaRepository;
+import com.onetuks.ihub.repository.ProjectMemberJpaRepository;
+import com.onetuks.ihub.repository.UserJpaRepository;
+import com.onetuks.ihub.service.ServiceTestDataFactory;
+import java.time.LocalDateTime;
+import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
+@SpringBootTest
+@Import(TestcontainersConfiguration.class)
+class EventAttendeeServiceTest {
+
+  @Autowired
+  private EventAttendeeService eventAttendeeService;
+
+  @Autowired
+  private EventService eventService;
+  @Autowired
+  private ProjectJpaRepository projectJpaRepository;
+  @Autowired
+  private UserJpaRepository userJpaRepository;
+  @Autowired
+  private ProjectMemberJpaRepository projectMemberJpaRepository;
+
+  private Project project;
+  private User creator;
+
+  @BeforeEach
+  void setUp() {
+    creator = ServiceTestDataFactory.createUser(userJpaRepository);
+    project = ServiceTestDataFactory.createProject(projectJpaRepository, creator, creator,
+        "EventProj");
+    ServiceTestDataFactory.createProjectMember(projectMemberJpaRepository, project, creator);
+  }
+
+  @Test
+  void manageAttendees_success() {
+    // Given
+    Event created = eventService.create(creator, project.getProjectId(), buildEventCreateRequest());
+    EventAttendeeRequests requests = new EventAttendeeRequests(List.of(
+        new EventAttendeeRequest(
+            created.getEventId(),
+            ServiceTestDataFactory.createUser(userJpaRepository).getUserId(),
+            true, EventAttendeeStatus.ACCEPTED),
+        new EventAttendeeRequest(
+            created.getEventId(),
+            ServiceTestDataFactory.createUser(userJpaRepository).getUserId(),
+            true, EventAttendeeStatus.ACCEPTED)
+    ));
+
+    // When
+    List<EventAttendee> results =
+        eventAttendeeService.manageAttendees(creator, created.getEventId(), requests);
+
+    // Then
+    assertThat(results).hasSize(2);
+  }
+
+  @Test
+  void getAllAttendees_success() {
+    // Given
+    Pageable pageable = PageRequest.of(0, 10);
+    Event created = eventService.create(creator, project.getProjectId(), buildEventCreateRequest());
+    EventAttendeeRequests requests = new EventAttendeeRequests(List.of(
+        new EventAttendeeRequest(
+            created.getEventId(),
+            ServiceTestDataFactory.createUser(userJpaRepository).getUserId(),
+            true, EventAttendeeStatus.ACCEPTED),
+        new EventAttendeeRequest(
+            created.getEventId(),
+            ServiceTestDataFactory.createUser(userJpaRepository).getUserId(),
+            true, EventAttendeeStatus.ACCEPTED)
+    ));
+    eventAttendeeService.manageAttendees(creator, created.getEventId(), requests);
+
+    // When
+    Page<EventAttendee> results =
+        eventAttendeeService.getAllAttendees(creator, created.getEventId(), pageable);
+
+    // Then
+    assertThat(results.getTotalElements()).isEqualTo(2);
+  }
+
+  private EventCreateRequest buildEventCreateRequest() {
+    return new EventCreateRequest(
+        "Kickoff",
+        LocalDateTime.now(),
+        LocalDateTime.now().plusHours(2),
+        "Room1",
+        "Content",
+        30);
+  }
+}
