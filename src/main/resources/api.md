@@ -47,19 +47,20 @@ Interfaces & statuses
 - GET /api/interfaces/{interfaceId} -> { items: [Interface] } (with latest status, systems,
   createdBy)
 - PATCH /api/interfaces/{interfaceId} -> { items: [partial update] }
-  O- POST /api/interfaces/{interfaceId}/status -> {
+  -O POST /api/interfaces/{interfaceId}/status -> {
   items: [{ toStatusId, reason?, relatedTaskId? }] }; resp {
   items: [{ history: InterfaceHistory, interface: Interface }] }
-  O- GET /api/projects/{projectId}/interface-statuses -> { items: InterfaceStatus[] }
-  O- POST /api/projects/{projectId}/interface-statuses -> {
+  -O GET /api/projects/{projectId}/interface-statuses -> { items: InterfaceStatus[] }
+  -O POST /api/projects/{projectId}/interface-statuses -> {
   items: [{ name, code?, seqOrder, isDefault? }] }
-  O- PATCH /api/interface-statuses/{statusId} -> {
+  -O PATCH /api/interface-statuses/{statusId} -> {
   items: [{ name?, code?, seqOrder?, isDefault?, status? }] }
-- GET /api/projects/{projectId}/interface-status-transitions -> { items:
+  -O GET /api/projects/{projectId}/interface-status-transitions -> { items:
   InterfaceStatusTransition[] } // exclude status=DELETED
-- POST /api/projects/{projectId}/interface-status-transitions -> {
+  -O POST /api/projects/{projectId}/interface-status-transitions -> {
   items: [{ fromStatusId, toStatusId, allowedRole?, status? }] }
-- PATCH /api/interface-status-transitions/{transitionId} -> { items: [{ allowedRole?, status? }] }
+  -O PATCH /api/interface-status-transitions/{transitionId} -> {
+  items: [{ allowedRole?, status? }] }
 - GET /api/interfaces/{interfaceId}/history -> { items: InterfaceHistory[] }
 - GET /api/interfaces/{interfaceId}/revisions -> { items: InterfaceRevision[] }
 - POST /api/interfaces/{interfaceId}/revisions -> { items: [{ snapshot (json), reason? }] }

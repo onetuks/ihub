@@ -8,10 +8,11 @@ import com.onetuks.ihub.entity.user.User;
 import com.onetuks.ihub.mapper.SystemMapper;
 import com.onetuks.ihub.repository.ProjectJpaRepository;
 import com.onetuks.ihub.repository.SystemJpaRepository;
-import com.onetuks.ihub.repository.UserJpaRepository;
+import com.onetuks.ihub.service.project.ProjectMemberCheckComponent;
 import jakarta.persistence.EntityNotFoundException;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,43 +20,40 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class SystemService {
 
+  private final ProjectMemberCheckComponent projectMemberCheckComponent;
   private final SystemJpaRepository systemJpaRepository;
   private final ProjectJpaRepository projectJpaRepository;
-  private final UserJpaRepository userJpaRepository;
 
   @Transactional
-  public System create(SystemCreateRequest request) {
-    System system = new System();
-    SystemMapper.applyCreate(system, request);
-    system.setProject(findProject(request.projectId()));
-    system.setCreatedBy(findUser(request.createdById()));
-    system.setUpdatedBy(findUser(request.updatedById()));
-    return systemJpaRepository.save(system);
+  public System create(User currentUser, SystemCreateRequest request) {
+    Project project = findProject(request.projectId());
+    projectMemberCheckComponent.checkIsProjectMember(currentUser, project.getProjectId());
+    return systemJpaRepository.save(SystemMapper.applyCreate(project, currentUser, request));
   }
 
   @Transactional(readOnly = true)
-  public System getById(String systemId) {
-    return findEntity(systemId);
-  }
-
-  @Transactional(readOnly = true)
-  public List<System> getAll() {
-    return systemJpaRepository.findAll();
-  }
-
-  @Transactional
-  public System update(String systemId, SystemUpdateRequest request) {
+  public System getById(User currentUser, String systemId) {
     System system = findEntity(systemId);
-    SystemMapper.applyUpdate(system, request);
-    if (request.updatedById() != null) {
-      system.setUpdatedBy(findUser(request.updatedById()));
-    }
+    projectMemberCheckComponent.checkIsProjectMember(
+        currentUser, system.getProject().getProjectId());
     return system;
   }
 
+  @Transactional(readOnly = true)
+  public Page<System> getAll(Pageable pageable) {
+    return systemJpaRepository.findAll(pageable);
+  }
+
   @Transactional
-  public void delete(String systemId) {
+  public System update(User currentUser, String systemId, SystemUpdateRequest request) {
+    return SystemMapper.applyUpdate(findEntity(systemId), currentUser, request);
+  }
+
+  @Transactional
+  public void delete(User currentUser, String systemId) {
     System system = findEntity(systemId);
+    projectMemberCheckComponent.checkIsProjectMember(currentUser,
+        system.getProject().getProjectId());
     systemJpaRepository.delete(system);
   }
 
@@ -67,10 +65,5 @@ public class SystemService {
   private Project findProject(String projectId) {
     return projectJpaRepository.findById(projectId)
         .orElseThrow(() -> new EntityNotFoundException("Project not found: " + projectId));
-  }
-
-  private User findUser(String userId) {
-    return userJpaRepository.findById(userId)
-        .orElseThrow(() -> new EntityNotFoundException("User not found: " + userId));
   }
 }

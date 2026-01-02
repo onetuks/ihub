@@ -3,7 +3,10 @@ package com.onetuks.ihub.mapper;
 import com.onetuks.ihub.dto.system.SystemCreateRequest;
 import com.onetuks.ihub.dto.system.SystemResponse;
 import com.onetuks.ihub.dto.system.SystemUpdateRequest;
+import com.onetuks.ihub.entity.project.Project;
 import com.onetuks.ihub.entity.system.System;
+import com.onetuks.ihub.entity.system.SystemStatus;
+import com.onetuks.ihub.entity.user.User;
 import java.time.LocalDateTime;
 
 public final class SystemMapper {
@@ -26,19 +29,24 @@ public final class SystemMapper {
         system.getUpdatedAt());
   }
 
-  public static void applyCreate(System system, SystemCreateRequest request) {
+  public static System applyCreate(Project project, User currentUser, SystemCreateRequest request) {
     LocalDateTime now = LocalDateTime.now();
-    system.setSystemId(UUIDProvider.provideUUID(System.TABLE_NAME));
-    system.setSystemCode(request.systemCode());
-    system.setStatus(request.status());
-    system.setDescription(request.description());
-    system.setSystemType(request.systemType());
-    system.setEnvironment(request.environment());
-    system.setCreatedAt(now);
-    system.setUpdatedAt(now);
+    return new System(
+        UUIDProvider.provideUUID(System.TABLE_NAME),
+        project,
+        request.systemCode(),
+        SystemStatus.ACTIVE,
+        request.description(),
+        request.systemType(),
+        request.environment(),
+        currentUser,
+        currentUser,
+        now,
+        now
+    );
   }
 
-  public static void applyUpdate(System system, SystemUpdateRequest request) {
+  public static System applyUpdate(System system, User currentUser, SystemUpdateRequest request) {
     if (request.systemCode() != null) {
       system.setSystemCode(request.systemCode());
     }
@@ -54,6 +62,8 @@ public final class SystemMapper {
     if (request.environment() != null) {
       system.setEnvironment(request.environment());
     }
+    system.setUpdatedBy(currentUser);
     system.setUpdatedAt(LocalDateTime.now());
+    return system;
   }
 }

@@ -8,7 +8,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +28,8 @@ public interface SystemRestController {
   @ApiResponses({
       @ApiResponse(responseCode = "201", description = "System created"),
       @ApiResponse(responseCode = "400", description = "Invalid request"),
+      @ApiResponse(responseCode = "401", description = "인증이 필요합니다."),
+      @ApiResponse(responseCode = "403", description = "권한이 없습니다."),
       @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @PostMapping
@@ -35,6 +39,8 @@ public interface SystemRestController {
   @ApiResponses({
       @ApiResponse(responseCode = "200", description = "System found"),
       @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
+      @ApiResponse(responseCode = "401", description = "인증이 필요합니다."),
+      @ApiResponse(responseCode = "403", description = "권한이 없습니다."),
       @ApiResponse(responseCode = "404", description = "System not found"),
       @ApiResponse(responseCode = "500", description = "Internal server error")
   })
@@ -44,15 +50,19 @@ public interface SystemRestController {
   @Operation(summary = "List systems")
   @ApiResponses({
       @ApiResponse(responseCode = "200", description = "Systems listed"),
+      @ApiResponse(responseCode = "401", description = "인증이 필요합니다."),
+      @ApiResponse(responseCode = "403", description = "권한이 없습니다."),
       @ApiResponse(responseCode = "500", description = "Internal server error")
   })
   @GetMapping
-  ResponseEntity<List<SystemResponse>> getSystems();
+  ResponseEntity<Page<SystemResponse>> getSystems(@PageableDefault Pageable pageable);
 
   @Operation(summary = "Update system")
   @ApiResponses({
       @ApiResponse(responseCode = "200", description = "System updated"),
       @ApiResponse(responseCode = "400", description = "Invalid request"),
+      @ApiResponse(responseCode = "401", description = "인증이 필요합니다."),
+      @ApiResponse(responseCode = "403", description = "권한이 없습니다."),
       @ApiResponse(responseCode = "404", description = "System not found"),
       @ApiResponse(responseCode = "500", description = "Internal server error")
   })
@@ -65,6 +75,8 @@ public interface SystemRestController {
   @ApiResponses({
       @ApiResponse(responseCode = "204", description = "System deleted"),
       @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
+      @ApiResponse(responseCode = "401", description = "인증이 필요합니다."),
+      @ApiResponse(responseCode = "403", description = "권한이 없습니다."),
       @ApiResponse(responseCode = "404", description = "System not found"),
       @ApiResponse(responseCode = "500", description = "Internal server error")
   })

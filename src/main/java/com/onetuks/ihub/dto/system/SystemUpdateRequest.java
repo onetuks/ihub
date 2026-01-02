@@ -9,8 +9,7 @@ public record SystemUpdateRequest(
     SystemStatus status,
     String description,
     SystemType systemType,
-    SystemEnvironment environment,
-    String updatedById
+    SystemEnvironment environment
 ) {
 
 }

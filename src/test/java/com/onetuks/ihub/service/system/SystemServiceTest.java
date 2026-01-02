@@ -1,30 +1,31 @@
 package com.onetuks.ihub.service.system;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.onetuks.ihub.TestcontainersConfiguration;
 import com.onetuks.ihub.dto.system.SystemCreateRequest;
-import com.onetuks.ihub.dto.system.SystemResponse;
 import com.onetuks.ihub.dto.system.SystemUpdateRequest;
 import com.onetuks.ihub.entity.project.Project;
+import com.onetuks.ihub.entity.system.System;
 import com.onetuks.ihub.entity.system.SystemEnvironment;
 import com.onetuks.ihub.entity.system.SystemStatus;
 import com.onetuks.ihub.entity.system.SystemType;
 import com.onetuks.ihub.entity.user.User;
-import com.onetuks.ihub.mapper.SystemMapper;
+import com.onetuks.ihub.exception.AccessDeniedException;
 import com.onetuks.ihub.repository.ProjectJpaRepository;
-import com.onetuks.ihub.repository.SystemJpaRepository;
+import com.onetuks.ihub.repository.ProjectMemberJpaRepository;
 import com.onetuks.ihub.repository.UserJpaRepository;
 import com.onetuks.ihub.service.ServiceTestDataFactory;
 import jakarta.persistence.EntityNotFoundException;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 @SpringBootTest
 @Import(TestcontainersConfiguration.class)
@@ -34,13 +35,11 @@ class SystemServiceTest {
   private SystemService systemService;
 
   @Autowired
-  private SystemJpaRepository systemJpaRepository;
-
-  @Autowired
   private ProjectJpaRepository projectJpaRepository;
-
   @Autowired
   private UserJpaRepository userJpaRepository;
+  @Autowired
+  private ProjectMemberJpaRepository projectMemberJpaRepository;
 
   private User creator;
   private User updater;
@@ -50,85 +49,76 @@ class SystemServiceTest {
   void setUp() {
     creator = ServiceTestDataFactory.createUser(userJpaRepository);
     updater = ServiceTestDataFactory.createUser(userJpaRepository);
-    project = ServiceTestDataFactory.createProject(projectJpaRepository, creator, updater, "SysProj");
+    project = ServiceTestDataFactory.createProject(
+        projectJpaRepository, creator, updater, "SysProj");
+    ServiceTestDataFactory.createProjectMember(projectMemberJpaRepository, project, creator);
+    ServiceTestDataFactory.createProjectMember(projectMemberJpaRepository, project, updater);
   }
 
-  @AfterEach
-  void tearDown() {
-    systemJpaRepository.deleteAll();
-    projectJpaRepository.deleteAll();
-    userJpaRepository.deleteAll();
+  private SystemCreateRequest buildCreateRequest() {
+    return new SystemCreateRequest(
+        project.getProjectId(),
+        "SYS1",
+        "desc",
+        SystemType.DB,
+        SystemEnvironment.DEV
+    );
   }
 
   @Test
   void createSystem_success() {
-    SystemCreateRequest request = new SystemCreateRequest(
-        project.getProjectId(),
-        "SYS1",
-        SystemStatus.ACTIVE,
-        "desc",
-        SystemType.DB,
-        SystemEnvironment.DEV,
-        creator.getEmail(),
-        updater.getEmail());
+    SystemCreateRequest request = buildCreateRequest();
 
-    SystemResponse response = SystemMapper.toResponse(systemService.create(request));
+    System result = systemService.create(creator, request);
 
-    assertNotNull(response.systemId());
-    assertEquals("SYS1", response.systemCode());
-    assertEquals(SystemStatus.ACTIVE, response.status());
-    assertEquals(SystemType.DB, response.systemType());
-    assertEquals(project.getProjectId(), response.projectId());
+    assertThat(result.getSystemId()).isNotNull();
+    assertThat(result.getSystemCode()).isEqualTo(request.systemCode());
+    assertThat(result.getStatus()).isEqualTo(SystemStatus.ACTIVE);
   }
 
   @Test
   void updateSystem_success() {
-    SystemResponse created = SystemMapper.toResponse(systemService.create(new SystemCreateRequest(
-        project.getProjectId(),
-        "SYS2",
-        SystemStatus.ACTIVE,
-        "desc",
-        SystemType.SAP,
-        SystemEnvironment.DEV,
-        creator.getEmail(),
-        updater.getEmail())));
-
+    System created = systemService.create(creator, buildCreateRequest());
     SystemUpdateRequest updateRequest = new SystemUpdateRequest(
         "SYS2-NEW",
         SystemStatus.INACTIVE,
         "updated",
         SystemType.SERVER,
-        SystemEnvironment.QA,
-        creator.getEmail());
+        SystemEnvironment.QA);
 
-    SystemResponse updated = SystemMapper.toResponse(systemService.update(created.systemId(), updateRequest));
+    System result = systemService.update(updater, created.getSystemId(), updateRequest);
 
-    assertEquals("SYS2-NEW", updated.systemCode());
-    assertEquals(SystemStatus.INACTIVE, updated.status());
-    assertEquals(SystemEnvironment.QA, updated.environment());
+    assertThat(result.getSystemCode()).isEqualTo(updateRequest.systemCode());
+    assertThat(result.getStatus()).isEqualTo(updateRequest.status());
+  }
+
+  @Test
+  void getSystemById_exception() {
+    System system = systemService.create(creator, buildCreateRequest());
+    User hacker = ServiceTestDataFactory.createUser(userJpaRepository);
+
+    assertThatThrownBy(() -> systemService.getById(hacker, system.getSystemId()))
+        .isInstanceOf(AccessDeniedException.class);
   }
 
   @Test
   void getSystems_returnsAll() {
-    systemService.create(new SystemCreateRequest(
-        project.getProjectId(), "S1", SystemStatus.ACTIVE, null,
-        SystemType.DB, SystemEnvironment.DEV, creator.getEmail(), updater.getEmail()));
-    systemService.create(new SystemCreateRequest(
-        project.getProjectId(), "S2", SystemStatus.ACTIVE, null,
-        SystemType.DB, SystemEnvironment.DEV, creator.getEmail(), updater.getEmail()));
+    Pageable pageable = PageRequest.of(0, 10);
+    systemService.create(creator, buildCreateRequest());
+    systemService.create(creator, buildCreateRequest());
 
-    assertEquals(2, systemService.getAll().size());
+    Page<System> results = systemService.getAll(pageable);
+
+    assertThat(results.getTotalElements()).isGreaterThanOrEqualTo(2);
   }
 
   @Test
   void deleteSystem_success() {
-    SystemResponse created = SystemMapper.toResponse(systemService.create(new SystemCreateRequest(
-        project.getProjectId(), "S3", SystemStatus.ACTIVE, null,
-        SystemType.DB, SystemEnvironment.DEV, creator.getEmail(), updater.getEmail())));
+    System created = systemService.create(updater, buildCreateRequest());
 
-    systemService.delete(created.systemId());
+    systemService.delete(updater, created.getSystemId());
 
-    assertEquals(0, systemJpaRepository.count());
-    assertThrows(EntityNotFoundException.class, () -> systemService.getById(created.systemId()));
+    assertThatThrownBy(() -> systemService.getById(updater, created.getSystemId()))
+        .isInstanceOf(EntityNotFoundException.class);
   }
 }
