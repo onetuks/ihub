@@ -1,5 +1,6 @@
 package com.onetuks.ihub.service.project;
 
+import com.onetuks.ihub.entity.project.ProjectMemberRole;
 import com.onetuks.ihub.entity.user.User;
 import com.onetuks.ihub.exception.AccessDeniedException;
 import com.onetuks.ihub.repository.ProjectMemberJpaRepository;
@@ -15,9 +16,19 @@ public class ProjectMemberCheckComponent {
 
   @Transactional(readOnly = true)
   public void checkIsProjectMember(User user, String projectId) {
-    boolean isProjectMember = projectMemberRepository.existsByProject_ProjectIdAndUser(projectId, user);
+    boolean isProjectMember = projectMemberRepository.existsByProject_ProjectIdAndUser(projectId,
+        user);
     if (!isProjectMember) {
       throw new AccessDeniedException("프로젝트 멤버가 아닙니다.");
+    }
+  }
+
+  @Transactional(readOnly = true)
+  public void checkIsProjectOwner(String userId, String projectId) {
+    boolean isProjectOwner = projectMemberRepository.existsByRoleEqualsAndProject_ProjectIdAndUser_UserId(
+        ProjectMemberRole.PROJECT_OWNER, projectId, userId);
+    if (!isProjectOwner) {
+      throw new AccessDeniedException("프로젝트 오너가 아닙니다.");
     }
   }
 }

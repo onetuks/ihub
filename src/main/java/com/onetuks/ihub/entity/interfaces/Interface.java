@@ -38,7 +38,7 @@ public class Interface {
 
   @OneToOne(fetch = FetchType.LAZY, optional = false)
   @JoinColumn(name = "source_system_id", referencedColumnName = "system_id", nullable = false)
-  private com.onetuks.ihub.entity.system.System sourceSystem;
+  private System sourceSystem;
 
   @OneToOne(fetch = FetchType.LAZY, optional = false)
   @JoinColumn(name = "target_system_id", referencedColumnName = "system_id", nullable = false)

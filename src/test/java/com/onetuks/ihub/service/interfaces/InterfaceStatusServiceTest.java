@@ -1,27 +1,28 @@
 package com.onetuks.ihub.service.interfaces;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.onetuks.ihub.TestcontainersConfiguration;
 import com.onetuks.ihub.dto.interfaces.InterfaceStatusCreateRequest;
-import com.onetuks.ihub.dto.interfaces.InterfaceStatusResponse;
 import com.onetuks.ihub.dto.interfaces.InterfaceStatusUpdateRequest;
+import com.onetuks.ihub.entity.interfaces.InterfaceStatus;
 import com.onetuks.ihub.entity.project.Project;
 import com.onetuks.ihub.entity.user.User;
-import com.onetuks.ihub.mapper.InterfaceStatusMapper;
-import com.onetuks.ihub.repository.InterfaceStatusJpaRepository;
+import com.onetuks.ihub.exception.AccessDeniedException;
 import com.onetuks.ihub.repository.ProjectJpaRepository;
+import com.onetuks.ihub.repository.ProjectMemberJpaRepository;
 import com.onetuks.ihub.repository.UserJpaRepository;
 import com.onetuks.ihub.service.ServiceTestDataFactory;
 import jakarta.persistence.EntityNotFoundException;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 @SpringBootTest
 @Import(TestcontainersConfiguration.class)
@@ -31,13 +32,11 @@ class InterfaceStatusServiceTest {
   private InterfaceStatusService interfaceStatusService;
 
   @Autowired
-  private InterfaceStatusJpaRepository interfaceStatusJpaRepository;
-
-  @Autowired
   private ProjectJpaRepository projectJpaRepository;
-
   @Autowired
   private UserJpaRepository userJpaRepository;
+  @Autowired
+  private ProjectMemberJpaRepository projectMemberJpaRepository;
 
   private Project project;
   private User user;
@@ -45,69 +44,76 @@ class InterfaceStatusServiceTest {
   @BeforeEach
   void setUp() {
     user = ServiceTestDataFactory.createUser(userJpaRepository);
-    project = ServiceTestDataFactory.createProject(projectJpaRepository, user, user, "IFStatusProj");
-  }
-
-  @AfterEach
-  void tearDown() {
-    interfaceStatusJpaRepository.deleteAll();
-    projectJpaRepository.deleteAll();
-    userJpaRepository.deleteAll();
+    project = ServiceTestDataFactory.createProject(projectJpaRepository, user, user,
+        "IFStatusProj");
+    ServiceTestDataFactory.createProjectMember(projectMemberJpaRepository, project, user);
   }
 
   @Test
   void createInterfaceStatus_success() {
-    InterfaceStatusCreateRequest request = new InterfaceStatusCreateRequest(
-        project.getProjectId(),
-        "Ready",
-        "RD",
-        1,
-        true);
+    InterfaceStatusCreateRequest request = buildCreateRequest();
 
-    InterfaceStatusResponse response = InterfaceStatusMapper.toResponse(
-        interfaceStatusService.create(request));
+    InterfaceStatus result = interfaceStatusService.create(user, request);
 
-    assertNotNull(response.statusId());
-    assertEquals("Ready", response.name());
-    assertEquals(1, response.seqOrder());
+    assertThat(result.getStatusId()).isNotNull();
+    assertThat(result.getName()).isEqualToIgnoringCase("ready");
+    assertThat(result.getSeqOrder()).isOne();
   }
 
   @Test
   void updateInterfaceStatus_success() {
-    InterfaceStatusResponse created = InterfaceStatusMapper.toResponse(
-        interfaceStatusService.create(new InterfaceStatusCreateRequest(
-            project.getProjectId(), "Draft", "DF", 1, true)));
+    InterfaceStatus created = interfaceStatusService.create(user, buildCreateRequest());
 
     InterfaceStatusUpdateRequest updateRequest =
         new InterfaceStatusUpdateRequest("DraftUpdated", "DFU", 2, false);
 
-    InterfaceStatusResponse updated = InterfaceStatusMapper.toResponse(
-        interfaceStatusService.update(created.statusId(), updateRequest));
+    InterfaceStatus result =
+        interfaceStatusService.update(user, created.getStatusId(), updateRequest);
 
-    assertEquals("DraftUpdated", updated.name());
-    assertEquals(2, updated.seqOrder());
+    assertThat(result.getName()).isEqualTo(updateRequest.name());
+    assertThat(result.getSeqOrder()).isEqualTo(updateRequest.seqOrder());
+  }
+
+  @Test
+  void updateInterfaceStatus_exception() {
+    InterfaceStatus created = interfaceStatusService.create(user, buildCreateRequest());
+    InterfaceStatusUpdateRequest updateRequest =
+        new InterfaceStatusUpdateRequest("DraftUpdated", "DFU", 2, false);
+    User hacker = ServiceTestDataFactory.createUser(userJpaRepository);
+
+    assertThatThrownBy(
+        () -> interfaceStatusService.update(hacker, created.getStatusId(), updateRequest))
+        .isInstanceOf(AccessDeniedException.class);
   }
 
   @Test
   void getInterfaceStatuses_returnsAll() {
-    interfaceStatusService.create(new InterfaceStatusCreateRequest(
-        project.getProjectId(), "S1", "S1", 1, true));
-    interfaceStatusService.create(new InterfaceStatusCreateRequest(
-        project.getProjectId(), "S2", "S2", 2, false));
+    Pageable pageable = PageRequest.of(0, 10);
+    interfaceStatusService.create(user, buildCreateRequest());
+    interfaceStatusService.create(user, buildCreateRequest());
 
-    assertEquals(2, interfaceStatusService.getAll().size());
+    Page<InterfaceStatus> results = interfaceStatusService.getAll(pageable);
+
+    assertThat(results.getTotalElements()).isGreaterThanOrEqualTo(2);
   }
 
   @Test
   void deleteInterfaceStatus_success() {
-    InterfaceStatusResponse created = InterfaceStatusMapper.toResponse(
-        interfaceStatusService.create(new InterfaceStatusCreateRequest(
-            project.getProjectId(), "S3", "S3", 1, true)));
+    InterfaceStatus created = interfaceStatusService.create(user, buildCreateRequest());
 
-    interfaceStatusService.delete(created.statusId());
+    interfaceStatusService.delete(user, created.getStatusId());
 
-    assertEquals(0, interfaceStatusJpaRepository.count());
-    assertThrows(EntityNotFoundException.class,
-        () -> interfaceStatusService.getById(created.statusId()));
+    assertThatThrownBy(() -> interfaceStatusService.getById(created.getStatusId()))
+        .isInstanceOf(EntityNotFoundException.class);
+  }
+
+  private InterfaceStatusCreateRequest buildCreateRequest() {
+    return new InterfaceStatusCreateRequest(
+        project.getProjectId(),
+        "Ready",
+        "RD",
+        1,
+        true
+    );
   }
 }
