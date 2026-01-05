@@ -4,6 +4,7 @@ import com.onetuks.ihub.dto.user.UserCreateRequest;
 import com.onetuks.ihub.dto.user.UserResponse;
 import com.onetuks.ihub.dto.user.UserUpdateRequest;
 import com.onetuks.ihub.entity.user.User;
+import com.onetuks.ihub.entity.user.UserStatus;
 import java.time.LocalDateTime;
 
 public final class UserMapper {
@@ -30,22 +31,19 @@ public final class UserMapper {
     return new User(
         request.email(),
         request.email(),
-        request.password(),
+        UserCreateRequest.INITIAL_PASSWORD,
         request.name(),
         request.company(),
         request.position(),
         request.phoneNumber(),
         request.profileImageUrl(),
-        request.status(),
+        UserStatus.INACTIVE,
         now,
         now
     );
   }
 
   public static User applyUpdate(User user, UserUpdateRequest request) {
-    if (request.password() != null) {
-      user.setPassword(request.password());
-    }
     if (request.name() != null) {
       user.setName(request.name());
     }

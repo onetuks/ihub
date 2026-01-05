@@ -1,0 +1,150 @@
+# API Checklist
+
+> 체크박스 형태로 엔드포인트 구현/검증 진행 상황을 관리하기 위한 문서입니다.  
+> 주석(약관) 예: _exclude status=DELETED_, _soft delete_, _multipart_ 등은 유지했습니다.
+
+## Auth
+- [ ] **POST** `/api/auth/login`
+- [ ] **GET** `/api/auth/me`  _(exclude status=DELETED)_
+
+## User
+- [ ] **GET** `/api/users`  _(exclude status=DELETED)_
+- [ ] **GET** `/api/users/search?query=`  _(exclude status=DELETED)_
+- [ ] **GET** `/api/users/{userId}`  _(exclude status=DELETED)_
+- [ ] **POST** `/api/users/invitations`  _(status=INACTIVE)_
+- [ ] **PATCH** `/api/users/{userId}`
+- [ ] **PATCH** `/api/users/{userId}/password`
+- [ ] **PATCH** `/api/users/{userId}/status`  _(INACTIVE → ACTIVE (first login))_
+
+## User Role
+- [ ] **GET** `/api/roles`
+- [ ] **GET** `/api/users/{userId}/roles`
+- [ ] **PUT** `/api/users/{userId}/roles`  _(replace all)_
+- [ ] **POST** `/api/users/{userId}/roles`  _(add single)_
+- [ ] **DELETE** `/api/users/{userId}/roles/{roleId}`
+
+## Project
+- [ ] **GET** `/api/projects`  _(exclude status=DELETED)_
+- [ ] **GET** `/api/projects/{projectId}`  _(exclude status=DELETED)_
+- [ ] **POST** `/api/projects`
+- [ ] **PATCH** `/api/projects/{projectId}`
+- [ ] **GET** `/api/users/me/projects`  _(exclude status=DELETED)_
+- [ ] **PATCH** `/api/projects/{projectId}/favorite`
+
+## Project Member
+- [ ] **GET** `/api/projects/{projectId}/members`  _(exclude status=DELETED)_
+- [ ] **POST** `/api/projects/{projectId}/members`  _(default role=VIEWER)_
+- [ ] **PATCH** `/api/projects/{projectId}/members/{memberId}`
+- [ ] **DELETE** `/api/projects/{projectId}/members/{memberId}`
+
+## Interface
+- [ ] **GET** `/api/projects/{projectId}/interfaces`
+- [ ] **POST** `/api/projects/{projectId}/interfaces`
+- [ ] **GET** `/api/interfaces/{interfaceId}`
+- [ ] **PATCH** `/api/interfaces/{interfaceId}`
+- [ ] **GET** `/api/interfaces/{interfaceId}/history`
+- [ ] **GET** `/api/interfaces/{interfaceId}/revisions`
+- [ ] **POST** `/api/interfaces/{interfaceId}/revisions`
+
+## Interface Status
+- [ ] **GET** `/api/projects/{projectId}/interface-statuses`
+- [ ] **POST** `/api/projects/{projectId}/interface-statuses`
+- [ ] **PATCH** `/api/interface-statuses/{statusId}`
+
+## Interface Status Transition
+- [ ] **GET** `/api/projects/{projectId}/interface-status-transitions`  _(exclude status=DELETED)_
+- [ ] **POST** `/api/projects/{projectId}/interface-status-transitions`
+- [ ] **PATCH** `/api/interface-status-transitions/{transitionId}`
+
+## Interface Status Change
+- [ ] **POST** `/api/interfaces/{interfaceId}/status`
+
+## Task
+- [ ] **GET** `/api/projects/{projectId}/tasks`  _(exclude status=DELETED)_
+- [ ] **POST** `/api/projects/{projectId}/tasks`
+- [ ] **GET** `/api/tasks/{taskId}`
+- [ ] **PATCH** `/api/tasks/{taskId}`
+- [ ] **POST** `/api/tasks/{taskId}/status`
+- [ ] **GET** `/api/tasks/{taskId}/subtasks`
+
+## Task Search
+- [ ] **GET** `/api/tasks/search`  _(exclude status=DELETED)_
+
+## Task Filter
+- [ ] **GET** `/api/projects/{projectId}/task-filters`
+- [ ] **POST** `/api/projects/{projectId}/task-filters`
+- [ ] **PATCH** `/api/task-filters/{groupId}`
+- [ ] **DELETE** `/api/task-filters/{groupId}`  _(soft delete)_
+
+## Post
+- [ ] **GET** `/api/projects/{projectId}/posts`  _(exclude status=DELETED)_
+- [ ] **POST** `/api/projects/{projectId}/posts`
+- [ ] **GET** `/api/posts/{postId}`  _(exclude status=DELETED)_
+- [ ] **PATCH** `/api/posts/{postId}`
+- [ ] **DELETE** `/api/posts/{postId}`
+
+## Notice
+- [ ] **GET** `/api/projects/{projectId}/notices`  _(exclude status=DELETED)_
+- [ ] **POST** `/api/projects/{projectId}/notices`
+- [ ] **GET** `/api/notices/{noticeId}`  _(exclude status=DELETED)_
+- [ ] **PATCH** `/api/notices/{noticeId}`
+- [ ] **DELETE** `/api/notices/{noticeId}`
+
+## Faq
+- [ ] **GET** `/api/projects/{projectId}/faqs`  _(exclude status=DELETED)_
+- [ ] **POST** `/api/projects/{projectId}/faqs`
+- [ ] **GET** `/api/faqs/{faqId}`  _(exclude status=DELETED)_
+- [ ] **PATCH** `/api/faqs/{faqId}`
+- [ ] **PATCH** `/api/faqs/{faqId}/answer`
+- [ ] **DELETE** `/api/faqs/{faqId}`
+
+## Event
+- [ ] **GET** `/api/projects/{projectId}/events`
+- [ ] **POST** `/api/projects/{projectId}/events`
+- [ ] **GET** `/api/events/{eventId}`
+- [ ] **PATCH** `/api/events/{eventId}`
+- [ ] **DELETE** `/api/events/{eventId}`
+
+## Event Attendee
+- [ ] **PUT** `/api/events/{eventId}/attendees`
+- [ ] **POST** `/api/events/{eventId}/attendees`
+- [ ] **PATCH** `/api/event-attendees/{eventAttendeeId}`
+
+## Feed
+- [ ] **GET** `/api/projects/{projectId}/feed`
+
+## Comment
+- [ ] **GET** `/api/{targetType}/{targetId}/comments`
+- [ ] **POST** `/api/{targetType}/{targetId}/comments`
+- [ ] **PATCH** `/api/comments/{commentId}`
+- [ ] **DELETE** `/api/comments/{commentId}`  _(soft delete)_
+
+## Mention
+- [ ] **GET** `/api/users/me/mentions`  _(exclude status=DELETED)_
+- [ ] **GET** `/api/users/me/my-posts`  _(exclude status=DELETED)_
+
+## System
+- [ ] **GET** `/api/projects/{projectId}/systems`  _(exclude status=DELETED)_
+- [ ] **POST** `/api/projects/{projectId}/systems`
+- [ ] **PATCH** `/api/systems/{systemId}`
+
+## System Owner
+- [ ] **GET** `/api/projects/{projectId}/system-owners`
+- [ ] **POST** `/api/projects/{projectId}/system-owners`
+- [ ] **DELETE** `/api/system-owners/{systemOwnerId}`
+
+## Connection
+- [ ] **GET** `/api/systems/{systemId}/connections`  _(exclude status=DELETED)_
+- [ ] **POST** `/api/systems/{systemId}/connections`
+- [ ] **PATCH** `/api/connections/{connectionId}`
+
+## File
+- [ ] **GET** `/api/projects/{projectId}/folders`
+- [ ] **POST** `/api/projects/{projectId}/folders`
+- [ ] **GET** `/api/folders/{folderId}/files`  _(exclude status=DELETED)_
+- [ ] **POST** `/api/projects/{projectId}/files`  _(multipart)_
+- [ ] **PATCH** `/api/files/{fileId}`
+
+## Attachment
+- [ ] **POST** `/api/attachments`
+- [ ] **GET** `/api/{targetType}/{targetId}/attachments`

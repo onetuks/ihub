@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,7 +35,7 @@ public interface UserRestController {
       @ApiResponse(responseCode = "403", description = "Forbidden"),
       @ApiResponse(responseCode = "500", description = "Internal server error")
   })
-  @PostMapping
+  @PostMapping("/invitations")
   ResponseEntity<UserResponse> createUser(@Valid @RequestBody UserCreateRequest request);
 
   @Operation(summary = "Get user by id")
@@ -84,7 +83,7 @@ public interface UserRestController {
       @ApiResponse(responseCode = "404", description = "User not found"),
       @ApiResponse(responseCode = "500", description = "Internal server error")
   })
-  @PutMapping("/{userId}")
+  @PatchMapping("/{userId}")
   ResponseEntity<UserResponse> updateUser(
       @PathVariable String userId,
       @Valid @RequestBody UserUpdateRequest request);
@@ -112,7 +111,7 @@ public interface UserRestController {
       @ApiResponse(responseCode = "404", description = "User not found"),
       @ApiResponse(responseCode = "500", description = "Internal server error")
   })
-  @PatchMapping("/{userId}")
+  @PatchMapping("/{userId}/status")
   ResponseEntity<UserResponse> updateUserStatus(
       @PathVariable String userId,
       @Valid @RequestBody UserStatusUpdateRequest request);

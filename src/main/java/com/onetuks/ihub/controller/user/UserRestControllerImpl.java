@@ -36,8 +36,7 @@ public class UserRestControllerImpl implements UserRestController {
   public ResponseEntity<UserResponse> createUser(
       @Valid @RequestBody UserCreateRequest request
   ) {
-    User result = userService.create(
-        request.applyEncodedPassword(passwordEncoder.encode(request.password())));
+    User result = userService.create(request);
     UserResponse response = UserMapper.toResponse(result);
     return ResponseEntity
         .created(URI.create("/api/users/" + response.userId()))
@@ -77,8 +76,7 @@ public class UserRestControllerImpl implements UserRestController {
       @PathVariable String userId,
       @Valid @RequestBody UserUpdateRequest request
   ) {
-    User result = userService.update(userId,
-        request.applyEncodedPassword(passwordEncoder.encode(request.password())));
+    User result = userService.update(userId, request);
     UserResponse response = UserMapper.toResponse(result);
     return ResponseEntity.ok(response);
   }

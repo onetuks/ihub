@@ -74,7 +74,7 @@ class UserServiceTest {
     // Given
     String name = "Mr.example";
     Pageable pageable = PageRequest.of(0, 10);
-    User created = userService.create(buildCreateRequest("example@example.com", name));
+    userService.create(buildCreateRequest("example@example.com", name));
 
     // When
     Page<User> results = userService.getAllByName(name.substring(0, 3), pageable);
@@ -109,12 +109,10 @@ class UserServiceTest {
   private UserCreateRequest buildCreateRequest(String email, String name) {
     return new UserCreateRequest(
         email,
-        "password",
         name,
         "Company",
         "Position",
         "010-1234-5678",
-        "http://example.com/profile.png",
-        UserStatus.ACTIVE);
+        "http://example.com/profile.png");
   }
 }
