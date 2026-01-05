@@ -64,18 +64,18 @@ class EventServiceTest {
   void createEvent_success() {
     EventCreateRequest request = buildEventCreateRequest();
 
-    Event result = eventService.create(creator, request);
+    Event result = eventService.create(creator, project.getProjectId(), request);
 
     assertThat(result.getEventId()).isNotNull();
     assertThat(result.getTitle()).isEqualToIgnoringCase(request.title());
-    assertThat(result.getProject().getProjectId()).isEqualToIgnoringCase(request.projectId());
+    assertThat(result.getProject().getProjectId()).isEqualToIgnoringCase(project.getProjectId());
     assertThat(result.getCreatedBy().getUserId()).isEqualToIgnoringCase(creator.getUserId());
     assertThat(alarmJpaRepository.findByEvent(result)).isPresent();
   }
 
   @Test
   void updateEvent_success() {
-    Event created = eventService.create(creator, buildEventCreateRequest());
+    Event created = eventService.create(creator, project.getProjectId(), buildEventCreateRequest());
     EventUpdateRequest updateRequest = new EventUpdateRequest(
         "Planning Updated",
         LocalDateTime.now().plusHours(1),
@@ -95,7 +95,7 @@ class EventServiceTest {
   void getEventById_exception() {
     // Given
     User hacker = ServiceTestDataFactory.createUser(userJpaRepository);
-    Event created = eventService.create(creator, buildEventCreateRequest());
+    Event created = eventService.create(creator, project.getProjectId(), buildEventCreateRequest());
 
     // When & Then
     assertThatThrownBy(() -> eventService.getById(hacker, created.getEventId()))
@@ -105,8 +105,8 @@ class EventServiceTest {
   @Test
   void getEvents_returnsAll() {
     Pageable pageable = PageRequest.of(0, 10);
-    eventService.create(creator, buildEventCreateRequest());
-    eventService.create(creator, buildEventCreateRequest());
+    eventService.create(creator, project.getProjectId(), buildEventCreateRequest());
+    eventService.create(creator, project.getProjectId(), buildEventCreateRequest());
 
     Page<Event> results = eventService.getAll(creator, project.getProjectId(), pageable);
 
@@ -115,7 +115,7 @@ class EventServiceTest {
 
   @Test
   void deleteEvent_success() {
-    Event created = eventService.create(creator, buildEventCreateRequest());
+    Event created = eventService.create(creator, project.getProjectId(), buildEventCreateRequest());
 
     eventService.delete(creator, created.getEventId());
 
@@ -127,7 +127,7 @@ class EventServiceTest {
   @Test
   void manageAttendees_success() {
     // Given
-    Event created = eventService.create(creator, buildEventCreateRequest());
+    Event created = eventService.create(creator, project.getProjectId(), buildEventCreateRequest());
     EventAttendeeRequests requests = new EventAttendeeRequests(List.of(
         new EventAttendeeRequest(
             created.getEventId(),
@@ -151,7 +151,7 @@ class EventServiceTest {
   void getAllAttendees_success() {
     // Given
     Pageable pageable = PageRequest.of(0, 10);
-    Event created = eventService.create(creator, buildEventCreateRequest());
+    Event created = eventService.create(creator, project.getProjectId(), buildEventCreateRequest());
     EventAttendeeRequests requests = new EventAttendeeRequests(List.of(
         new EventAttendeeRequest(
             created.getEventId(),
@@ -174,7 +174,6 @@ class EventServiceTest {
 
   private EventCreateRequest buildEventCreateRequest() {
     return new EventCreateRequest(
-        project.getProjectId(),
         "Kickoff",
         LocalDateTime.now(),
         LocalDateTime.now().plusHours(2),

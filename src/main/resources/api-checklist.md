@@ -116,11 +116,11 @@
 
 ## Event
 
-- [ ] **GET** `/api/projects/{projectId}/events`
-- [ ] **POST** `/api/projects/{projectId}/events`
-- [ ] **GET** `/api/events/{eventId}`
-- [ ] **PATCH** `/api/events/{eventId}`
-- [ ] **DELETE** `/api/events/{eventId}`
+- [x] **GET** `/api/projects/{projectId}/events`
+- [x] **POST** `/api/projects/{projectId}/events`
+- [x] **GET** `/api/events/{eventId}`
+- [x] **PATCH** `/api/events/{eventId}`
+- [x] **DELETE** `/api/events/{eventId}`
 
 ## Event Attendee
 

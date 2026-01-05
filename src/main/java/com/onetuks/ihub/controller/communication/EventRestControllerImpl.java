@@ -33,8 +33,9 @@ public class EventRestControllerImpl implements EventRestController {
 
   @Override
   public ResponseEntity<EventResponse> createEvent(
+      @PathVariable String projectId,
       @Valid @RequestBody EventCreateRequest request) {
-    Event result = eventService.create(currentUserProvider.resolveUser(), request);
+    Event result = eventService.create(currentUserProvider.resolveUser(), projectId, request);
     EventResponse response = EventMapper.toResponse(result);
     return ResponseEntity.created(URI.create("/api/events/" + response.eventId()))
         .body(response);
@@ -70,14 +71,16 @@ public class EventRestControllerImpl implements EventRestController {
   @Override
   public ResponseEntity<List<EventAttendeeResponse>> manageEventAttendees(
       String eventId, EventAttendeeRequests request) {
-    List<EventAttendee> results = eventService.manageAttendees(currentUserProvider.resolveUser(), eventId, request);
+    List<EventAttendee> results = eventService.manageAttendees(currentUserProvider.resolveUser(),
+        eventId, request);
     return ResponseEntity.ok(results.stream().map(EventAttendeeMapper::toResponse).toList());
   }
 
   @Override
   public ResponseEntity<Page<EventAttendeeResponse>> getEventAttendees(
       String eventId, Pageable pageable) {
-    Page<EventAttendee> results = eventService.getAllAttendees(currentUserProvider.resolveUser(), eventId, pageable);
+    Page<EventAttendee> results = eventService.getAllAttendees(currentUserProvider.resolveUser(),
+        eventId, pageable);
     return ResponseEntity.ok(results.map(EventAttendeeMapper::toResponse));
   }
 }

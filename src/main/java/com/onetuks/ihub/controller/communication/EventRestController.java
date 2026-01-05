@@ -22,11 +22,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-@RequestMapping("/api/events")
+@RequestMapping
 @Tag(name = "Event", description = "Event management APIs")
 public interface EventRestController {
+
+  @Operation(summary = "List events")
+  @ApiResponses({
+      @ApiResponse(responseCode = "200", description = "Events listed"),
+      @ApiResponse(responseCode = "401", description = "UnAuthorized"),
+      @ApiResponse(responseCode = "403", description = "Forbidden"),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
+  })
+  @GetMapping("/api/projects/{projectId}/events")
+  ResponseEntity<Page<EventResponse>> getEvents(
+      @PathVariable String projectId,
+      @PageableDefault Pageable pageable);
 
   @Operation(summary = "Create event")
   @ApiResponses({
@@ -36,8 +47,10 @@ public interface EventRestController {
       @ApiResponse(responseCode = "403", description = "Forbidden"),
       @ApiResponse(responseCode = "500", description = "Internal server error")
   })
-  @PostMapping
-  ResponseEntity<EventResponse> createEvent(@Valid @RequestBody EventCreateRequest request);
+  @PostMapping("/api/projects/{projectId}/events")
+  ResponseEntity<EventResponse> createEvent(
+      @PathVariable String projectId,
+      @Valid @RequestBody EventCreateRequest request);
 
   @Operation(summary = "Get event by id")
   @ApiResponses({
@@ -48,20 +61,8 @@ public interface EventRestController {
       @ApiResponse(responseCode = "404", description = "Event not found"),
       @ApiResponse(responseCode = "500", description = "Internal server error")
   })
-  @GetMapping("/{eventId}")
+  @GetMapping("/api/events/{eventId}")
   ResponseEntity<EventResponse> getEvent(@PathVariable String eventId);
-
-  @Operation(summary = "List events")
-  @ApiResponses({
-      @ApiResponse(responseCode = "200", description = "Events listed"),
-      @ApiResponse(responseCode = "401", description = "UnAuthorized"),
-      @ApiResponse(responseCode = "403", description = "Forbidden"),
-      @ApiResponse(responseCode = "500", description = "Internal server error")
-  })
-  @GetMapping
-  ResponseEntity<Page<EventResponse>> getEvents(
-      @RequestParam String projectId,
-      @PageableDefault Pageable pageable);
 
   @Operation(summary = "Update event")
   @ApiResponses({
@@ -72,7 +73,7 @@ public interface EventRestController {
       @ApiResponse(responseCode = "404", description = "Event not found"),
       @ApiResponse(responseCode = "500", description = "Internal server error")
   })
-  @PutMapping("/{eventId}")
+  @PutMapping("/api/events/{eventId}")
   ResponseEntity<EventResponse> updateEvent(
       @PathVariable String eventId,
       @Valid @RequestBody EventUpdateRequest request);
@@ -86,7 +87,7 @@ public interface EventRestController {
       @ApiResponse(responseCode = "404", description = "Event not found"),
       @ApiResponse(responseCode = "500", description = "Internal server error")
   })
-  @DeleteMapping("/{eventId}")
+  @DeleteMapping("/api/events/{eventId}")
   ResponseEntity<Void> deleteEvent(@PathVariable String eventId);
 
   @Operation(summary = "Manage event attendees")
