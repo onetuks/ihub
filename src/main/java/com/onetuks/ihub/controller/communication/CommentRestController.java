@@ -13,14 +13,14 @@ import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@RequestMapping("/api")
+@RequestMapping
 @Tag(name = "Comment", description = "댓글 관리 API")
 public interface CommentRestController {
 
@@ -33,7 +33,7 @@ public interface CommentRestController {
       @ApiResponse(responseCode = "404", description = "대상을 찾을 수 없습니다."),
       @ApiResponse(responseCode = "500", description = "서버 오류")
   })
-  @PostMapping("/{targetType}/{targetId}/comments")
+  @PostMapping("/api/{targetType}/{targetId}/comments")
   ResponseEntity<CommentCreateResponse> createComment(
       @PathVariable TargetType targetType,
       @PathVariable String targetId,
@@ -49,7 +49,7 @@ public interface CommentRestController {
       @ApiResponse(responseCode = "404", description = "대상을 찾을 수 없습니다."),
       @ApiResponse(responseCode = "500", description = "서버 오류")
   })
-  @GetMapping("/{targetType}/{targetId}/comments")
+  @GetMapping("/api/{targetType}/{targetId}/comments")
   ResponseEntity<List<CommentResponse>> getComments(
       @PathVariable TargetType targetType,
       @PathVariable String targetId
@@ -64,7 +64,7 @@ public interface CommentRestController {
       @ApiResponse(responseCode = "404", description = "댓글을 찾을 수 없습니다."),
       @ApiResponse(responseCode = "500", description = "서버 오류")
   })
-  @PatchMapping("/comments/{commentId}")
+  @PatchMapping("/api/comments/{commentId}")
   ResponseEntity<CommentResponse> updateComment(
       @PathVariable String commentId,
       @Valid @RequestBody CommentUpdateRequest request
@@ -79,7 +79,7 @@ public interface CommentRestController {
       @ApiResponse(responseCode = "404", description = "댓글을 찾을 수 없습니다."),
       @ApiResponse(responseCode = "500", description = "서버 오류")
   })
-  @DeleteMapping("/comments/{commentId}")
+  @DeleteMapping("/api/comments/{commentId}")
   ResponseEntity<Void> deleteComment(
       @PathVariable String commentId
   );

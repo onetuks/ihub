@@ -134,10 +134,10 @@
 
 ## Comment
 
-- [ ] **GET** `/api/{targetType}/{targetId}/comments`
-- [ ] **POST** `/api/{targetType}/{targetId}/comments`
-- [ ] **PATCH** `/api/comments/{commentId}`
-- [ ] **DELETE** `/api/comments/{commentId}`  _(soft delete)_
+- [x] **GET** `/api/{targetType}/{targetId}/comments`
+- [x] **POST** `/api/{targetType}/{targetId}/comments`
+- [x] **PATCH** `/api/comments/{commentId}`
+- [x] **DELETE** `/api/comments/{commentId}`  _(soft delete)_
 
 ## Mention
 
