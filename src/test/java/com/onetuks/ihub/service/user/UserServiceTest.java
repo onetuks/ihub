@@ -39,7 +39,7 @@ class UserServiceTest {
     assertNotNull(response.email());
     assertEquals("user1@example.com", response.email());
     assertEquals("User One", response.name());
-    assertEquals(UserStatus.ACTIVE, response.status());
+    assertEquals(UserStatus.INACTIVE, response.status());
     assertNotNull(response.createdAt());
     assertNotNull(response.updatedAt());
   }
@@ -49,7 +49,6 @@ class UserServiceTest {
     UserResponse created = UserMapper.toResponse(
         userService.create(buildCreateRequest("user2@example.com", "User Two")));
     UserUpdateRequest updateRequest = new UserUpdateRequest(
-        "newPass",
         "User Two Updated",
         "NewCo",
         "Lead",

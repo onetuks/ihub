@@ -1,7 +1,7 @@
 Auth & users
 
 - POST /api/auth/login -> { items: [{ email, password }] }; resp { items: [{ token, user: User }] }
-- GET /api/users/me -> resp { items: [User] } // exclude status=DELETED
+- GET /api/users/me (/api/auth/me) -> resp { items: [User] } // exclude status=DELETED
 - GET /api/users -> resp { items: User[] } // exclude status=DELETED
 - GET /api/users/search?query= -> resp { items: User[] } // exclude status=DELETED
 - POST /api/users/invite -> {
