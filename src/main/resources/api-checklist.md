@@ -91,11 +91,11 @@
 
 ## Post
 
-- [ ] **GET** `/api/projects/{projectId}/posts`  _(exclude status=DELETED)_
-- [ ] **POST** `/api/projects/{projectId}/posts`
-- [ ] **GET** `/api/posts/{postId}`  _(exclude status=DELETED)_
-- [ ] **PATCH** `/api/posts/{postId}`
-- [ ] **DELETE** `/api/posts/{postId}`
+- [x] **GET** `/api/projects/{projectId}/posts`  _(exclude status=DELETED)_
+- [x] **POST** `/api/projects/{projectId}/posts`
+- [x] **GET** `/api/posts/{postId}`  _(exclude status=DELETED)_
+- [x] **PATCH** `/api/posts/{postId}`
+- [x] **DELETE** `/api/posts/{postId}`
 
 ## Notice
 

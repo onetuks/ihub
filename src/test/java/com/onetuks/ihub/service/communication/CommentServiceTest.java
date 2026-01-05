@@ -69,8 +69,7 @@ class CommentServiceTest {
     ServiceTestDataFactory.createProjectMember(projectMemberJpaRepository, project, author);
     ServiceTestDataFactory.createProjectMember(projectMemberJpaRepository, project, mentionedUser);
     post = postJpaRepository.save(
-        PostMapper.applyCreate(author, project,
-            new PostCreateRequest(project.getProjectId(), "title", "content"))
+        PostMapper.applyCreate(author, project, new PostCreateRequest("title", "content"))
     );
   }
 

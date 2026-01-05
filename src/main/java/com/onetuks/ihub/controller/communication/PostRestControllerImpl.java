@@ -32,9 +32,10 @@ public class PostRestControllerImpl implements PostRestController {
   @RequiresRole({POST_FULL_ACCESS})
   @Override
   public ResponseEntity<PostResponse> createPost(
+      @PathVariable String projectId,
       @Valid @RequestBody PostCreateRequest request
   ) {
-    Post result = postService.create(currentUserProvider.resolveUser(), request);
+    Post result = postService.create(currentUserProvider.resolveUser(), projectId, request);
     PostResponse response = PostMapper.toResponse(result);
     return ResponseEntity
         .created(URI.create("/api/posts/" + response.postId()))

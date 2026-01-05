@@ -26,8 +26,8 @@ public class PostService {
   private final ProjectJpaRepository projectJpaRepository;
 
   @Transactional
-  public Post create(User currentUser, PostCreateRequest request) {
-    Project project = findProject(request.projectId());
+  public Post create(User currentUser, String projectId, PostCreateRequest request) {
+    Project project = findProject(projectId);
     projectMemberCheckComponent.checkIsProjectMember(currentUser, project.getProjectId());
     return postJpaRepository.save(PostMapper.applyCreate(currentUser, project, request));
   }
