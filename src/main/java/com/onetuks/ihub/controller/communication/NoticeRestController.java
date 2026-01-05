@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@RequestMapping("/api")
+@RequestMapping
 @Tag(name = "Notice", description = "공지사항 관리 API")
 public interface NoticeRestController {
 
@@ -36,7 +36,7 @@ public interface NoticeRestController {
       @ApiResponse(responseCode = "404", description = "대상을 찾을 수 없습니다."),
       @ApiResponse(responseCode = "500", description = "서버 오류")
   })
-  @GetMapping("/projects/{projectId}/notices")
+  @GetMapping("/api/projects/{projectId}/notices")
   ResponseEntity<Page<NoticeResponse>> getNotices(
       @PathVariable String projectId,
       @RequestParam(required = false) String keyword,
@@ -58,7 +58,7 @@ public interface NoticeRestController {
       @ApiResponse(responseCode = "404", description = "대상을 찾을 수 없습니다."),
       @ApiResponse(responseCode = "500", description = "서버 오류")
   })
-  @PostMapping("/projects/{projectId}/notices")
+  @PostMapping("/api/projects/{projectId}/notices")
   ResponseEntity<NoticeResponse> createNotice(
       @PathVariable String projectId,
       @Valid @RequestBody NoticeCreateRequest request
@@ -73,7 +73,7 @@ public interface NoticeRestController {
       @ApiResponse(responseCode = "404", description = "공지사항을 찾을 수 없습니다."),
       @ApiResponse(responseCode = "500", description = "서버 오류")
   })
-  @GetMapping("/notices/{noticeId}")
+  @GetMapping("/api/notices/{noticeId}")
   ResponseEntity<NoticeResponse> getNotice(@PathVariable String noticeId);
 
   @Operation(summary = "공지사항 수정", description = "공지사항의 내용을 수정합니다.")
@@ -85,7 +85,7 @@ public interface NoticeRestController {
       @ApiResponse(responseCode = "404", description = "공지사항을 찾을 수 없습니다."),
       @ApiResponse(responseCode = "500", description = "서버 오류")
   })
-  @PatchMapping("/notices/{noticeId}")
+  @PatchMapping("/api/notices/{noticeId}")
   ResponseEntity<NoticeResponse> updateNotice(
       @PathVariable String noticeId,
       @Valid @RequestBody NoticeUpdateRequest request
@@ -100,6 +100,6 @@ public interface NoticeRestController {
       @ApiResponse(responseCode = "404", description = "공지사항을 찾을 수 없습니다."),
       @ApiResponse(responseCode = "500", description = "서버 오류")
   })
-  @DeleteMapping("/notices/{noticeId}")
+  @DeleteMapping("/api/notices/{noticeId}")
   ResponseEntity<Void> deleteNotice(@PathVariable String noticeId);
 }

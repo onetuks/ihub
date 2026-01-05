@@ -99,11 +99,11 @@
 
 ## Notice
 
-- [ ] **GET** `/api/projects/{projectId}/notices`  _(exclude status=DELETED)_
-- [ ] **POST** `/api/projects/{projectId}/notices`
-- [ ] **GET** `/api/notices/{noticeId}`  _(exclude status=DELETED)_
-- [ ] **PATCH** `/api/notices/{noticeId}`
-- [ ] **DELETE** `/api/notices/{noticeId}`
+- [x] **GET** `/api/projects/{projectId}/notices`  _(exclude status=DELETED)_
+- [x] **POST** `/api/projects/{projectId}/notices`
+- [x] **GET** `/api/notices/{noticeId}`  _(exclude status=DELETED)_
+- [x] **PATCH** `/api/notices/{noticeId}`
+- [x] **DELETE** `/api/notices/{noticeId}`
 
 ## Faq
 
