@@ -55,21 +55,11 @@ class SystemServiceTest {
     ServiceTestDataFactory.createProjectMember(projectMemberJpaRepository, project, updater);
   }
 
-  private SystemCreateRequest buildCreateRequest() {
-    return new SystemCreateRequest(
-        project.getProjectId(),
-        "SYS1",
-        "desc",
-        SystemType.DB,
-        SystemEnvironment.DEV
-    );
-  }
-
   @Test
   void createSystem_success() {
     SystemCreateRequest request = buildCreateRequest();
 
-    System result = systemService.create(creator, request);
+    System result = systemService.create(creator, project.getProjectId(), request);
 
     assertThat(result.getSystemId()).isNotNull();
     assertThat(result.getSystemCode()).isEqualTo(request.systemCode());
@@ -78,7 +68,7 @@ class SystemServiceTest {
 
   @Test
   void updateSystem_success() {
-    System created = systemService.create(creator, buildCreateRequest());
+    System created = systemService.create(creator, project.getProjectId(), buildCreateRequest());
     SystemUpdateRequest updateRequest = new SystemUpdateRequest(
         "SYS2-NEW",
         SystemStatus.INACTIVE,
@@ -94,7 +84,7 @@ class SystemServiceTest {
 
   @Test
   void getSystemById_exception() {
-    System system = systemService.create(creator, buildCreateRequest());
+    System system = systemService.create(creator, project.getProjectId(), buildCreateRequest());
     User hacker = ServiceTestDataFactory.createUser(userJpaRepository);
 
     assertThatThrownBy(() -> systemService.getById(hacker, system.getSystemId()))
@@ -104,21 +94,30 @@ class SystemServiceTest {
   @Test
   void getSystems_returnsAll() {
     Pageable pageable = PageRequest.of(0, 10);
-    systemService.create(creator, buildCreateRequest());
-    systemService.create(creator, buildCreateRequest());
+    systemService.create(creator, project.getProjectId(), buildCreateRequest());
+    systemService.create(creator, project.getProjectId(), buildCreateRequest());
 
-    Page<System> results = systemService.getAll(pageable);
+    Page<System> results = systemService.getAll(project.getProjectId(), pageable);
 
     assertThat(results.getTotalElements()).isGreaterThanOrEqualTo(2);
   }
 
   @Test
   void deleteSystem_success() {
-    System created = systemService.create(updater, buildCreateRequest());
+    System created = systemService.create(updater, project.getProjectId(), buildCreateRequest());
 
     systemService.delete(updater, created.getSystemId());
 
     assertThatThrownBy(() -> systemService.getById(updater, created.getSystemId()))
         .isInstanceOf(EntityNotFoundException.class);
+  }
+
+  private SystemCreateRequest buildCreateRequest() {
+    return new SystemCreateRequest(
+        "SYS1",
+        "desc",
+        SystemType.DB,
+        SystemEnvironment.DEV
+    );
   }
 }

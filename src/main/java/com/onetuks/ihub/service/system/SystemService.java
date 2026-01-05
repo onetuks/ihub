@@ -25,8 +25,8 @@ public class SystemService {
   private final ProjectJpaRepository projectJpaRepository;
 
   @Transactional
-  public System create(User currentUser, SystemCreateRequest request) {
-    Project project = findProject(request.projectId());
+  public System create(User currentUser, String projectId, SystemCreateRequest request) {
+    Project project = findProject(projectId);
     projectMemberCheckComponent.checkIsProjectMember(currentUser, project.getProjectId());
     return systemJpaRepository.save(SystemMapper.applyCreate(project, currentUser, request));
   }
@@ -40,8 +40,8 @@ public class SystemService {
   }
 
   @Transactional(readOnly = true)
-  public Page<System> getAll(Pageable pageable) {
-    return systemJpaRepository.findAll(pageable);
+  public Page<System> getAll(String projectId, Pageable pageable) {
+    return systemJpaRepository.findAllByProject_ProjectId(projectId, pageable);
   }
 
   @Transactional

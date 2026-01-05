@@ -5,7 +5,6 @@ import com.onetuks.ihub.entity.system.SystemType;
 import jakarta.validation.constraints.NotNull;
 
 public record SystemCreateRequest(
-    @NotNull String projectId,
     String systemCode,
     String description,
     @NotNull SystemType systemType,

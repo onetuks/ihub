@@ -14,15 +14,27 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@RequestMapping("/api/systems")
+@RequestMapping
 @Tag(name = "System", description = "System management APIs")
 public interface SystemRestController {
+
+  @Operation(summary = "List systems")
+  @ApiResponses({
+      @ApiResponse(responseCode = "200", description = "Systems listed"),
+      @ApiResponse(responseCode = "401", description = "인증이 필요합니다."),
+      @ApiResponse(responseCode = "403", description = "권한이 없습니다."),
+      @ApiResponse(responseCode = "500", description = "Internal server error")
+  })
+  @GetMapping("/api/projects/{projectId}/systems")
+  ResponseEntity<Page<SystemResponse>> getSystems(
+      @PathVariable String projectId,
+      @PageableDefault Pageable pageable);
 
   @Operation(summary = "Create system")
   @ApiResponses({
@@ -32,8 +44,10 @@ public interface SystemRestController {
       @ApiResponse(responseCode = "403", description = "권한이 없습니다."),
       @ApiResponse(responseCode = "500", description = "Internal server error")
   })
-  @PostMapping
-  ResponseEntity<SystemResponse> createSystem(@Valid @RequestBody SystemCreateRequest request);
+  @PostMapping("/api/projects/{projectId}/systems")
+  ResponseEntity<SystemResponse> createSystem(
+      @PathVariable String projectId,
+      @Valid @RequestBody SystemCreateRequest request);
 
   @Operation(summary = "Get system by id")
   @ApiResponses({
@@ -44,18 +58,8 @@ public interface SystemRestController {
       @ApiResponse(responseCode = "404", description = "System not found"),
       @ApiResponse(responseCode = "500", description = "Internal server error")
   })
-  @GetMapping("/{systemId}")
+  @GetMapping("/api/systems/{systemId}")
   ResponseEntity<SystemResponse> getSystem(@PathVariable String systemId);
-
-  @Operation(summary = "List systems")
-  @ApiResponses({
-      @ApiResponse(responseCode = "200", description = "Systems listed"),
-      @ApiResponse(responseCode = "401", description = "인증이 필요합니다."),
-      @ApiResponse(responseCode = "403", description = "권한이 없습니다."),
-      @ApiResponse(responseCode = "500", description = "Internal server error")
-  })
-  @GetMapping
-  ResponseEntity<Page<SystemResponse>> getSystems(@PageableDefault Pageable pageable);
 
   @Operation(summary = "Update system")
   @ApiResponses({
@@ -66,7 +70,7 @@ public interface SystemRestController {
       @ApiResponse(responseCode = "404", description = "System not found"),
       @ApiResponse(responseCode = "500", description = "Internal server error")
   })
-  @PutMapping("/{systemId}")
+  @PatchMapping("/api/systems/{systemId}")
   ResponseEntity<SystemResponse> updateSystem(
       @PathVariable String systemId,
       @Valid @RequestBody SystemUpdateRequest request);
@@ -80,6 +84,6 @@ public interface SystemRestController {
       @ApiResponse(responseCode = "404", description = "System not found"),
       @ApiResponse(responseCode = "500", description = "Internal server error")
   })
-  @DeleteMapping("/{systemId}")
+  @DeleteMapping("/api/systems/{systemId}")
   ResponseEntity<Void> deleteSystem(@PathVariable String systemId);
 }

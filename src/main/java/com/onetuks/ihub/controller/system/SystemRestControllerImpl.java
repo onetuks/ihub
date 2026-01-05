@@ -28,11 +28,20 @@ public class SystemRestControllerImpl implements SystemRestController {
   private final CurrentUserProvider currentUserProvider;
   private final SystemService systemService;
 
+  @Override
+  public ResponseEntity<Page<SystemResponse>> getSystems(
+      @PathVariable String projectId, @PageableDefault Pageable pageable) {
+    Page<System> results = systemService.getAll(projectId, pageable);
+    Page<SystemResponse> responses = results.map(SystemMapper::toResponse);
+    return ResponseEntity.ok(responses);
+  }
+
   @RequiresRole({SYSTEM_FULL_ACCESS})
   @Override
   public ResponseEntity<SystemResponse> createSystem(
+      @PathVariable String projectId,
       @Valid @RequestBody SystemCreateRequest request) {
-    System result = systemService.create(currentUserProvider.resolveUser(), request);
+    System result = systemService.create(currentUserProvider.resolveUser(), projectId, request);
     SystemResponse response = SystemMapper.toResponse(result);
     return ResponseEntity
         .created(URI.create("/api/systems/" + response.systemId()))
@@ -47,18 +56,11 @@ public class SystemRestControllerImpl implements SystemRestController {
     return ResponseEntity.ok(response);
   }
 
-  @Override
-  public ResponseEntity<Page<SystemResponse>> getSystems(@PageableDefault Pageable pageable) {
-    Page<System> results = systemService.getAll(pageable);
-    Page<SystemResponse> responses = results.map(SystemMapper::toResponse);
-    return ResponseEntity.ok(responses);
-  }
-
   @RequiresRole({SYSTEM_FULL_ACCESS})
   @Override
   public ResponseEntity<SystemResponse> updateSystem(
-      @PathVariable String systemId, @Valid @RequestBody SystemUpdateRequest request) {
-    System result = systemService.update(currentUserProvider.resolveUser(), systemId, request);
+      @PathVariable String projectId, @Valid @RequestBody SystemUpdateRequest request) {
+    System result = systemService.update(currentUserProvider.resolveUser(), projectId, request);
     SystemResponse response = SystemMapper.toResponse(result);
     return ResponseEntity.ok(response);
   }

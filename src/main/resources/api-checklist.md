@@ -146,9 +146,9 @@
 
 ## System
 
-- [ ] **GET** `/api/projects/{projectId}/systems`  _(exclude status=DELETED)_
-- [ ] **POST** `/api/projects/{projectId}/systems`
-- [ ] **PATCH** `/api/systems/{systemId}`
+- [x] **GET** `/api/projects/{projectId}/systems`  _(exclude status=DELETED)_
+- [x] **POST** `/api/projects/{projectId}/systems`
+- [x] **PATCH** `/api/systems/{systemId}`
 
 ## System Owner
 
