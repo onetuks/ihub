@@ -107,12 +107,12 @@
 
 ## Faq
 
-- [ ] **GET** `/api/projects/{projectId}/faqs`  _(exclude status=DELETED)_
-- [ ] **POST** `/api/projects/{projectId}/faqs`
-- [ ] **GET** `/api/faqs/{faqId}`  _(exclude status=DELETED)_
-- [ ] **PATCH** `/api/faqs/{faqId}`
-- [ ] **PATCH** `/api/faqs/{faqId}/answer`
-- [ ] **DELETE** `/api/faqs/{faqId}`
+- [x] **GET** `/api/projects/{projectId}/faqs`  _(exclude status=DELETED)_
+- [x] **POST** `/api/projects/{projectId}/faqs`
+- [x] **GET** `/api/faqs/{faqId}`  _(exclude status=DELETED)_
+- [x] **PATCH** `/api/faqs/{faqId}`
+- [x] **PATCH** `/api/faqs/{faqId}/answer`
+- [x] **DELETE** `/api/faqs/{faqId}`
 
 ## Event
 

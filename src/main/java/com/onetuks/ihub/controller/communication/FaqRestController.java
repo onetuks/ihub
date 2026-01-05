@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@RequestMapping("/api")
+@RequestMapping
 @Tag(name = "Faq", description = "FAQ 관리 API")
 public interface FaqRestController {
 
@@ -37,7 +37,7 @@ public interface FaqRestController {
       @ApiResponse(responseCode = "404", description = "대상을 찾을 수 없습니다."),
       @ApiResponse(responseCode = "500", description = "서버 오류")
   })
-  @GetMapping("/projects/{projectId}/faqs")
+  @GetMapping("/api/projects/{projectId}/faqs")
   ResponseEntity<Page<FaqResponse>> getFaqs(
       @PathVariable String projectId,
       @RequestParam(required = false) String keyword,
@@ -59,7 +59,7 @@ public interface FaqRestController {
       @ApiResponse(responseCode = "404", description = "대상을 찾을 수 없습니다."),
       @ApiResponse(responseCode = "500", description = "서버 오류")
   })
-  @PostMapping("/projects/{projectId}/faqs")
+  @PostMapping("/api/projects/{projectId}/faqs")
   ResponseEntity<FaqResponse> createFaq(
       @PathVariable String projectId,
       @Valid @RequestBody FaqCreateRequest request
@@ -74,7 +74,7 @@ public interface FaqRestController {
       @ApiResponse(responseCode = "404", description = "FAQ를 찾을 수 없습니다."),
       @ApiResponse(responseCode = "500", description = "서버 오류")
   })
-  @GetMapping("/faqs/{faqId}")
+  @GetMapping("/api/faqs/{faqId}")
   ResponseEntity<FaqResponse> getFaq(
       @PathVariable String faqId
   );
@@ -88,7 +88,7 @@ public interface FaqRestController {
       @ApiResponse(responseCode = "404", description = "FAQ를 찾을 수 없습니다."),
       @ApiResponse(responseCode = "500", description = "서버 오류")
   })
-  @PatchMapping("/faqs/{faqId}")
+  @PatchMapping("/api/faqs/{faqId}")
   ResponseEntity<FaqResponse> updateFaq(
       @PathVariable String faqId,
       @Valid @RequestBody FaqUpdateRequest request
@@ -103,7 +103,7 @@ public interface FaqRestController {
       @ApiResponse(responseCode = "404", description = "FAQ를 찾을 수 없습니다."),
       @ApiResponse(responseCode = "500", description = "서버 오류")
   })
-  @PatchMapping("/faqs/{faqId}/answer")
+  @PatchMapping("/api/faqs/{faqId}/answer")
   ResponseEntity<FaqResponse> answerFaq(
       @PathVariable String faqId,
       @Valid @RequestBody FaqAnswerUpdateRequest request
@@ -118,7 +118,7 @@ public interface FaqRestController {
       @ApiResponse(responseCode = "404", description = "FAQ를 찾을 수 없습니다."),
       @ApiResponse(responseCode = "500", description = "서버 오류")
   })
-  @DeleteMapping("/faqs/{faqId}")
+  @DeleteMapping("/api/faqs/{faqId}")
   ResponseEntity<Void> deleteFaq(
       @PathVariable String faqId
   );
