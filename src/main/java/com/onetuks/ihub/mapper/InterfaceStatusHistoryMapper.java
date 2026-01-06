@@ -5,6 +5,7 @@ import com.onetuks.ihub.dto.interfaces.InterfaceStatusHistoryResponse;
 import com.onetuks.ihub.dto.interfaces.InterfaceStatusHistoryUpdateRequest;
 import com.onetuks.ihub.entity.interfaces.InterfaceStatusHistory;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public final class InterfaceStatusHistoryMapper {
 
@@ -12,14 +13,21 @@ public final class InterfaceStatusHistoryMapper {
   }
 
   public static InterfaceStatusHistoryResponse toResponse(InterfaceStatusHistory history) {
+    var anInterface = Objects.requireNonNull(history.getAnInterface());
+    var fromStatus = Objects.requireNonNull(history.getFromStatus());
+    var toStatus = Objects.requireNonNull(history.getToStatus());
+    var changedBy = Objects.requireNonNull(history.getChangedBy());
+    var relatedTask = Objects.requireNonNull(history.getRelatedTask());
     return new InterfaceStatusHistoryResponse(
         history.getHistoryId(),
-        history.getAnInterface() != null ? history.getAnInterface().getInterfaceId() : null,
-        history.getFromStatus() != null ? history.getFromStatus().getStatusId() : null,
-        history.getToStatus() != null ? history.getToStatus().getStatusId() : null,
-        history.getChangedBy() != null ? history.getChangedBy().getUserId() : null,
+        anInterface.getInterfaceId(),
+        fromStatus.getStatusId(),
+        toStatus.getStatusId(),
+        changedBy.getUserId(),
+        changedBy.getStatus(),
+        changedBy.getName(),
         history.getChangedAt(),
-        history.getRelatedTask() != null ? history.getRelatedTask().getTaskId() : null,
+        relatedTask.getTaskId(),
         history.getReason());
   }
 

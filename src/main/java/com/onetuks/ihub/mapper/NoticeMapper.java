@@ -9,6 +9,7 @@ import com.onetuks.ihub.entity.communication.NoticeStatus;
 import com.onetuks.ihub.entity.project.Project;
 import com.onetuks.ihub.entity.user.User;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public final class NoticeMapper {
 
@@ -18,7 +19,9 @@ public final class NoticeMapper {
   public static NoticeResponse toResponse(Notice notice) {
     return new NoticeResponse(
         notice.getNoticeId(),
-        notice.getProject() != null ? notice.getProject().getProjectId() : null,
+        Objects.requireNonNull(notice.getProject()).getProjectId(),
+        Objects.requireNonNull(notice.getProject()).getStatus(),
+        Objects.requireNonNull(notice.getProject()).getTitle(),
         notice.getTitle(),
         notice.getContent(),
         notice.getCategory(),
@@ -26,8 +29,12 @@ public final class NoticeMapper {
         notice.getIsPinned(),
         notice.getPinnedAt(),
         notice.getStatus(),
-        notice.getCreatedBy() != null ? notice.getCreatedBy().getUserId() : null,
-        notice.getUpdatedBy() != null ? notice.getUpdatedBy().getUserId() : null,
+        Objects.requireNonNull(notice.getCreatedBy()).getUserId(),
+        Objects.requireNonNull(notice.getCreatedBy()).getStatus(),
+        Objects.requireNonNull(notice.getCreatedBy()).getName(),
+        Objects.requireNonNull(notice.getUpdatedBy()).getUserId(),
+        Objects.requireNonNull(notice.getUpdatedBy()).getStatus(),
+        Objects.requireNonNull(notice.getUpdatedBy()).getName(),
         notice.getCreatedAt(),
         notice.getUpdatedAt(),
         notice.getDeletedAt());
@@ -76,7 +83,7 @@ public final class NoticeMapper {
     }
     if (request.isPinned() != null) {
       notice.setIsPinned(request.isPinned());
-      notice.setPinnedAt(Boolean.TRUE.equals(request.isPinned()) ? LocalDateTime.now() : null);
+      notice.setPinnedAt(request.isPinned() ? LocalDateTime.now() : null);
     }
     notice.setUpdatedBy(updatedBy);
     notice.setUpdatedAt(LocalDateTime.now());

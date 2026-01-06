@@ -5,6 +5,7 @@ import com.onetuks.ihub.dto.project.AttachmentResponse;
 import com.onetuks.ihub.dto.project.AttachmentUpdateRequest;
 import com.onetuks.ihub.entity.project.Attachment;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public final class AttachmentMapper {
 
@@ -12,13 +13,20 @@ public final class AttachmentMapper {
   }
 
   public static AttachmentResponse toResponse(Attachment attachment) {
+    var project = Objects.requireNonNull(attachment.getProject());
+    var file = Objects.requireNonNull(attachment.getFile());
+    var attachedBy = Objects.requireNonNull(attachment.getAttachedBy());
     return new AttachmentResponse(
         attachment.getAttachmentId(),
-        attachment.getProject() != null ? attachment.getProject().getProjectId() : null,
-        attachment.getFile() != null ? attachment.getFile().getFileId() : null,
+        project.getProjectId(),
+        project.getStatus(),
+        project.getTitle(),
+        file.getFileId(),
         attachment.getTargetType(),
         attachment.getTargetId(),
-        attachment.getAttachedBy() != null ? attachment.getAttachedBy().getUserId() : null,
+        attachedBy.getUserId(),
+        attachedBy.getStatus(),
+        attachedBy.getName(),
         attachment.getAttachedAt());
   }
 

@@ -5,6 +5,7 @@ import com.onetuks.ihub.dto.task.TaskFilterGroupStatusResponse;
 import com.onetuks.ihub.dto.task.TaskFilterGroupStatusUpdateRequest;
 import com.onetuks.ihub.entity.task.TaskFilterGroupStatus;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public final class TaskFilterGroupStatusMapper {
 
@@ -12,9 +13,10 @@ public final class TaskFilterGroupStatusMapper {
   }
 
   public static TaskFilterGroupStatusResponse toResponse(TaskFilterGroupStatus status) {
+    var group = Objects.requireNonNull(status.getGroup());
     return new TaskFilterGroupStatusResponse(
         status.getStatusId(),
-        status.getGroup() != null ? status.getGroup().getGroupId() : null,
+        group.getGroupId(),
         status.getStatusType(),
         status.getCreatedAt());
   }

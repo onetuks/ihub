@@ -5,6 +5,7 @@ import com.onetuks.ihub.dto.interfaces.InterfaceRevisionResponse;
 import com.onetuks.ihub.dto.interfaces.InterfaceRevisionUpdateRequest;
 import com.onetuks.ihub.entity.interfaces.InterfaceRevision;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public final class InterfaceRevisionMapper {
 
@@ -12,11 +13,15 @@ public final class InterfaceRevisionMapper {
   }
 
   public static InterfaceRevisionResponse toResponse(InterfaceRevision revision) {
+    var anInterface = Objects.requireNonNull(revision.getAnInterface());
+    var changedBy = Objects.requireNonNull(revision.getChangedBy());
     return new InterfaceRevisionResponse(
         revision.getRevisionId(),
-        revision.getAnInterface() != null ? revision.getAnInterface().getInterfaceId() : null,
+        anInterface.getInterfaceId(),
         revision.getVersionNo(),
-        revision.getChangedBy() != null ? revision.getChangedBy().getUserId() : null,
+        changedBy.getUserId(),
+        changedBy.getStatus(),
+        changedBy.getName(),
         revision.getChangedAt(),
         revision.getSnapshot(),
         revision.getReason());

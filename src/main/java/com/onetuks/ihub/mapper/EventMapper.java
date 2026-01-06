@@ -7,6 +7,7 @@ import com.onetuks.ihub.entity.communication.Event;
 import com.onetuks.ihub.entity.project.Project;
 import com.onetuks.ihub.entity.user.User;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public final class EventMapper {
 
@@ -16,14 +17,18 @@ public final class EventMapper {
   public static EventResponse toResponse(Event event) {
     return new EventResponse(
         event.getEventId(),
-        event.getProject() != null ? event.getProject().getProjectId() : null,
+        Objects.requireNonNull(event.getProject()).getProjectId(),
+        Objects.requireNonNull(event.getProject()).getStatus(),
+        Objects.requireNonNull(event.getProject()).getTitle(),
         event.getTitle(),
         event.getStartAt(),
         event.getEndAt(),
         event.getLocation(),
         event.getContent(),
         event.getRemindBeforeMinutes(),
-        event.getCreatedBy() != null ? event.getCreatedBy().getUserId() : null,
+        Objects.requireNonNull(event.getCreatedBy()).getUserId(),
+        Objects.requireNonNull(event.getCreatedBy()).getStatus(),
+        Objects.requireNonNull(event.getCreatedBy()).getName(),
         event.getCreatedAt(),
         event.getUpdatedAt());
   }

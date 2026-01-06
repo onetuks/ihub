@@ -5,6 +5,7 @@ import com.onetuks.ihub.dto.system.ConnectionResponse;
 import com.onetuks.ihub.dto.system.ConnectionUpdateRequest;
 import com.onetuks.ihub.entity.system.Connection;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public final class ConnectionMapper {
 
@@ -12,10 +13,16 @@ public final class ConnectionMapper {
   }
 
   public static ConnectionResponse toResponse(Connection connection) {
+    var project = Objects.requireNonNull(connection.getProject());
+    var system = Objects.requireNonNull(connection.getSystem());
+    var createdBy = Objects.requireNonNull(connection.getCreatedBy());
+    var updatedBy = Objects.requireNonNull(connection.getUpdatedBy());
     return new ConnectionResponse(
         connection.getConnectionId(),
-        connection.getProject() != null ? connection.getProject().getProjectId() : null,
-        connection.getSystem() != null ? connection.getSystem().getSystemId() : null,
+        project.getProjectId(),
+        project.getStatus(),
+        project.getTitle(),
+        system.getSystemId(),
         connection.getName(),
         connection.getProtocol(),
         connection.getHost(),
@@ -26,8 +33,12 @@ public final class ConnectionMapper {
         connection.getExtraConfig(),
         connection.getStatus(),
         connection.getDescription(),
-        connection.getCreatedBy() != null ? connection.getCreatedBy().getUserId() : null,
-        connection.getUpdatedBy() != null ? connection.getUpdatedBy().getUserId() : null,
+        createdBy.getUserId(),
+        createdBy.getStatus(),
+        createdBy.getName(),
+        updatedBy.getUserId(),
+        updatedBy.getStatus(),
+        updatedBy.getName(),
         connection.getCreatedAt(),
         connection.getUpdatedAt());
   }

@@ -6,6 +6,7 @@ import com.onetuks.ihub.entity.project.ProjectMember;
 import com.onetuks.ihub.entity.project.ProjectMemberRole;
 import com.onetuks.ihub.entity.user.User;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public final class ProjectMemberMapper {
 
@@ -13,10 +14,16 @@ public final class ProjectMemberMapper {
   }
 
   public static ProjectMemberResponse toResponse(ProjectMember projectMember) {
+    var project = Objects.requireNonNull(projectMember.getProject());
+    var user = Objects.requireNonNull(projectMember.getUser());
     return new ProjectMemberResponse(
         projectMember.getProjectMemberId(),
-        projectMember.getProject() != null ? projectMember.getProject().getProjectId() : null,
-        projectMember.getUser() != null ? projectMember.getUser().getUserId() : null,
+        project.getProjectId(),
+        project.getStatus(),
+        project.getTitle(),
+        user.getUserId(),
+        user.getStatus(),
+        user.getName(),
         projectMember.getRole(),
         projectMember.getJoinedAt(),
         projectMember.getLeftAt());

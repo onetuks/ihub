@@ -5,6 +5,7 @@ import com.onetuks.ihub.dto.task.TaskResponse;
 import com.onetuks.ihub.dto.task.TaskUpdateRequest;
 import com.onetuks.ihub.entity.task.Task;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public final class TaskMapper {
 
@@ -12,22 +13,34 @@ public final class TaskMapper {
   }
 
   public static TaskResponse toResponse(Task task) {
+    var project = Objects.requireNonNull(task.getProject());
+    var assignee = Objects.requireNonNull(task.getAssignee());
+    var requester = Objects.requireNonNull(task.getRequester());
+    var createdBy = Objects.requireNonNull(task.getCreatedBy());
     return new TaskResponse(
         task.getTaskId(),
-        task.getProject() != null ? task.getProject().getProjectId() : null,
+        project.getProjectId(),
+        project.getStatus(),
+        project.getTitle(),
         task.getParentTask() != null ? task.getParentTask().getTaskId() : null,
         task.getTaskType(),
         task.getAnInterface() != null ? task.getAnInterface().getInterfaceId() : null,
         task.getTitle(),
         task.getDescription(),
         task.getStatus(),
-        task.getAssignee() != null ? task.getAssignee().getUserId() : null,
-        task.getRequester() != null ? task.getRequester().getUserId() : null,
+        assignee.getUserId(),
+        assignee.getStatus(),
+        assignee.getName(),
+        requester.getUserId(),
+        requester.getStatus(),
+        requester.getName(),
         task.getStartDate(),
         task.getDueDate(),
         task.getPriority(),
         task.getProgress(),
-        task.getCreatedBy() != null ? task.getCreatedBy().getUserId() : null,
+        createdBy.getUserId(),
+        createdBy.getStatus(),
+        createdBy.getName(),
         task.getCreatedAt(),
         task.getUpdatedAt());
   }

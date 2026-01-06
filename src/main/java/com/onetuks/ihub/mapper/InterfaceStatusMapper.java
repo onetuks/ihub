@@ -6,6 +6,7 @@ import com.onetuks.ihub.dto.interfaces.InterfaceStatusUpdateRequest;
 import com.onetuks.ihub.entity.interfaces.InterfaceStatus;
 import com.onetuks.ihub.entity.project.Project;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public final class InterfaceStatusMapper {
 
@@ -13,9 +14,12 @@ public final class InterfaceStatusMapper {
   }
 
   public static InterfaceStatusResponse toResponse(InterfaceStatus status) {
+    var project = Objects.requireNonNull(status.getProject());
     return new InterfaceStatusResponse(
         status.getStatusId(),
-        status.getProject() != null ? status.getProject().getProjectId() : null,
+        project.getProjectId(),
+        project.getStatus(),
+        project.getTitle(),
         status.getName(),
         status.getCode(),
         status.getSeqOrder(),

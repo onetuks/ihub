@@ -8,6 +8,7 @@ import com.onetuks.ihub.entity.communication.TargetType;
 import com.onetuks.ihub.entity.project.Project;
 import com.onetuks.ihub.entity.user.User;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public final class CommentMapper {
 
@@ -15,14 +16,20 @@ public final class CommentMapper {
   }
 
   public static CommentResponse toResponse(Comment comment) {
+    var project = Objects.requireNonNull(comment.getProject());
+    var createdBy = Objects.requireNonNull(comment.getCreatedBy());
     return new CommentResponse(
         comment.getCommentId(),
-        comment.getProject() != null ? comment.getProject().getProjectId() : null,
+        project.getProjectId(),
+        project.getStatus(),
+        project.getTitle(),
         comment.getParentComment() != null ? comment.getParentComment().getCommentId() : null,
         comment.getTargetType(),
         comment.getTargetId(),
         comment.getContent(),
-        comment.getCreatedBy() != null ? comment.getCreatedBy().getUserId() : null,
+        createdBy.getUserId(),
+        createdBy.getStatus(),
+        createdBy.getName(),
         comment.getCreatedAt(),
         comment.getUpdatedAt());
   }

@@ -8,6 +8,7 @@ import com.onetuks.ihub.entity.communication.PostStatus;
 import com.onetuks.ihub.entity.project.Project;
 import com.onetuks.ihub.entity.user.User;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public final class PostMapper {
 
@@ -17,10 +18,14 @@ public final class PostMapper {
   public static PostResponse toResponse(Post post) {
     return new PostResponse(
         post.getPostId(),
-        post.getProject() != null ? post.getProject().getProjectId() : null,
+        Objects.requireNonNull(post.getProject()).getProjectId(),
+        Objects.requireNonNull(post.getProject()).getStatus(),
+        Objects.requireNonNull(post.getProject()).getTitle(),
         post.getTitle(),
         post.getContent(),
-        post.getCreatedBy() != null ? post.getCreatedBy().getUserId() : null,
+        Objects.requireNonNull(post.getCreatedBy()).getUserId(),
+        Objects.requireNonNull(post.getCreatedBy()).getStatus(),
+        Objects.requireNonNull(post.getCreatedBy()).getName(),
         post.getCreatedAt(),
         post.getUpdatedAt());
   }

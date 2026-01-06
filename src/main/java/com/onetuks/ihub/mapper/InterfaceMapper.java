@@ -5,6 +5,7 @@ import com.onetuks.ihub.dto.interfaces.InterfaceResponse;
 import com.onetuks.ihub.dto.interfaces.InterfaceUpdateRequest;
 import com.onetuks.ihub.entity.interfaces.Interface;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public final class InterfaceMapper {
 
@@ -12,22 +13,31 @@ public final class InterfaceMapper {
   }
 
   public static InterfaceResponse toResponse(Interface anInterface) {
+    var project = Objects.requireNonNull(anInterface.getProject());
+    var sourceSystem = Objects.requireNonNull(anInterface.getSourceSystem());
+    var targetSystem = Objects.requireNonNull(anInterface.getTargetSystem());
+    var status = Objects.requireNonNull(anInterface.getStatus());
+    var createdBy = Objects.requireNonNull(anInterface.getCreatedBy());
     return new InterfaceResponse(
         anInterface.getInterfaceId(),
-        anInterface.getProject() != null ? anInterface.getProject().getProjectId() : null,
+        project.getProjectId(),
+        project.getStatus(),
+        project.getTitle(),
         anInterface.getIfId(),
-        anInterface.getSourceSystem() != null ? anInterface.getSourceSystem().getSystemId() : null,
-        anInterface.getTargetSystem() != null ? anInterface.getTargetSystem().getSystemId() : null,
+        sourceSystem.getSystemId(),
+        targetSystem.getSystemId(),
         anInterface.getModule(),
         anInterface.getInterfaceType(),
         anInterface.getPattern(),
         anInterface.getSenderAdapter(),
         anInterface.getReceiverAdapter(),
         anInterface.getSa(),
-        anInterface.getStatus() != null ? anInterface.getStatus().getStatusId() : null,
+        status.getStatusId(),
         anInterface.getBatchTimeLabel(),
         anInterface.getRemark(),
-        anInterface.getCreatedBy() != null ? anInterface.getCreatedBy().getUserId() : null,
+        createdBy.getUserId(),
+        createdBy.getStatus(),
+        createdBy.getName(),
         anInterface.getCreatedAt(),
         anInterface.getUpdatedAt());
   }

@@ -16,8 +16,10 @@ public final class EventAttendeeMapper {
   public static EventAttendeeResponse toResponse(EventAttendee eventAttendee) {
     return new EventAttendeeResponse(
         eventAttendee.getEventAttendeeId(),
-        eventAttendee.getEvent() != null ? eventAttendee.getEvent().getEventId() : null,
-        eventAttendee.getUser() != null ? eventAttendee.getUser().getUserId() : null,
+        Objects.requireNonNull(eventAttendee.getEvent()).getEventId(),
+        Objects.requireNonNull(eventAttendee.getUser()).getUserId(),
+        Objects.requireNonNull(eventAttendee.getUser()).getStatus(),
+        Objects.requireNonNull(eventAttendee.getUser()).getName(),
         eventAttendee.getIsMandatory(),
         eventAttendee.getAttendStatus());
   }

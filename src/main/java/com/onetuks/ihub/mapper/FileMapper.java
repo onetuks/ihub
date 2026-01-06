@@ -5,6 +5,7 @@ import com.onetuks.ihub.dto.file.FileResponse;
 import com.onetuks.ihub.dto.file.FileUpdateRequest;
 import com.onetuks.ihub.entity.file.File;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public final class FileMapper {
 
@@ -12,16 +13,22 @@ public final class FileMapper {
   }
 
   public static FileResponse toResponse(File file) {
+    var project = Objects.requireNonNull(file.getProject());
+    var uploadedBy = Objects.requireNonNull(file.getUploadedBy());
     return new FileResponse(
         file.getFileId(),
-        file.getProject() != null ? file.getProject().getProjectId() : null,
+        project.getProjectId(),
+        project.getStatus(),
+        project.getTitle(),
         file.getFolder() != null ? file.getFolder().getFolderId() : null,
         file.getStatus(),
         file.getOriginalName(),
         file.getStoredName(),
         file.getSizeBytes(),
         file.getMimeType(),
-        file.getUploadedBy() != null ? file.getUploadedBy().getUserId() : null,
+        uploadedBy.getUserId(),
+        uploadedBy.getStatus(),
+        uploadedBy.getName(),
         file.getUploadedAt(),
         file.getDeletedAt());
   }

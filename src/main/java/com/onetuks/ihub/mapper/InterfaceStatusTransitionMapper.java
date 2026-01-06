@@ -9,6 +9,7 @@ import com.onetuks.ihub.entity.interfaces.InterfaceStatusTransitionStatus;
 import com.onetuks.ihub.entity.project.Project;
 import com.onetuks.ihub.entity.user.User;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public final class InterfaceStatusTransitionMapper {
 
@@ -17,15 +18,23 @@ public final class InterfaceStatusTransitionMapper {
 
   public static InterfaceStatusTransitionResponse toResponse(
       InterfaceStatusTransition transition) {
+    var project = Objects.requireNonNull(transition.getProject());
+    var fromStatus = Objects.requireNonNull(transition.getFromStatus());
+    var toStatus = Objects.requireNonNull(transition.getToStatus());
+    var createdBy = Objects.requireNonNull(transition.getCreatedBy());
     return new InterfaceStatusTransitionResponse(
         transition.getTransitionId(),
-        transition.getProject() != null ? transition.getProject().getProjectId() : null,
-        transition.getFromStatus() != null ? transition.getFromStatus().getStatusId() : null,
-        transition.getToStatus() != null ? transition.getToStatus().getStatusId() : null,
+        project.getProjectId(),
+        project.getStatus(),
+        project.getTitle(),
+        fromStatus.getStatusId(),
+        toStatus.getStatusId(),
         transition.getAllowedRole(),
         transition.getStatus(),
         transition.getCreatedAt(),
-        transition.getCreatedBy() != null ? transition.getCreatedBy().getUserId() : null);
+        createdBy.getUserId(),
+        createdBy.getStatus(),
+        createdBy.getName());
   }
 
   public static InterfaceStatusTransition applyCreate(

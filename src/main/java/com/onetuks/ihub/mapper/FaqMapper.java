@@ -8,6 +8,7 @@ import com.onetuks.ihub.entity.communication.FaqStatus;
 import com.onetuks.ihub.entity.project.Project;
 import com.onetuks.ihub.entity.user.User;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public final class FaqMapper {
 
@@ -17,16 +18,24 @@ public final class FaqMapper {
   public static FaqResponse toResponse(Faq faq) {
     return new FaqResponse(
         faq.getFaqId(),
-        faq.getProject() != null ? faq.getProject().getProjectId() : null,
+        Objects.requireNonNull(faq.getProject()).getProjectId(),
+        Objects.requireNonNull(faq.getProject()).getStatus(),
+        Objects.requireNonNull(faq.getProject()).getTitle(),
         faq.getCategory(),
         faq.getQuestion(),
         faq.getAnswer(),
         faq.getIsSecret(),
-        faq.getAssignee() != null ? faq.getAssignee().getUserId() : null,
+        Objects.requireNonNull(faq.getAssignee()).getUserId(),
+        Objects.requireNonNull(faq.getAssignee()).getStatus(),
+        Objects.requireNonNull(faq.getAssignee()).getName(),
         faq.getAnsweredAt(),
         faq.getStatus(),
-        faq.getCreatedBy() != null ? faq.getCreatedBy().getUserId() : null,
-        faq.getUpdatedBy() != null ? faq.getUpdatedBy().getUserId() : null,
+        Objects.requireNonNull(faq.getCreatedBy()).getUserId(),
+        Objects.requireNonNull(faq.getCreatedBy()).getStatus(),
+        Objects.requireNonNull(faq.getCreatedBy()).getName(),
+        Objects.requireNonNull(faq.getUpdatedBy()).getUserId(),
+        Objects.requireNonNull(faq.getUpdatedBy()).getStatus(),
+        Objects.requireNonNull(faq.getUpdatedBy()).getName(),
         faq.getCreatedAt(),
         faq.getUpdatedAt(),
         faq.getDeletedAt());

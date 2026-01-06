@@ -5,6 +5,7 @@ import com.onetuks.ihub.dto.task.TaskFilterGroupResponse;
 import com.onetuks.ihub.dto.task.TaskFilterGroupUpdateRequest;
 import com.onetuks.ihub.entity.task.TaskFilterGroup;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public final class TaskFilterGroupMapper {
 
@@ -12,10 +13,16 @@ public final class TaskFilterGroupMapper {
   }
 
   public static TaskFilterGroupResponse toResponse(TaskFilterGroup group) {
+    var user = Objects.requireNonNull(group.getUser());
+    var project = Objects.requireNonNull(group.getProject());
     return new TaskFilterGroupResponse(
         group.getGroupId(),
-        group.getUser() != null ? group.getUser().getUserId() : null,
-        group.getProject() != null ? group.getProject().getProjectId() : null,
+        user.getUserId(),
+        user.getStatus(),
+        user.getName(),
+        project.getProjectId(),
+        project.getStatus(),
+        project.getTitle(),
         group.getName(),
         group.getAssigneeKeyword(),
         group.getAuthorKeyword(),

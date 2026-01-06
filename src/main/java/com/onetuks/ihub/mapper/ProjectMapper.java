@@ -15,6 +15,8 @@ public final class ProjectMapper {
   }
 
   public static ProjectResponse toResponse(Project project) {
+    var createdBy = Objects.requireNonNull(project.getCreatedBy());
+    var updatedBy = Objects.requireNonNull(project.getUpdatedBy());
     return new ProjectResponse(
         project.getProjectId(),
         project.getTitle(),
@@ -22,8 +24,12 @@ public final class ProjectMapper {
         project.getStartDate(),
         project.getEndDate(),
         project.getStatus(),
-        Objects.requireNonNull(project.getCreatedBy()).getUserId(),
-        Objects.requireNonNull(project.getUpdatedBy()).getUserId(),
+        createdBy.getUserId(),
+        createdBy.getStatus(),
+        createdBy.getName(),
+        updatedBy.getUserId(),
+        updatedBy.getStatus(),
+        updatedBy.getName(),
         project.getCreatedAt(),
         project.getUpdatedAt());
   }

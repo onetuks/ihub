@@ -8,6 +8,7 @@ import com.onetuks.ihub.entity.system.System;
 import com.onetuks.ihub.entity.system.SystemStatus;
 import com.onetuks.ihub.entity.user.User;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public final class SystemMapper {
 
@@ -15,16 +16,25 @@ public final class SystemMapper {
   }
 
   public static SystemResponse toResponse(System system) {
+    var project = Objects.requireNonNull(system.getProject());
+    var createdBy = Objects.requireNonNull(system.getCreatedBy());
+    var updatedBy = Objects.requireNonNull(system.getUpdatedBy());
     return new SystemResponse(
         system.getSystemId(),
-        system.getProject() != null ? system.getProject().getProjectId() : null,
+        project.getProjectId(),
+        project.getStatus(),
+        project.getTitle(),
         system.getSystemCode(),
         system.getStatus(),
         system.getDescription(),
         system.getSystemType(),
         system.getEnvironment(),
-        system.getCreatedBy() != null ? system.getCreatedBy().getUserId() : null,
-        system.getUpdatedBy() != null ? system.getUpdatedBy().getUserId() : null,
+        createdBy.getUserId(),
+        createdBy.getStatus(),
+        createdBy.getName(),
+        updatedBy.getUserId(),
+        updatedBy.getStatus(),
+        updatedBy.getName(),
         system.getCreatedAt(),
         system.getUpdatedAt());
   }
