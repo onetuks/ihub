@@ -40,7 +40,7 @@ public class AlarmService {
         new Alarm(
             UUIDProvider.provideUUID(Alarm.TABLE_NAME),
             event,
-            event.getStartDatetime().minusMinutes(event.getRemindBeforeMinutes())));
+            event.getStartAt().minusMinutes(event.getRemindBeforeMinutes())));
   }
 
   @Transactional
@@ -50,7 +50,7 @@ public class AlarmService {
       return alarm;
     }
 
-    alarm.setNotifyAt(event.getStartDatetime().minusMinutes(event.getRemindBeforeMinutes()));
+    alarm.setNotifyAt(event.getStartAt().minusMinutes(event.getRemindBeforeMinutes()));
     return alarm;
   }
 

@@ -4,8 +4,8 @@ import java.time.LocalDateTime;
 
 public record EventCreateRequest(
     String title,
-    LocalDateTime startDatetime,
-    LocalDateTime endDatetime,
+    LocalDateTime startAt,
+    LocalDateTime endAt,
     String location,
     String content,
     Integer remindBeforeMinutes

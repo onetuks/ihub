@@ -82,7 +82,7 @@ class EventServiceTest {
     Event result = eventService.update(creator, created.getEventId(), updateRequest);
 
     assertThat(result.getTitle()).isEqualToIgnoringCase(updateRequest.title());
-    assertThat(result.getEndDatetime()).isEqualTo(updateRequest.endDatetime());
+    assertThat(result.getEndAt()).isEqualTo(updateRequest.endAt());
     assertThat(alarmJpaRepository.findByEvent(result)).isPresent();
   }
 

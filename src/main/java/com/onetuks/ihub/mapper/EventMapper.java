@@ -18,8 +18,8 @@ public final class EventMapper {
         event.getEventId(),
         event.getProject() != null ? event.getProject().getProjectId() : null,
         event.getTitle(),
-        event.getStartDatetime(),
-        event.getEndDatetime(),
+        event.getStartAt(),
+        event.getEndAt(),
         event.getLocation(),
         event.getContent(),
         event.getRemindBeforeMinutes(),
@@ -35,8 +35,8 @@ public final class EventMapper {
         UUIDProvider.provideUUID(Event.TABLE_NAME),
         project,
         request.title(),
-        request.startDatetime(),
-        request.endDatetime(),
+        request.startAt(),
+        request.endAt(),
         request.location(),
         request.content(),
         request.remindBeforeMinutes(),
@@ -50,11 +50,11 @@ public final class EventMapper {
     if (request.title() != null) {
       event.setTitle(request.title());
     }
-    if (request.startDatetime() != null) {
-      event.setStartDatetime(request.startDatetime());
+    if (request.startAt() != null) {
+      event.setStartAt(request.startAt());
     }
-    if (request.endDatetime() != null) {
-      event.setEndDatetime(request.endDatetime());
+    if (request.endAt() != null) {
+      event.setEndAt(request.endAt());
     }
     if (request.location() != null) {
       event.setLocation(request.location());

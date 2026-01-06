@@ -36,11 +36,11 @@ public class Event {
   @Column(name = "title")
   private String title;
 
-  @Column(name = "start_datetime")
-  private LocalDateTime startDatetime;
+  @Column(name = "start_at")
+  private LocalDateTime startAt;
 
-  @Column(name = "end_datetime")
-  private LocalDateTime endDatetime;
+  @Column(name = "end_at")
+  private LocalDateTime endAt;
 
   @Column(name = "location")
   private String location;

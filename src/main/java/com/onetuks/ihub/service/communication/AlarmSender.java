@@ -18,40 +18,6 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class AlarmSender {
 
-  private final JavaMailSender mailSender;
-
-  public void send(Alarm alarm, List<EventAttendee> eventAttendees) {
-    log.info("Sending alarm: {} (event: {})", alarm.getAlarmId(), alarm.getEvent().getEventId());
-
-    MimeMessage message = mailSender.createMimeMessage();
-
-    try {
-      MimeMessageHelper helper =
-          new MimeMessageHelper(message, true, StandardCharsets.UTF_8.name());
-
-      helper.setTo(
-          eventAttendees.stream()
-              .map(EventAttendee::getUser)
-              .map(User::getEmail)
-              .toArray(String[]::new));
-      helper.setSubject("IHub 이벤트 리마인더");
-      helper.setText(
-          String.format(
-              HTML_FORMAT,
-              alarm.getEvent().getTitle(),
-              alarm.getEvent().getProject().getTitle(),
-              alarm.getEvent().getStartDatetime(),
-              alarm.getEvent().getEndDatetime(),
-              alarm.getEvent().getLocation(),
-              alarm.getEvent().getContent(),
-              alarm.getEvent().getCreatedBy().getName(),
-              alarm.getEvent().getCreatedBy().getEmail()
-          ));
-    } catch (MessagingException e) {
-      throw new IllegalStateException("메일 전송 실패", e);
-    }
-  }
-
   private static final String HTML_FORMAT = """
       <!DOCTYPE html>
       <html lang="ko">
@@ -138,4 +104,37 @@ public class AlarmSender {
       </body>
       </html>
       """;
+  private final JavaMailSender mailSender;
+
+  public void send(Alarm alarm, List<EventAttendee> eventAttendees) {
+    log.info("Sending alarm: {} (event: {})", alarm.getAlarmId(), alarm.getEvent().getEventId());
+
+    MimeMessage message = mailSender.createMimeMessage();
+
+    try {
+      MimeMessageHelper helper =
+          new MimeMessageHelper(message, true, StandardCharsets.UTF_8.name());
+
+      helper.setTo(
+          eventAttendees.stream()
+              .map(EventAttendee::getUser)
+              .map(User::getEmail)
+              .toArray(String[]::new));
+      helper.setSubject("IHub 이벤트 리마인더");
+      helper.setText(
+          String.format(
+              HTML_FORMAT,
+              alarm.getEvent().getTitle(),
+              alarm.getEvent().getProject().getTitle(),
+              alarm.getEvent().getStartAt(),
+              alarm.getEvent().getEndAt(),
+              alarm.getEvent().getLocation(),
+              alarm.getEvent().getContent(),
+              alarm.getEvent().getCreatedBy().getName(),
+              alarm.getEvent().getCreatedBy().getEmail()
+          ));
+    } catch (MessagingException e) {
+      throw new IllegalStateException("메일 전송 실패", e);
+    }
+  }
 }
