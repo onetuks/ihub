@@ -17,7 +17,6 @@ import com.onetuks.ihub.repository.ProjectJpaRepository;
 import com.onetuks.ihub.repository.ProjectMemberJpaRepository;
 import com.onetuks.ihub.repository.UserJpaRepository;
 import com.onetuks.ihub.service.ServiceTestDataFactory;
-import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -106,10 +105,10 @@ class SystemServiceTest {
   void deleteSystem_success() {
     System created = systemService.create(updater, project.getProjectId(), buildCreateRequest());
 
-    systemService.delete(updater, created.getSystemId());
+    System result = systemService.delete(updater, created.getSystemId());
 
-    assertThatThrownBy(() -> systemService.getById(updater, created.getSystemId()))
-        .isInstanceOf(EntityNotFoundException.class);
+    assertThat(result.getStatus()).isEqualTo(SystemStatus.DELETED);
+    assertThat(result.getUpdatedBy().getUserId()).isEqualTo(updater.getUserId());
   }
 
   private SystemCreateRequest buildCreateRequest() {

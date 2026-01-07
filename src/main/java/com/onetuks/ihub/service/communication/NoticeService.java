@@ -32,14 +32,15 @@ public class NoticeService {
   @Transactional
   public Notice create(User currentUser, String projectId, NoticeCreateRequest request) {
     Project project = findProject(projectId);
-    projectMemberCheckComponent.checkIsProjectMember(currentUser, projectId);
+    projectMemberCheckComponent.checkIsProjectMember(currentUser.getUserId(), projectId);
     return noticeJpaRepository.save(NoticeMapper.applyCreate(currentUser, project, request));
   }
 
   @Transactional(readOnly = true)
   public Notice getById(User currentUser, String noticeId) {
     Notice notice = findEntity(noticeId);
-    projectMemberCheckComponent.checkIsProjectMember(currentUser, notice.getProject().getProjectId());
+    projectMemberCheckComponent.checkIsProjectViewer(currentUser.getUserId(),
+        notice.getProject().getProjectId());
     return notice;
   }
 
@@ -56,7 +57,7 @@ public class NoticeService {
       LocalDateTime to,
       Pageable pageable
   ) {
-    projectMemberCheckComponent.checkIsProjectMember(currentUser, projectId);
+    projectMemberCheckComponent.checkIsProjectViewer(currentUser.getUserId(), projectId);
     List<Notice> notices =
         noticeJpaRepository.findAllByProject_ProjectIdAndStatusNot(projectId, NoticeStatus.DELETED);
 
@@ -65,7 +66,8 @@ public class NoticeService {
             || containsIgnoreCase(notice.getTitle(), keyword)
             || containsIgnoreCase(notice.getContent(), keyword))
         .filter(notice -> authorId == null
-            || (notice.getCreatedBy() != null && Objects.equals(authorId, notice.getCreatedBy().getUserId())))
+            || (notice.getCreatedBy() != null && Objects.equals(authorId,
+            notice.getCreatedBy().getUserId())))
         .filter(notice -> category == null || Objects.equals(category, notice.getCategory()))
         .filter(notice -> importance == null
             || notice.getImportance().name().equalsIgnoreCase(importance))
@@ -83,7 +85,8 @@ public class NoticeService {
   @Transactional
   public Notice update(User currentUser, String noticeId, NoticeUpdateRequest request) {
     Notice notice = findEntity(noticeId);
-    projectMemberCheckComponent.checkIsProjectMember(currentUser, notice.getProject().getProjectId());
+    projectMemberCheckComponent.checkIsProjectMember(currentUser.getUserId(),
+        notice.getProject().getProjectId());
     NoticeMapper.applyUpdate(notice, request, currentUser);
     return notice;
   }
@@ -91,7 +94,8 @@ public class NoticeService {
   @Transactional
   public Notice delete(User currentUser, String noticeId) {
     Notice notice = findEntity(noticeId);
-    projectMemberCheckComponent.checkIsProjectMember(currentUser, notice.getProject().getProjectId());
+    projectMemberCheckComponent.checkIsProjectMember(currentUser.getUserId(),
+        notice.getProject().getProjectId());
     notice.setStatus(NoticeStatus.DELETED);
     notice.setDeletedAt(LocalDateTime.now());
     notice.setUpdatedBy(currentUser);

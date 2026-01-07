@@ -30,7 +30,7 @@ public class InterfaceStatusTransitionService {
   @Transactional
   public InterfaceStatusTransition create(
       User currentUser, InterfaceStatusTransitionCreateRequest request) {
-    projectMemberCheckComponent.checkIsProjectMember(currentUser, request.projectId());
+    projectMemberCheckComponent.checkIsProjectMember(currentUser.getUserId(), request.projectId());
     return interfaceStatusTransitionJpaRepository.save(
         InterfaceStatusTransitionMapper.applyCreate(
             findProject(request.projectId()),
@@ -50,8 +50,8 @@ public class InterfaceStatusTransitionService {
   public InterfaceStatusTransition update(
       User currentUser, String transitionId, InterfaceStatusTransitionUpdateRequest request) {
     InterfaceStatusTransition transition = findEntity(transitionId);
-    projectMemberCheckComponent.checkIsProjectMember(currentUser,
-        transition.getProject().getProjectId());
+    projectMemberCheckComponent.checkIsProjectMember(
+        currentUser.getUserId(), transition.getProject().getProjectId());
     return InterfaceStatusTransitionMapper.applyUpdate(
         transition,
         findStatus(request.fromStatusId()),

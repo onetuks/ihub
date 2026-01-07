@@ -28,27 +28,30 @@ public class PostService {
   @Transactional
   public Post create(User currentUser, String projectId, PostCreateRequest request) {
     Project project = findProject(projectId);
-    projectMemberCheckComponent.checkIsProjectMember(currentUser, project.getProjectId());
+    projectMemberCheckComponent.checkIsProjectMember(currentUser.getUserId(),
+        project.getProjectId());
     return postJpaRepository.save(PostMapper.applyCreate(currentUser, project, request));
   }
 
   @Transactional(readOnly = true)
   public Post getById(User currentUser, String postId) {
     Post post = findEntity(postId);
-    projectMemberCheckComponent.checkIsProjectMember(currentUser, post.getProject().getProjectId());
+    projectMemberCheckComponent.checkIsProjectViewer(currentUser.getUserId(),
+        post.getProject().getProjectId());
     return post;
   }
 
   @Transactional(readOnly = true)
   public Page<Post> getAll(User currentUser, String projectId, Pageable pageable) {
-    projectMemberCheckComponent.checkIsProjectMember(currentUser, projectId);
+    projectMemberCheckComponent.checkIsProjectViewer(currentUser.getUserId(), projectId);
     return postJpaRepository.findAllByProject_ProjectId(projectId, pageable);
   }
 
   @Transactional
   public Post update(User currentUser, String postId, PostUpdateRequest request) {
     Post post = findEntity(postId);
-    projectMemberCheckComponent.checkIsProjectMember(currentUser, post.getProject().getProjectId());
+    projectMemberCheckComponent.checkIsProjectMember(currentUser.getUserId(),
+        post.getProject().getProjectId());
     PostMapper.applyUpdate(post, request);
     return post;
   }
@@ -56,7 +59,8 @@ public class PostService {
   @Transactional
   public Post delete(User currentUser, String postId) {
     Post post = findEntity(postId);
-    projectMemberCheckComponent.checkIsProjectMember(currentUser, post.getProject().getProjectId());
+    projectMemberCheckComponent.checkIsProjectMember(currentUser.getUserId(),
+        post.getProject().getProjectId());
     post.setStatus(PostStatus.DELETED);
     return post;
   }

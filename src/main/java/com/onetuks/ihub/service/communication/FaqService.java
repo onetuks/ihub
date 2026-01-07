@@ -35,7 +35,7 @@ public class FaqService {
   @Transactional
   public Faq create(User currentUser, String projectId, FaqCreateRequest request) {
     Project project = findProject(projectId);
-    projectMemberCheckComponent.checkIsProjectMember(currentUser, projectId);
+    projectMemberCheckComponent.checkIsProjectMember(currentUser.getUserId(), projectId);
 
     Faq faq = FaqMapper.applyCreate(currentUser, project, request);
     if (request.assigneeId() != null) {
@@ -47,7 +47,8 @@ public class FaqService {
   @Transactional(readOnly = true)
   public Faq getById(User currentUser, String faqId) {
     Faq faq = findEntity(faqId);
-    projectMemberCheckComponent.checkIsProjectMember(currentUser, faq.getProject().getProjectId());
+    projectMemberCheckComponent.checkIsProjectViewer(
+        currentUser.getUserId(), faq.getProject().getProjectId());
     return faq;
   }
 
@@ -64,9 +65,10 @@ public class FaqService {
       LocalDateTime to,
       Pageable pageable
   ) {
-    projectMemberCheckComponent.checkIsProjectMember(currentUser, projectId);
+    projectMemberCheckComponent.checkIsProjectViewer(currentUser.getUserId(), projectId);
 
-    List<Faq> faqs = faqJpaRepository.findAllByProject_ProjectIdAndStatusNot(projectId, FaqStatus.DELETED);
+    List<Faq> faqs = faqJpaRepository.findAllByProject_ProjectIdAndStatusNot(projectId,
+        FaqStatus.DELETED);
     List<Faq> filtered = faqs.stream()
         .filter(faq -> keyword == null || keyword.isBlank()
             || containsIgnoreCase(faq.getQuestion(), keyword)
@@ -76,7 +78,8 @@ public class FaqService {
             || ("ANSWERED".equalsIgnoreCase(answerStatus) && faq.getAnswer() != null)
             || ("UNANSWERED".equalsIgnoreCase(answerStatus) && faq.getAnswer() == null))
         .filter(faq -> assigneeId == null
-            || (faq.getAssignee() != null && Objects.equals(assigneeId, faq.getAssignee().getUserId())))
+            || (faq.getAssignee() != null && Objects.equals(assigneeId,
+            faq.getAssignee().getUserId())))
         .filter(faq -> isSecret == null || Objects.equals(isSecret, faq.getIsSecret()))
         .filter(faq -> from == null
             || (faq.getCreatedAt() != null && !faq.getCreatedAt().isBefore(from)))
@@ -91,7 +94,8 @@ public class FaqService {
   @Transactional
   public Faq update(User currentUser, String faqId, FaqUpdateRequest request) {
     Faq faq = findEntity(faqId);
-    projectMemberCheckComponent.checkIsProjectMember(currentUser, faq.getProject().getProjectId());
+    projectMemberCheckComponent.checkIsProjectMember(currentUser.getUserId(),
+        faq.getProject().getProjectId());
     FaqMapper.applyUpdate(faq, request, currentUser);
     if (request.assigneeId() != null) {
       faq.setAssignee(findUser(request.assigneeId()));
@@ -102,7 +106,8 @@ public class FaqService {
   @Transactional
   public Faq answer(User currentUser, String faqId, FaqAnswerUpdateRequest request) {
     Faq faq = findEntity(faqId);
-    projectMemberCheckComponent.checkIsProjectMember(currentUser, faq.getProject().getProjectId());
+    projectMemberCheckComponent.checkIsProjectMember(currentUser.getUserId(),
+        faq.getProject().getProjectId());
     faq.setAnswer(request.answer());
     faq.setAnsweredAt(LocalDateTime.now());
     faq.setUpdatedBy(currentUser);
@@ -113,7 +118,8 @@ public class FaqService {
   @Transactional
   public Faq delete(User currentUser, String faqId) {
     Faq faq = findEntity(faqId);
-    projectMemberCheckComponent.checkIsProjectMember(currentUser, faq.getProject().getProjectId());
+    projectMemberCheckComponent.checkIsProjectMember(currentUser.getUserId(),
+        faq.getProject().getProjectId());
     faq.setStatus(FaqStatus.DELETED);
     faq.setDeletedAt(LocalDateTime.now());
     faq.setUpdatedBy(currentUser);

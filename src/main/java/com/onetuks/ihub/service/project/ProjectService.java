@@ -34,7 +34,7 @@ public class ProjectService {
 
   @Transactional(readOnly = true)
   public Project getById(User currentUser, String projectId) {
-    projectMemberCheckComponent.checkIsProjectMember(currentUser, projectId);
+    projectMemberCheckComponent.checkIsProjectViewer(currentUser.getUserId(), projectId);
     return findEntity(projectId);
   }
 
@@ -51,13 +51,13 @@ public class ProjectService {
 
   @Transactional
   public Project update(User currentUser, String projectId, ProjectUpdateRequest request) {
-    projectMemberCheckComponent.checkIsProjectMember(currentUser, projectId);
+    projectMemberCheckComponent.checkIsProjectOwner(currentUser.getUserId(), projectId);
     return ProjectMapper.applyUpdate(findEntity(projectId), currentUser, request);
   }
 
   @Transactional
   public Project delete(User currentUser, String projectId) {
-    projectMemberCheckComponent.checkIsProjectMember(currentUser, projectId);
+    projectMemberCheckComponent.checkIsProjectOwner(currentUser.getUserId(), projectId);
 
     Project project = findEntity(projectId);
     project.setStatus(ProjectStatus.DELETED);

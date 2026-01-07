@@ -48,14 +48,16 @@ public class CommentService {
       CommentCreateRequest request
   ) {
     Project project = resolveProject(targetType, targetId);
-    projectMemberCheckComponent.checkIsProjectMember(currentUser, project.getProjectId());
+    projectMemberCheckComponent.checkIsProjectMember(currentUser.getUserId(),
+        project.getProjectId());
 
     Comment parentComment = null;
     if (request.parentCommentId() != null) {
       parentComment = findParentComment(request.parentCommentId(), project, targetType, targetId);
     }
 
-    Comment comment = CommentMapper.applyCreate(currentUser, project, targetType, targetId, request);
+    Comment comment = CommentMapper.applyCreate(currentUser, project, targetType, targetId,
+        request);
     comment.setParentComment(parentComment);
 
     Comment result = commentJpaRepository.save(comment);
@@ -67,15 +69,17 @@ public class CommentService {
   @Transactional(readOnly = true)
   public List<Comment> getAll(User currentUser, TargetType targetType, String targetId) {
     Project project = resolveProject(targetType, targetId);
-    projectMemberCheckComponent.checkIsProjectMember(currentUser, project.getProjectId());
-    return commentJpaRepository.findAllByTargetTypeAndTargetIdOrderByCreatedAtAsc(targetType, targetId);
+    projectMemberCheckComponent.checkIsProjectViewer(currentUser.getUserId(),
+        project.getProjectId());
+    return commentJpaRepository.findAllByTargetTypeAndTargetIdOrderByCreatedAtAsc(targetType,
+        targetId);
   }
 
   @Transactional(readOnly = true)
   public Comment getById(User currentUser, String commentId) {
     Comment comment = findEntity(commentId);
-    projectMemberCheckComponent.checkIsProjectMember(
-        currentUser, comment.getProject().getProjectId());
+    projectMemberCheckComponent.checkIsProjectViewer(
+        currentUser.getUserId(), comment.getProject().getProjectId());
     return comment;
   }
 
@@ -83,7 +87,7 @@ public class CommentService {
   public Comment update(User currentUser, String commentId, CommentUpdateRequest request) {
     Comment comment = findEntity(commentId);
     projectMemberCheckComponent.checkIsProjectMember(
-        currentUser, comment.getProject().getProjectId());
+        currentUser.getUserId(), comment.getProject().getProjectId());
     CommentMapper.applyUpdate(comment, request);
     return comment;
   }
@@ -92,7 +96,7 @@ public class CommentService {
   public void delete(User currentUser, String commentId) {
     Comment comment = findEntity(commentId);
     projectMemberCheckComponent.checkIsProjectMember(
-        currentUser, comment.getProject().getProjectId());
+        currentUser.getUserId(), comment.getProject().getProjectId());
     commentJpaRepository.delete(comment);
   }
 
@@ -185,5 +189,6 @@ public class CommentService {
   }
 
   public record CommentCreateResult(Comment comment, List<Mention> mentions) {
+
   }
 }

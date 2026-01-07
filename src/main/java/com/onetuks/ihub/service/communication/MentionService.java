@@ -34,7 +34,7 @@ public class MentionService {
       Pageable pageable
   ) {
     if (projectId != null) {
-      projectMemberCheckComponent.checkIsProjectMember(currentUser, projectId);
+      projectMemberCheckComponent.checkIsProjectViewer(currentUser.getUserId(), projectId);
     }
 
     List<Mention> mentions = mentionJpaRepository.findAllByMentionedUser_UserId(
@@ -52,7 +52,8 @@ public class MentionService {
             || (mention.getCreatedAt() != null && !mention.getCreatedAt().isBefore(from)))
         .filter(mention -> to == null
             || (mention.getCreatedAt() != null && !mention.getCreatedAt().isAfter(to)))
-        .sorted(Comparator.comparing(Mention::getCreatedAt, Comparator.nullsLast(Comparator.naturalOrder())))
+        .sorted(Comparator.comparing(Mention::getCreatedAt,
+            Comparator.nullsLast(Comparator.naturalOrder())))
         .toList();
 
     List<Mention> pageContent = slice(filtered, pageable);

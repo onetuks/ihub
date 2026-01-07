@@ -29,7 +29,7 @@ public class EventService {
 
   @Transactional
   public Event create(User currentUser, String projectId, EventCreateRequest request) {
-    projectMemberCheckComponent.checkIsProjectMember(currentUser, projectId);
+    projectMemberCheckComponent.checkIsProjectMember(currentUser.getUserId(), projectId);
     Event event = eventJpaRepository.save(
         EventMapper.applyCreate(currentUser, findProject(projectId), request));
     alarmService.create(event);
@@ -39,22 +39,22 @@ public class EventService {
   @Transactional(readOnly = true)
   public Event getById(User currentUser, String eventId) {
     Event event = findEntity(eventId);
-    projectMemberCheckComponent.checkIsProjectMember(
-        currentUser, event.getProject().getProjectId());
+    projectMemberCheckComponent.checkIsProjectViewer(
+        currentUser.getUserId(), event.getProject().getProjectId());
     return event;
   }
 
   @Transactional(readOnly = true)
   public Page<Event> getAll(User currentUser, String projectId, Pageable pageable) {
-    projectMemberCheckComponent.checkIsProjectMember(currentUser, projectId);
+    projectMemberCheckComponent.checkIsProjectViewer(currentUser.getUserId(), projectId);
     return eventJpaRepository.findAllByProject_ProjectId(projectId, pageable);
   }
 
   @Transactional
   public Event update(User currentUser, String eventId, EventUpdateRequest request) {
     Event event = findEntity(eventId);
-    projectMemberCheckComponent.checkIsProjectMember(currentUser,
-        event.getProject().getProjectId());
+    projectMemberCheckComponent.checkIsProjectMember(
+        currentUser.getUserId(), event.getProject().getProjectId());
     EventMapper.applyUpdate(event, request);
     alarmService.update(event);
     return event;
@@ -63,8 +63,8 @@ public class EventService {
   @Transactional
   public void delete(User currentUser, String eventId) {
     Event event = findEntity(eventId);
-    projectMemberCheckComponent.checkIsProjectMember(currentUser,
-        event.getProject().getProjectId());
+    projectMemberCheckComponent.checkIsProjectMember(
+        currentUser.getUserId(), event.getProject().getProjectId());
     alarmService.delete(event);
     eventJpaRepository.delete(event);
   }

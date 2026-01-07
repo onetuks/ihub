@@ -54,7 +54,7 @@ public class EventAttendeeService {
         .orElseThrow(EntityNotFoundException::new);
 
     projectMemberCheckComponent.checkIsProjectMember(
-        currentUser, eventAttendee.getEvent().getProject().getProjectId());
+        currentUser.getUserId(), eventAttendee.getEvent().getProject().getProjectId());
 
     return EventAttendeeMapper.applyUpdate(eventAttendee, request);
   }
@@ -62,15 +62,15 @@ public class EventAttendeeService {
   @Transactional(readOnly = true)
   public Page<EventAttendee> getAllAttendees(User currentUser, String eventId, Pageable pageable) {
     Event event = findEvent(eventId);
-    projectMemberCheckComponent.checkIsProjectMember(currentUser,
-        event.getProject().getProjectId());
+    projectMemberCheckComponent.checkIsProjectViewer(
+        currentUser.getUserId(), event.getProject().getProjectId());
     return eventAttendeeRepository.findAllByEvent_EventId(eventId, pageable);
   }
 
   private Event getEvent(User currentUser, String eventId) {
     Event event = findEvent(eventId);
-    projectMemberCheckComponent.checkIsProjectMember(
-        currentUser, event.getProject().getProjectId());
+    projectMemberCheckComponent.checkIsProjectViewer(
+        currentUser.getUserId(), event.getProject().getProjectId());
     return event;
   }
 

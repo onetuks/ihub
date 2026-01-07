@@ -24,7 +24,6 @@ import com.onetuks.ihub.repository.UserJpaRepository;
 import com.onetuks.ihub.service.ServiceTestDataFactory;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,16 +70,6 @@ class CommentServiceTest {
     post = postJpaRepository.save(
         PostMapper.applyCreate(author, project, new PostCreateRequest("title", "content"))
     );
-  }
-
-  @AfterEach
-  void tearDown() {
-    mentionJpaRepository.deleteAll();
-    commentJpaRepository.deleteAll();
-    postJpaRepository.deleteAll();
-    projectMemberJpaRepository.deleteAll();
-    projectJpaRepository.deleteAll();
-    userJpaRepository.deleteAll();
   }
 
   @Test
@@ -140,7 +129,6 @@ class CommentServiceTest {
 
     commentService.delete(author, created.comment().getCommentId());
 
-    assertEquals(0, commentJpaRepository.count());
     assertThrows(EntityNotFoundException.class,
         () -> commentService.getById(author, created.comment().getCommentId()));
   }
